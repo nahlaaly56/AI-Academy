@@ -1,0 +1,1393 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="_ds/nocturne-113e411d-462a-44fd-9fb9-d527d382c80b/styles.css">
+  <script src="_ds/nocturne-113e411d-462a-44fd-9fb9-d527d382c80b/_ds_bundle.js"></script>
+  <script src="https://unpkg.com/@phosphor-icons/web@2.1.1"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&amp;family=Share+Tech+Mono&amp;display=swap" rel="stylesheet">
+  <style>
+    :root{--c-green:#00e676;--c-blue:#0ea5e9;--c-red:#ff3355;--c-amber:#f59e0b;--color-bg:#04080f;--color-surface:#080f1a;--color-accent:#0ea5e9;--color-divider:rgba(14,165,233,0.12);}
+    *,*::before,*::after{box-sizing:border-box;}
+    body{background:#04080f;}
+    a{color:var(--c-blue);}a:hover{color:var(--c-green);}
+    .mono{font-family:'Share Tech Mono',monospace;}
+    .hdg{font-family:'Rajdhani',sans-serif;}
+
+    @keyframes fadeUp    {from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+    @keyframes blinkDot  {0%,100%{opacity:1}50%{opacity:.25}}
+    @keyframes pulseRing {0%,100%{box-shadow:0 0 0 0 rgba(0,230,118,.35)}60%{box-shadow:0 0 0 16px rgba(0,230,118,0)}}
+    @keyframes popIn     {0%{transform:scale(.58);opacity:0}70%{transform:scale(1.07)}100%{transform:scale(1);opacity:1}}
+    @keyframes xpFloat   {0%{opacity:0;transform:translateX(-50%) translateY(8px) scale(.8)}15%{opacity:1;transform:translateX(-50%) translateY(0) scale(1.05)}75%{opacity:1}100%{opacity:0;transform:translateX(-50%) translateY(-44px)}}
+    @keyframes confettiFall{0%{transform:translateY(-10px) rotate(0deg);opacity:1}100%{transform:translateY(105vh) rotate(720deg);opacity:0}}
+    @keyframes badgeIn   {0%{transform:scale(0) rotate(-12deg);opacity:0}65%{transform:scale(1.15) rotate(2deg)}100%{transform:scale(1) rotate(0);opacity:1}}
+    @keyframes completeGlow{0%,100%{box-shadow:0 0 0 0 rgba(0,230,118,.4)}50%{box-shadow:0 0 0 18px rgba(0,230,118,0)}}
+    @keyframes slideUp   {from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+    @keyframes sweepIn   {from{opacity:0;transform:translateX(-10px)}to{opacity:1;transform:translateX(0)}}
+    @keyframes scanLine  {0%{top:-4px}100%{top:100%}}
+    @keyframes cornerPulse{0%,100%{opacity:.4}50%{opacity:.9}}
+
+    .ops-card{border-radius:6px;cursor:pointer;transition:transform .13s,box-shadow .18s,border-color .15s;}
+    .ops-card:hover{transform:translateY(-3px);box-shadow:0 18px 44px rgba(0,0,0,.65);}
+    .lesson-panel{animation:sweepIn .28s ease-out;}
+    .clear-desc{animation:slideUp .2s ease-out both;}
+    .prog-track{height:2px;background:rgba(14,165,233,.08);}
+    .prog-fill{height:100%;background:linear-gradient(90deg,var(--c-blue),rgba(14,165,233,.3));transition:width .6s ease;}
+    .finale-ready{animation:pulseRing 2.8s infinite;}
+    .finale-locked{opacity:.28;cursor:default!important;pointer-events:none!important;}
+    .xp-pop{position:fixed;left:50%;top:62px;z-index:9999;pointer-events:none;font-size:17px;font-weight:800;color:var(--c-green);text-shadow:0 0 24px rgba(0,230,118,.7);white-space:nowrap;animation:xpFloat 1.7s ease-out forwards;font-family:'Share Tech Mono',monospace;}
+    .badge-chip{transition:transform .2s;}.badge-chip:hover{transform:scale(1.2);}
+    .complete-check{animation:popIn .5s ease-out,completeGlow 2.4s .5s infinite;}
+    .ops-bg{background-image:radial-gradient(rgba(14,165,233,.04) 1px,transparent 1px);background-size:28px 28px;}
+    .ops-scan{background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(14,165,233,.006) 3px,rgba(14,165,233,.006) 4px);pointer-events:none;}
+    .music-btn{background:transparent;border-radius:6px;padding:5px 9px;cursor:pointer;transition:all .2s;display:flex;align-items:center;justify-content:center;}
+    .music-btn:hover{background:rgba(14,165,233,.1);}
+    .corner{animation:cornerPulse 3.5s infinite;position:absolute;width:36px;height:36px;}
+    .corner-tl{top:22px;left:22px;border-top:1px solid rgba(14,165,233,.45);border-left:1px solid rgba(14,165,233,.45);}
+    .corner-tr{top:22px;right:22px;border-top:1px solid rgba(14,165,233,.45);border-right:1px solid rgba(14,165,233,.45);}
+    .corner-bl{bottom:22px;left:22px;border-bottom:1px solid rgba(14,165,233,.45);border-left:1px solid rgba(14,165,233,.45);}
+    .corner-br{bottom:22px;right:22px;border-bottom:1px solid rgba(14,165,233,.45);border-right:1px solid rgba(14,165,233,.45);}
+    .reveal-btn{background:transparent;border:1px solid rgba(14,165,233,.2);border-radius:6px;padding:7px 16px;cursor:pointer;font-family:'Share Tech Mono',monospace;font-size:10px;letter-spacing:.12em;color:rgba(233,233,237,.42);text-transform:uppercase;transition:all .2s;}
+    .reveal-btn:hover{border-color:rgba(14,165,233,.5);color:rgba(233,233,237,.75);background:rgba(14,165,233,.06);}
+    .hint-chip{background:transparent;border-radius:6px;padding:8px 14px;cursor:pointer;transition:all .15s;display:flex;align-items:center;gap:4px;}
+    .hint-chip:hover{background:rgba(14,165,233,.08);}
+    .anno-chip{border-radius:6px;padding:7px 14px;cursor:pointer;transition:all .15s;display:flex;align-items:center;gap:6px;border:1px solid transparent;}
+    .ft-chip{border-radius:6px;padding:10px 18px;cursor:pointer;transition:all .2s;display:flex;align-items:center;justify-content:center;min-width:52px;}
+    textarea:focus,input[type="text"]:focus{border-color:rgba(14,165,233,.55)!important;outline:none;}
+  </style>
+</helmet>
+
+<div style="min-height:100vh;background:#04080f;position:relative;overflow-x:hidden;">
+  <div class="ops-bg" style="position:fixed;inset:0;pointer-events:none;z-index:0;"></div>
+  <div class="ops-scan" style="position:fixed;inset:0;z-index:0;pointer-events:none;"></div>
+
+  <!-- ━━ WELCOME ━━ -->
+  <sc-if value="{{ isWelcomeView }}" hint-placeholder-val="{{ false }}">
+  <div style="min-height:100vh;display:flex;align-items:center;justify-content:center;position:relative;z-index:1;padding:40px 20px;overflow:hidden;">
+    <div class="corner corner-tl"></div>
+    <div class="corner corner-tr"></div>
+    <div class="corner corner-bl"></div>
+    <div class="corner corner-br"></div>
+    <div style="position:absolute;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(14,165,233,.3),transparent);animation:scanLine 4s linear infinite;top:0;"></div>
+    <div style="max-width:580px;width:100%;text-align:center;">
+      <div style="display:flex;align-items:center;justify-content:center;gap:8px;margin-bottom:32px;animation:fadeUp .4s .05s both;">
+        <i class="ph-bold ph-radar" style="font-size:13px;color:var(--c-blue);animation:blinkDot 2.4s infinite;"></i>
+        <span class="mono" style="font-size:9px;letter-spacing:.26em;text-transform:uppercase;color:var(--c-blue);">BeyondTalent</span>
+      </div>
+      <div class="hdg" style="font-size:16px;font-weight:600;letter-spacing:.32em;text-transform:uppercase;color:rgba(233,233,237,.6);margin-bottom:10px;animation:fadeUp .4s .14s both;">WELCOME TO</div>
+      <h1 class="hdg" style="font-size:clamp(42px,8vw,70px);font-weight:700;line-height:.92;letter-spacing:.04em;text-transform:uppercase;color:rgba(233,233,237,.98);margin:0;min-height:0.84em;">{{ typedTitle }}<sc-if value="{{ showCursor }}" hint-placeholder-val="{{ true }}"><span style="color:var(--c-blue);animation:blinkDot .75s infinite;">|</span></sc-if></h1>
+      <div style="{{ wcSub }}">
+        <p style="font-size:18px;color:rgba(233,233,237,.75);line-height:1.6;max-width:600px;margin:16px auto 10px;width:100%;">The home of the CLEAR framework for AI prompting.</p>
+        <p style="font-size:15px;color:rgba(233,233,237,.58);line-height:1.72;max-width:520px;margin:0 auto 8px;">Master AI prompting; from principles, examples and applications, to a live AI-graded prompt lab.</p>
+        <p style="font-size:14.5px;color:rgba(233,233,237,.46);line-height:1.7;max-width:480px;margin:0 auto 28px;">So join us! Earn XP, unlock clearance levels, and become an AI prompting super-operative.</p>
+        <div style="display:flex;gap:7px;justify-content:center;margin-bottom:8px;">
+          <div style="padding:10px 15px;border-radius:8px;background:rgba(14,165,233,.12);border:1px solid rgba(14,165,233,.3);"><span class="hdg" style="font-size:24px;font-weight:700;color:#0ea5e9;line-height:1;">C</span></div>
+          <div style="padding:10px 15px;border-radius:8px;background:rgba(239,68,68,.09);border:1px solid rgba(239,68,68,.28);"><span class="hdg" style="font-size:24px;font-weight:700;color:#ef4444;line-height:1;">L</span></div>
+          <div style="padding:10px 15px;border-radius:8px;background:rgba(20,184,166,.09);border:1px solid rgba(20,184,166,.28);"><span class="hdg" style="font-size:24px;font-weight:700;color:#14b8a6;line-height:1;">E</span></div>
+          <div style="padding:10px 15px;border-radius:8px;background:rgba(245,158,11,.09);border:1px solid rgba(245,158,11,.28);"><span class="hdg" style="font-size:24px;font-weight:700;color:#f59e0b;line-height:1;">A</span></div>
+          <div style="padding:10px 15px;border-radius:8px;background:rgba(34,197,94,.09);border:1px solid rgba(34,197,94,.28);"><span class="hdg" style="font-size:24px;font-weight:700;color:#22c55e;line-height:1;">R</span></div>
+        </div>
+        <div class="mono" style="font-size:9px;letter-spacing:.1em;color:rgba(233,233,237,.3);margin-bottom:28px;">Command · Limits · Environment · Audience · Response</div>
+        <div style="max-width:360px;margin:0 auto 20px;text-align:left;">
+          <label class="mono" style="display:block;font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:rgba(233,233,237,.45);margin-bottom:9px;">[ OPERATIVE DESIGNATION — OPTIONAL ]</label>
+          <input type="text" value="{{ learnerName }}" onChange="{{ onNameChange }}" onKeyDown="{{ onNameKeyDown }}" placeholder="Your first name" style="width:100%;background:rgba(14,165,233,.06);border:1px solid rgba(14,165,233,.22);border-radius:6px;padding:12px 16px;font-family:'Share Tech Mono',monospace;font-size:14px;color:rgba(233,233,237,.92);box-sizing:border-box;color-scheme:dark;transition:border-color .2s;">
+        </div>
+        <button class="btn btn-primary" onClick="{{ enroll }}" style="font-size:14px;padding:13px 44px;letter-spacing:.1em;font-family:'Rajdhani',sans-serif;font-weight:700;">ENROLL →</button>
+        <div style="display:flex;gap:20px;justify-content:center;margin-top:28px;">
+          <span class="mono" style="font-size:9px;color:rgba(233,233,237,.3);letter-spacing:.08em;">7 MISSIONS</span>
+          <span class="mono" style="font-size:9px;color:rgba(233,233,237,.15);">·</span>
+          <span class="mono" style="font-size:9px;color:rgba(233,233,237,.3);letter-spacing:.08em;">~35 MIN</span>
+          <span class="mono" style="font-size:9px;color:rgba(233,233,237,.15);">·</span>
+          <span class="mono" style="font-size:9px;color:rgba(233,233,237,.3);letter-spacing:.08em;">LIVE AI FEEDBACK</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  </sc-if>
+
+  <!-- ━━ HEADER ━━ -->
+  <sc-if value="{{ showHeader }}" hint-placeholder-val="{{ false }}">
+  <div style="position:sticky;top:0;z-index:100;background:rgba(4,8,15,.97);backdrop-filter:blur(14px);border-bottom:1px solid rgba(14,165,233,.15);">
+    <div style="max-width:960px;margin:0 auto;padding:0 20px;display:flex;align-items:center;justify-content:space-between;height:50px;gap:12px;">
+      <div style="display:flex;align-items:center;gap:10px;flex-shrink:0;">
+        <i class="ph-bold ph-radar" style="font-size:15px;color:var(--c-blue);animation:blinkDot 2.4s infinite;"></i>
+        <div style="display:flex;flex-direction:column;gap:1px;line-height:1;">
+          <span class="mono" style="font-size:7px;letter-spacing:.22em;text-transform:uppercase;color:var(--c-blue);">BeyondTalent</span>
+          <span class="hdg" style="font-size:13px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:rgba(233,233,237,.97);">Prompt Ops Academy</span>
+        </div>
+      </div>
+      <div style="display:flex;align-items:center;gap:12px;">
+        <span class="mono" style="font-size:12px;color:var(--c-green);font-weight:700;letter-spacing:.04em;">⚡ {{ xpDisplay }} XP</span>
+        <span class="mono" style="font-size:10px;color:rgba(233,233,237,.3);letter-spacing:.06em;">{{ completedCount }}/7</span>
+        <button class="music-btn" style="{{ musicBtnStyle }}" onClick="{{ toggleMusic }}" title="{{ musicBtnTitle }}">
+          <i class="{{ musicBtnIcon }}" style="font-size:15px;"></i>
+        </button>
+        <sc-if value="{{ isModuleView }}" hint-placeholder-val="{{ false }}">
+          <button class="btn btn-ghost" onClick="{{ goHome }}" style="font-size:11px;padding:4px 10px;letter-spacing:.04em;">
+            <i class="ph-bold ph-arrow-left" style="font-size:11px;margin-right:3px;"></i>Command Center
+          </button>
+        </sc-if>
+      </div>
+    </div>
+    <div class="prog-track"><div class="prog-fill" style="{{ courseProgressStyle }}"></div></div>
+  </div>
+  </sc-if>
+
+  <!-- ━━ HOME / COMMAND CENTER ━━ -->
+  <sc-if value="{{ isHomeView }}" hint-placeholder-val="{{ false }}">
+  <div style="max-width:960px;margin:0 auto;padding:40px 20px 80px;position:relative;z-index:1;">
+    <div style="margin-bottom:46px;max-width:660px;">
+      <div class="mono" style="font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:var(--c-blue);margin-bottom:10px;">{{ operativeLabel }}</div>
+      <h1 class="hdg" style="font-size:48px;font-weight:700;margin:0 0 10px;letter-spacing:.04em;line-height:1.05;color:rgba(233,233,237,.97);text-transform:uppercase;">Command<br>Center</h1>
+      <p style="font-size:15px;color:rgba(233,233,237,.68);line-height:1.82;margin:0 0 22px;max-width:520px;">Master the CLEAR framework for AI prompting. Complete all missions, then deploy your skills in the grand finale.</p>
+      <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:16px;">
+        <span style="{{ levelBadgeStyle }}">{{ levelLabel }}</span>
+        <div style="height:3px;width:160px;background:rgba(14,165,233,.1);border-radius:2px;overflow:hidden;flex-shrink:0;"><div style="{{ levelBarStyle }}"></div></div>
+        <span class="mono" style="font-size:10px;color:rgba(233,233,237,.3);letter-spacing:.06em;">{{ xpToNextLabel }}</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
+        <span class="mono" style="font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:rgba(233,233,237,.26);">Clearance</span>
+        <sc-for list="{{ badgeDisplay }}" as="bd" hint-placeholder-count="5">
+          <div class="badge-chip" style="{{ bd.chipStyle }}" title="{{ bd.tooltip }}">
+            <i class="ph-bold ph-{{ bd.iconClass }}" style="{{ bd.iconStyle }}"></i>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+    <div class="mono" style="font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:rgba(14,165,233,.5);margin-bottom:12px;">[ MISSION SELECT ]</div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(278px,1fr));gap:10px;margin-bottom:12px;">
+      <sc-for list="{{ moduleCards }}" as="mc" hint-placeholder-count="7">
+        <div class="ops-card" style="{{ mc.cardStyle }}" onClick="{{ mc.open }}">
+          <div style="{{ mc.accentLine }}"></div>
+          <div style="padding:14px 16px;">
+            <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:12px;">
+              <div>
+                <div class="mono" style="{{ mc.numStyle }}">MISSION {{ mc.number }}</div>
+                <sc-if value="{{ mc.hasLetter }}" hint-placeholder-val="{{ false }}">
+                  <div style="{{ mc.letterBadge }}">{{ mc.letter }}</div>
+                </sc-if>
+              </div>
+              <div style="{{ mc.iconWrap }}"><i class="ph-bold ph-{{ mc.iconClass }}" style="{{ mc.iconPh }}"></i></div>
+            </div>
+            <div class="hdg" style="font-weight:700;font-size:16px;margin-bottom:5px;line-height:1.25;letter-spacing:.04em;color:rgba(233,233,237,.97);text-transform:uppercase;">{{ mc.title }}</div>
+            <div style="font-size:12.5px;color:rgba(233,233,237,.62);line-height:1.65;margin-bottom:12px;">{{ mc.teaser }}</div>
+            <div style="display:flex;align-items:center;justify-content:space-between;">
+              <span class="mono" style="font-size:10px;color:rgba(233,233,237,.28);">⏱ {{ mc.duration }}</span>
+              <sc-if value="{{ mc.done }}" hint-placeholder-val="{{ false }}">
+                <span class="mono" style="font-size:9px;color:var(--c-green);background:rgba(0,230,118,.07);border:1px solid rgba(0,230,118,.2);padding:2px 9px;border-radius:3px;letter-spacing:.1em;">✓ COMPLETE</span>
+              </sc-if>
+              <sc-if value="{{ mc.notDone }}" hint-placeholder-val="{{ false }}">
+                <span class="mono" style="font-size:9px;color:rgba(233,233,237,.2);letter-spacing:.08em;">up to 45 XP</span>
+              </sc-if>
+            </div>
+          </div>
+        </div>
+      </sc-for>
+    </div>
+    <div class="{{ finaleCardCls }}" style="{{ finaleCardStyle }}" onClick="{{ openFinale }}">
+      <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;">
+        <div style="display:flex;align-items:center;gap:18px;">
+          <div style="width:56px;height:56px;border-radius:8px;background:rgba(14,165,233,.1);border:1px solid rgba(14,165,233,.25);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+            <i class="ph-bold ph-rocket" style="font-size:26px;color:var(--c-blue);"></i>
+          </div>
+          <div>
+            <div class="mono" style="font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:rgba(233,233,237,.36);margin-bottom:4px;">[ GRAND FINALE ]</div>
+            <div class="hdg" style="font-size:20px;font-weight:700;margin-bottom:4px;letter-spacing:.06em;text-transform:uppercase;color:rgba(233,233,237,.97);">Mission Prompt Ops</div>
+            <div style="font-size:13px;color:rgba(233,233,237,.55);">{{ finaleSubtitle }}</div>
+          </div>
+        </div>
+        <div style="{{ finaleCtaStyle }}">{{ finaleCta }}</div>
+      </div>
+    </div>
+    <div style="text-align:center;margin-top:32px;padding-top:20px;border-top:1px solid rgba(14,165,233,.06);">
+      <button onClick="{{ resetProgress }}" style="background:transparent;border:none;font-family:'Share Tech Mono',monospace;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:rgba(233,233,237,.2);cursor:pointer;padding:6px 12px;border-radius:4px;transition:color .2s;" onMouseOver="{{ resetHover }}" onMouseOut="{{ resetOut }}">↺ Reset Session Progress</button>
+    </div>
+  </div>
+  </sc-if>
+
+  <!-- ━━ MODULE VIEW ━━ -->
+  <sc-if value="{{ isModuleView }}" hint-placeholder-val="{{ false }}">
+  <div style="max-width:780px;margin:0 auto;padding:26px 20px 80px;position:relative;z-index:1;">
+
+    <sc-if value="{{ showModuleNav }}" hint-placeholder-val="{{ false }}">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:26px;">
+        <span class="mono" style="{{ modLabelStyle }}">{{ modLabel }}</span>
+        <div style="display:flex;align-items:center;gap:7px;">
+          <sc-for list="{{ lessonDots }}" as="dot" hint-placeholder-count="3">
+            <div style="{{ dot.style }}"></div>
+          </sc-for>
+          <span class="mono" style="font-size:10px;color:rgba(233,233,237,.28);margin-left:3px;letter-spacing:.05em;">{{ lessonCountLabel }}</span>
+        </div>
+      </div>
+    </sc-if>
+
+    <!-- BRIEFING -->
+    <sc-if value="{{ isIntroScreen }}" hint-placeholder-val="{{ false }}">
+      <div class="lesson-panel" style="text-align:center;padding:16px 0;">
+        <div style="{{ introBubbleStyle }}">
+          <i class="ph-bold ph-{{ modIconClass }}" style="{{ modIconPhStyle }}"></i>
+        </div>
+        <div class="mono" style="{{ introNumStyle }}">[ {{ modNumber }} ]</div>
+        <sc-if value="{{ modHasLetter }}" hint-placeholder-val="{{ false }}">
+          <div style="{{ introLetterStyle }}">{{ modLetter }}</div>
+        </sc-if>
+        <h2 class="hdg" style="font-size:30px;font-weight:700;margin:8px 0 10px;letter-spacing:.06em;text-transform:uppercase;line-height:1.2;color:rgba(233,233,237,.97);">{{ modTitle }}</h2>
+        <p style="font-size:14.5px;color:rgba(233,233,237,.66);line-height:1.82;max-width:460px;margin:0 auto 26px;">{{ modTeaser }}</p>
+        <div style="background:rgba(14,165,233,.04);border:1px solid rgba(14,165,233,.12);border-radius:6px;padding:18px 22px;max-width:440px;margin:0 auto 24px;text-align:left;">
+          <div class="mono" style="font-size:9px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:rgba(233,233,237,.35);margin-bottom:14px;">[ MISSION OBJECTIVES ]</div>
+          <sc-for list="{{ objectives }}" as="obj" hint-placeholder-count="3">
+            <div style="{{ obj.rowStyle }}">
+              <i class="ph-bold ph-check" style="{{ obj.checkStyle }}"></i>
+              <span style="font-size:13.5px;color:rgba(233,233,237,.82);line-height:1.6;">{{ obj.text }}</span>
+            </div>
+          </sc-for>
+        </div>
+        <div style="display:flex;align-items:center;justify-content:center;gap:18px;">
+          <span class="mono" style="font-size:12px;color:rgba(233,233,237,.3);">⏱ {{ modDuration }}</span>
+          <button class="btn btn-primary" onClick="{{ startModule }}" style="font-size:13px;padding:9px 26px;letter-spacing:.06em;">BEGIN MISSION →</button>
+        </div>
+      </div>
+    </sc-if>
+
+    <!-- LESSON SCREEN -->
+    <sc-if value="{{ isLessonScreen }}" hint-placeholder-val="{{ false }}">
+
+      <!-- CONCEPT: progressive reveal -->
+      <sc-if value="{{ isConceptLesson }}" hint-placeholder-val="{{ false }}">
+        <div class="lesson-panel">
+          <div style="display:flex;align-items:center;gap:14px;margin-bottom:22px;">
+            <div style="{{ iconBubble }}"><i class="ph-bold ph-{{ lessonIconClass }}" style="{{ lessonIconStyle }}"></i></div>
+            <h2 class="hdg" style="font-size:26px;font-weight:700;margin:0;line-height:1.2;letter-spacing:.04em;text-transform:uppercase;color:rgba(233,233,237,.97);">{{ lessonTitle }}</h2>
+          </div>
+          <sc-for list="{{ displayedBodyItems }}" as="bi" hint-placeholder-count="1">
+            <p style="{{ bi.pStyle }}">{{ bi.text }}</p>
+          </sc-for>
+          <sc-if value="{{ showConceptCallout }}" hint-placeholder-val="{{ false }}">
+            <div style="{{ calloutStyle }}">
+              <span class="mono" style="{{ calloutLblStyle }}">{{ calloutLabel }}</span>
+              <p style="font-size:14.5px;line-height:1.72;color:rgba(233,233,237,.92);margin:0;font-style:italic;">"{{ calloutText }}"</p>
+            </div>
+          </sc-if>
+          <sc-if value="{{ showRevealNext }}" hint-placeholder-val="{{ false }}">
+            <div style="margin-top:20px;padding-top:18px;border-top:1px solid rgba(14,165,233,.07);">
+              <button class="reveal-btn" onClick="{{ revealNextParagraph }}">
+                <i class="ph-bold ph-arrow-down" style="margin-right:5px;font-size:10px;"></i>READ ON
+              </button>
+            </div>
+          </sc-if>
+        </div>
+      </sc-if>
+
+      <!-- CLEAR GRID + FIELD TEST -->
+      <sc-if value="{{ isClearGridLesson }}" hint-placeholder-val="{{ false }}">
+        <div class="lesson-panel">
+          <h2 class="hdg" style="font-size:26px;font-weight:700;margin:0 0 10px;line-height:1.2;letter-spacing:.04em;text-transform:uppercase;color:rgba(233,233,237,.97);">{{ lessonTitle }}</h2>
+          <p style="font-size:14.5px;color:rgba(233,233,237,.7);line-height:1.8;margin:0 0 6px;">{{ clearIntro }}</p>
+          <div class="mono" style="font-size:10px;color:rgba(233,233,237,.28);margin:0 0 18px;letter-spacing:.08em;">↓ TAP EACH ELEMENT TO EXPAND</div>
+          <div style="display:flex;flex-direction:column;gap:8px;">
+            <sc-for list="{{ clearEls }}" as="ce" hint-placeholder-count="5">
+              <div style="{{ ce.cardStyle }}" onClick="{{ ce.toggle }}">
+                <div style="{{ ce.bubbleStyle }}"><span class="hdg" style="{{ ce.letterStyle }}">{{ ce.letter }}</span></div>
+                <div style="flex:1;min-width:0;">
+                  <div class="hdg" style="{{ ce.labelStyle }}">{{ ce.label }}</div>
+                  <sc-if value="{{ ce.isCollapsed }}" hint-placeholder-val="{{ false }}">
+                    <span class="mono" style="font-size:10px;color:rgba(233,233,237,.26);letter-spacing:.06em;">TAP TO EXPAND →</span>
+                  </sc-if>
+                  <sc-if value="{{ ce.isExpanded }}" hint-placeholder-val="{{ false }}">
+                    <div class="clear-desc" style="font-size:13.5px;color:rgba(233,233,237,.8);line-height:1.68;margin-top:6px;">{{ ce.desc }}</div>
+                  </sc-if>
+                </div>
+                <span style="{{ ce.chevronStyle }}">{{ ce.chevron }}</span>
+              </div>
+            </sc-for>
+          </div>
+          <!-- Field test after all 5 expanded -->
+          <sc-if value="{{ showFieldTest }}" hint-placeholder-val="{{ false }}">
+            <div style="margin-top:22px;padding-top:20px;border-top:1px solid rgba(14,165,233,.1);animation:fadeUp .35s ease-out;">
+              <div class="mono" style="font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--c-blue);margin-bottom:10px;">[ FIELD TEST ]</div>
+              <p class="hdg" style="font-size:17px;font-weight:600;color:rgba(233,233,237,.9);margin:0 0 16px;line-height:1.4;">Which CLEAR element shapes the FORMAT and STRUCTURE of the AI's output?</p>
+              <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px;">
+                <sc-for list="{{ fieldTestOptions }}" as="ft" hint-placeholder-count="5">
+                  <button class="ft-chip" style="{{ ft.style }}" onClick="{{ ft.select }}">
+                    <span class="hdg" style="{{ ft.letterStyle }}">{{ ft.letter }}</span>
+                  </button>
+                </sc-for>
+              </div>
+              <sc-if value="{{ fieldTestDone }}" hint-placeholder-val="{{ false }}">
+                <div style="{{ ftFbStyle }}"><p style="font-size:13.5px;color:rgba(233,233,237,.88);line-height:1.65;margin:0;">{{ fieldTestFeedback }}</p></div>
+              </sc-if>
+            </div>
+          </sc-if>
+        </div>
+      </sc-if>
+
+      <!-- EXAMPLE + CLEAR ANNOTATION -->
+      <sc-if value="{{ isExampleLesson }}" hint-placeholder-val="{{ false }}">
+        <div class="lesson-panel">
+          <h2 class="hdg" style="font-size:26px;font-weight:700;margin:0 0 20px;line-height:1.2;letter-spacing:.04em;text-transform:uppercase;color:rgba(233,233,237,.97);">{{ lessonTitle }}</h2>
+          <div style="border:1px solid rgba(255,51,85,.26);border-radius:6px;overflow:hidden;margin-bottom:12px;">
+            <div style="background:rgba(255,51,85,.07);padding:9px 16px;border-bottom:1px solid rgba(255,51,85,.12);">
+              <span class="mono" style="font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#ff6b80;">✗  WEAK PROMPT</span>
+            </div>
+            <div style="padding:16px;">
+              <p style="font-family:'Share Tech Mono',monospace;font-size:12.5px;color:rgba(233,233,237,.76);line-height:1.72;margin:0 0 14px;padding-bottom:14px;border-bottom:1px solid rgba(255,51,85,.1);">{{ weakText }}</p>
+              <sc-for list="{{ weakIssues }}" as="wi" hint-placeholder-count="4">
+                <div style="display:flex;align-items:flex-start;gap:8px;margin-bottom:7px;">
+                  <i class="ph-bold ph-x" style="color:#ff6b80;font-size:11px;flex-shrink:0;margin-top:3px;"></i>
+                  <span style="font-size:12.5px;color:rgba(233,233,237,.6);line-height:1.5;">{{ wi.text }}</span>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+          <sc-if value="{{ showRevealBtn }}" hint-placeholder-val="{{ false }}">
+            <div style="display:flex;justify-content:center;padding:8px 0 10px;">
+              <button class="btn btn-primary" onClick="{{ revealExample }}" style="{{ revealBtnStyle }}">
+                <i class="ph-bold ph-lightning" style="margin-right:6px;"></i>TRANSFORM WITH CLEAR →
+              </button>
+            </div>
+          </sc-if>
+          <sc-if value="{{ exampleRevealed }}" hint-placeholder-val="{{ false }}">
+            <div style="border:1px solid rgba(0,230,118,.2);border-radius:6px;overflow:hidden;animation:slideUp .35s ease-out;">
+              <div style="background:rgba(0,230,118,.06);padding:9px 16px;border-bottom:1px solid rgba(0,230,118,.12);">
+                <span class="mono" style="font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--c-green);">✓  STRONG PROMPT</span>
+              </div>
+              <div style="padding:16px;">
+                <p style="font-family:'Share Tech Mono',monospace;font-size:12.5px;color:rgba(233,233,237,.92);line-height:1.72;margin:0 0 14px;padding-bottom:14px;border-bottom:1px solid rgba(0,230,118,.1);">{{ strongText }}</p>
+                <sc-for list="{{ strongWins }}" as="sw" hint-placeholder-count="4">
+                  <div style="display:flex;align-items:flex-start;gap:8px;margin-bottom:7px;">
+                    <i class="ph-bold ph-check" style="color:var(--c-green);font-size:11px;flex-shrink:0;margin-top:3px;"></i>
+                    <span style="font-size:12.5px;color:rgba(233,233,237,.74);line-height:1.5;">{{ sw.text }}</span>
+                  </div>
+                </sc-for>
+              </div>
+            </div>
+            <!-- CLEAR annotation chips -->
+            <sc-if value="{{ hasAnnotations }}" hint-placeholder-val="{{ false }}">
+              <div style="margin-top:18px;padding-top:16px;border-top:1px solid rgba(14,165,233,.08);animation:fadeUp .3s .2s ease-out both;">
+                <div class="mono" style="font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:rgba(233,233,237,.3);margin-bottom:10px;">[ WHAT CLEAR CONTRIBUTED — TAP TO EXPLORE ]</div>
+                <div style="display:flex;gap:7px;flex-wrap:wrap;margin-bottom:12px;">
+                  <sc-for list="{{ annotationChips }}" as="ac" hint-placeholder-count="4">
+                    <button class="anno-chip" style="{{ ac.chipStyle }}" onClick="{{ ac.select }}">
+                      <span class="hdg" style="{{ ac.letterStyle }}">{{ ac.letter }}</span>
+                      <span class="mono" style="{{ ac.labelStyle }}">{{ ac.label }}</span>
+                    </button>
+                  </sc-for>
+                </div>
+                <sc-if value="{{ showAnnotation }}" hint-placeholder-val="{{ false }}">
+                  <div style="animation:slideUp .2s ease-out;background:rgba(14,165,233,.06);border-radius:6px;padding:12px 16px;border:1px solid rgba(14,165,233,.18);">
+                    <p style="font-size:13.5px;color:rgba(233,233,237,.88);line-height:1.65;margin:0;">{{ activeAnnotationText }}</p>
+                  </div>
+                </sc-if>
+              </div>
+            </sc-if>
+          </sc-if>
+        </div>
+      </sc-if>
+
+      <!-- PROMPT LAB -->
+      <sc-if value="{{ isPromptLabLesson }}" hint-placeholder-val="{{ false }}">
+        <div class="lesson-panel">
+          <div class="mono" style="{{ labKickerStyle }}">[ PROMPT LAB ]</div>
+          <h2 class="hdg" style="font-size:22px;font-weight:700;margin:8px 0 18px;letter-spacing:.04em;text-transform:uppercase;color:rgba(233,233,237,.97);">{{ lessonTitle }}</h2>
+          <div style="background:rgba(14,165,233,.04);border:1px solid rgba(14,165,233,.14);border-left:3px solid var(--c-blue);border-radius:0 6px 6px 0;padding:14px 18px;margin-bottom:14px;">
+            <div class="mono" style="font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:rgba(233,233,237,.33);margin-bottom:7px;">[ SCENARIO ]</div>
+            <p style="font-size:14px;color:rgba(233,233,237,.88);line-height:1.75;margin:0;">{{ labScenario }}</p>
+          </div>
+          <p style="font-size:13.5px;color:rgba(233,233,237,.6);line-height:1.72;margin:0 0 14px;">{{ labTask }}</p>
+
+          <sc-if value="{{ labNotAnalyzed }}" hint-placeholder-val="{{ true }}">
+            <!-- CLEAR hint chips -->
+            <div style="margin-bottom:16px;">
+              <div class="mono" style="font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:rgba(233,233,237,.28);margin-bottom:8px;">CLEAR HINTS — TAP A LETTER FOR A TIP</div>
+              <div style="display:flex;gap:6px;flex-wrap:wrap;">
+                <sc-for list="{{ hintChips }}" as="hc" hint-placeholder-count="5">
+                  <button class="hint-chip" style="{{ hc.style }}" onClick="{{ hc.select }}">
+                    <span class="hdg" style="{{ hc.letterStyle }}">{{ hc.letter }}</span>
+                    <span class="mono" style="{{ hc.subStyle }}">{{ hc.label }}</span>
+                  </button>
+                </sc-for>
+              </div>
+              <sc-if value="{{ showHint }}" hint-placeholder-val="{{ false }}">
+                <div style="margin-top:10px;animation:slideUp .2s ease-out;background:rgba(245,158,11,.05);border-left:3px solid var(--c-amber);border-radius:0 6px 6px 0;padding:11px 16px;">
+                  <p style="font-size:13px;color:rgba(233,233,237,.82);line-height:1.65;margin:0;">{{ activeHintText }}</p>
+                </div>
+              </sc-if>
+            </div>
+            <textarea value="{{ promptText }}" onChange="{{ onPromptChange }}" placeholder="{{ labPlaceholder }}" rows="6" style="width:100%;background:rgba(14,165,233,.04);border:1px solid rgba(14,165,233,.2);border-radius:6px;padding:14px 16px;font-family:'Share Tech Mono',monospace;font-size:13px;color:rgba(233,233,237,.9);line-height:1.65;resize:vertical;box-sizing:border-box;color-scheme:dark;transition:border-color .2s;"></textarea>
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-top:10px;flex-wrap:wrap;gap:8px;">
+              <span class="mono" style="font-size:10px;color:rgba(233,233,237,.24);letter-spacing:.04em;">{{ labCharCount }} chars</span>
+              <button class="btn btn-primary" onClick="{{ analyzePrompt }}" disabled="{{ labAnalyzing }}" style="font-size:12px;padding:9px 22px;letter-spacing:.06em;">
+                <i class="{{ labBtnIcon }}" style="margin-right:6px;font-size:13px;"></i>{{ labBtnLabel }}
+              </button>
+            </div>
+            <sc-if value="{{ labError }}" hint-placeholder-val="{{ false }}">
+              <div class="mono" style="font-size:11px;color:#ff6b80;margin-top:10px;padding:10px 14px;background:rgba(255,51,85,.06);border-radius:4px;border:1px solid rgba(255,51,85,.2);">{{ labErrorMsg }}</div>
+            </sc-if>
+          </sc-if>
+
+          <sc-if value="{{ labAnalyzed }}" hint-placeholder-val="{{ false }}">
+            <div style="background:rgba(233,233,237,.03);border:1px solid rgba(233,233,237,.07);border-radius:6px;padding:14px 16px;margin-bottom:14px;">
+              <div class="mono" style="font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:rgba(233,233,237,.26);margin-bottom:8px;">[ YOUR PROMPT ]</div>
+              <p style="font-family:'Share Tech Mono',monospace;font-size:12.5px;color:rgba(233,233,237,.78);line-height:1.7;margin:0;">{{ promptText }}</p>
+            </div>
+            <div style="{{ labScoreBannerStyle }}">
+              <span class="mono" style="{{ labScoreNumStyle }}">{{ labScoreDisplay }}/50</span>
+              <div>
+                <div class="mono" style="font-size:10px;color:rgba(233,233,237,.38);letter-spacing:.08em;margin-bottom:2px;">CLEAR ELEMENTS DETECTED</div>
+                <div class="mono" style="{{ labScoreLabelStyle }}">{{ labScoreLabel }}</div>
+              </div>
+            </div>
+            <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:6px;margin-bottom:14px;">
+              <sc-for list="{{ labElements }}" as="el" hint-placeholder-count="5">
+                <div style="{{ el.chipStyle }}">
+                  <div style="{{ el.statusStyle }}">{{ el.statusIcon }}</div>
+                  <div class="hdg" style="{{ el.letterStyle }}">{{ el.letter }}</div>
+                  <div class="mono" style="{{ el.labelStyle }}">{{ el.label }}</div>
+                  <div style="{{ el.noteStyle }}">{{ el.note }}</div>
+                </div>
+              </sc-for>
+            </div>
+            <div style="background:rgba(14,165,233,.05);border:1px solid rgba(14,165,233,.14);border-radius:6px;padding:14px 18px;margin-bottom:10px;">
+              <div class="mono" style="font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:rgba(233,233,237,.33);margin-bottom:6px;">[ ANALYSIS ]</div>
+              <p style="font-size:14px;color:rgba(233,233,237,.88);line-height:1.75;margin:0;">{{ labFeedback }}</p>
+            </div>
+            <div style="background:rgba(245,158,11,.05);border:1px solid rgba(245,158,11,.2);border-left:3px solid var(--c-amber);border-radius:0 6px 6px 0;padding:14px 18px;margin-bottom:18px;">
+              <div class="mono" style="font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:var(--c-amber);margin-bottom:6px;">[ UPGRADE YOUR PROMPT ]</div>
+              <p style="font-size:13.5px;color:rgba(233,233,237,.82);line-height:1.72;margin:0;">{{ labImprovement }}</p>
+            </div>
+            <div style="display:flex;gap:10px;flex-wrap:wrap;">
+              <button class="btn btn-secondary" onClick="{{ retryLab }}" style="font-size:12px;letter-spacing:.04em;">↺ TRY AGAIN</button>
+              <button class="btn btn-primary" onClick="{{ doComplete }}" style="{{ completeBtnStyle }}">
+                <i class="ph-bold ph-check-circle" style="margin-right:6px;"></i>COMPLETE MISSION +{{ labXp }} XP
+              </button>
+            </div>
+          </sc-if>
+        </div>
+      </sc-if>
+
+      <!-- Lesson nav -->
+      <sc-if value="{{ showLessonNav }}" hint-placeholder-val="{{ false }}">
+        <div style="display:flex;gap:8px;margin-top:26px;">
+          <button class="btn btn-secondary" onClick="{{ prevAction }}" style="font-size:12px;letter-spacing:.04em;">← {{ prevLabel }}</button>
+          <sc-if value="{{ showNext }}" hint-placeholder-val="{{ false }}">
+            <button class="btn btn-primary" onClick="{{ nextLesson }}" style="font-size:12px;padding:8px 20px;letter-spacing:.04em;">CONTINUE →</button>
+          </sc-if>
+        </div>
+      </sc-if>
+
+    </sc-if>
+
+    <!-- COMPLETE SCREEN -->
+    <sc-if value="{{ isCompleteScreen }}" hint-placeholder-val="{{ false }}">
+      <div class="lesson-panel" style="text-align:center;padding:46px 20px 30px;">
+        <div class="complete-check" style="width:78px;height:78px;border-radius:50%;background:rgba(0,230,118,.08);border:2px solid rgba(0,230,118,.35);display:flex;align-items:center;justify-content:center;margin:0 auto 14px;">
+          <i class="ph-bold ph-check" style="font-size:34px;color:var(--c-green);"></i>
+        </div>
+        <div class="mono" style="font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--c-green);margin-bottom:4px;">[ MISSION COMPLETE ]</div>
+        <h2 class="hdg" style="font-size:26px;font-weight:700;margin:6px 0 22px;letter-spacing:.06em;text-transform:uppercase;color:rgba(233,233,237,.97);">{{ completeHeading }}</h2>
+        <div style="display:inline-flex;align-items:center;gap:12px;padding:14px 26px;border-radius:6px;background:rgba(0,230,118,.07);border:1px solid rgba(0,230,118,.2);margin-bottom:16px;">
+          <span class="mono" style="font-size:30px;font-weight:800;color:var(--c-green);line-height:1;">+{{ sessionXp }}</span>
+          <div style="text-align:left;">
+            <div class="mono" style="font-size:11px;color:var(--c-green);margin-bottom:2px;letter-spacing:.08em;">XP EARNED</div>
+            <div class="mono" style="font-size:10px;color:rgba(233,233,237,.36);letter-spacing:.04em;">{{ xpDisplay }} TOTAL · {{ levelLabel }}</div>
+          </div>
+        </div>
+        <sc-if value="{{ showStreak }}" hint-placeholder-val="{{ false }}">
+          <div class="mono" style="font-size:12px;color:rgba(233,233,237,.55);margin-bottom:14px;letter-spacing:.04em;">{{ streakText }}</div>
+        </sc-if>
+        <sc-if value="{{ showNewBadge }}" hint-placeholder-val="{{ false }}">
+          <div style="display:inline-flex;align-items:center;gap:12px;padding:12px 20px;border-radius:6px;background:rgba(14,165,233,.08);border:1px solid rgba(14,165,233,.25);margin-bottom:16px;animation:badgeIn .5s .35s ease-out both;">
+            <i class="ph-bold ph-{{ newBadgeIconClass }}" style="font-size:26px;color:var(--c-blue);"></i>
+            <div style="text-align:left;">
+              <div class="hdg" style="font-size:13px;color:var(--c-blue);font-weight:700;margin-bottom:2px;letter-spacing:.06em;text-transform:uppercase;">{{ newBadgeName }}</div>
+              <div class="mono" style="font-size:10px;color:rgba(233,233,237,.36);letter-spacing:.08em;">BADGE UNLOCKED</div>
+            </div>
+          </div>
+        </sc-if>
+        <div class="mono" style="font-size:11px;color:rgba(233,233,237,.3);margin-bottom:26px;letter-spacing:.06em;">{{ completedCount }}/7 MISSIONS COMPLETE</div>
+        <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;">
+          <button class="btn btn-secondary" onClick="{{ goHome }}" style="font-size:12px;letter-spacing:.04em;">← Command Center</button>
+          <sc-if value="{{ hasNextMission }}" hint-placeholder-val="{{ false }}">
+            <button class="btn btn-primary" onClick="{{ goNextMission }}" style="font-size:12px;letter-spacing:.04em;">Next Mission →</button>
+          </sc-if>
+        </div>
+      </div>
+    </sc-if>
+
+  </div>
+  </sc-if>
+
+  <!-- XP POP -->
+  <sc-if value="{{ showXpPop }}" hint-placeholder-val="{{ false }}">
+    <div class="xp-pop">⚡ +{{ xpPopAmt }} XP</div>
+  </sc-if>
+
+  <!-- TOAST -->
+  <div style="{{ toastStyle }}">{{ toastMsg }}</div>
+
+  <!-- DEMO CONTROLLER -->
+  <sc-if value="{{ demoMode }}" hint-placeholder-val="{{ false }}">
+    <sc-if value="{{ demoSceneNum }}" hint-placeholder-val="{{ false }}">
+      <div style="position:fixed;top:18px;left:50%;transform:translateX(-50%);background:rgba(0,0,0,.72);backdrop-filter:blur(10px);border:1px solid rgba(14,165,233,.35);border-radius:20px;padding:6px 18px;z-index:9998;pointer-events:none;display:flex;align-items:center;gap:8px;">
+        <span class="mono" style="font-size:9px;letter-spacing:.18em;color:#0ea5e9;text-transform:uppercase;">SCENE {{ demoSceneNum }}</span>
+        <span class="mono" style="font-size:11px;color:rgba(233,233,237,.88);letter-spacing:.06em;">{{ demoSceneName }}</span>
+      </div>
+    </sc-if>
+    <div style="position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:rgba(4,8,15,.92);backdrop-filter:blur(16px);border:1px solid rgba(14,165,233,.22);border-radius:12px;padding:12px 18px;display:flex;align-items:center;gap:14px;z-index:9998;min-width:340px;">
+      <sc-if value="{{ demoRunning }}" hint-placeholder-val="{{ false }}">
+        <button onClick="{{ demoPause }}" style="width:36px;height:36px;border-radius:50%;background:rgba(14,165,233,.15);border:1px solid rgba(14,165,233,.4);color:#0ea5e9;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0;">⏸</button>
+      </sc-if>
+      <sc-if value="{{ demoRunning }}" hint-placeholder-val="{{ true }}">
+        <button onClick="{{ demoPlay }}" style="width:36px;height:36px;border-radius:50%;background:rgba(14,165,233,.15);border:1px solid rgba(14,165,233,.4);color:#0ea5e9;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0;">▶</button>
+      </sc-if>
+      <div style="flex:1;min-width:0;">
+        <div class="mono" style="font-size:10px;color:rgba(233,233,237,.55);letter-spacing:.08em;margin-bottom:5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">{{ demoLabel }}</div>
+        <div style="height:3px;background:rgba(14,165,233,.1);border-radius:2px;overflow:hidden;">
+          <div style="height:100%;background:linear-gradient(90deg,#0ea5e9,rgba(14,165,233,.4));transition:width .4s linear;width:{{ demoProgress }}%;"></div>
+        </div>
+      </div>
+      <span class="mono" style="font-size:11px;color:rgba(233,233,237,.35);flex-shrink:0;">{{ demoTimer }}</span>
+      <button onClick="{{ demoReset }}" style="background:transparent;border:none;color:rgba(233,233,237,.3);cursor:pointer;font-size:14px;padding:4px;flex-shrink:0;" title="Reset">↺</button>
+    </div>
+  </sc-if>
+
+  <!-- GAME OVERLAY -->
+  <sc-if value="{{ showGameOverlay }}" hint-placeholder-val="{{ false }}">
+    <div style="position:fixed;inset:0;z-index:9000;background:#04080f;display:flex;flex-direction:column;">
+      <div style="height:48px;display:flex;align-items:center;justify-content:space-between;padding:0 20px;border-bottom:1px solid rgba(14,165,233,.2);background:rgba(4,8,15,.98);flex-shrink:0;">
+        <div style="display:flex;align-items:center;gap:10px;">
+          <i class="ph-bold ph-rocket" style="font-size:15px;color:var(--c-blue);"></i>
+          <span class="mono" style="font-size:11px;letter-spacing:.15em;text-transform:uppercase;color:rgba(233,233,237,.62);">Mission Prompt Ops — Grand Finale</span>
+        </div>
+        <button class="btn btn-ghost" onClick="{{ closeGame }}" style="font-size:11px;padding:4px 12px;letter-spacing:.04em;">
+          <i class="ph-bold ph-x" style="font-size:12px;margin-right:4px;"></i>CLOSE
+        </button>
+      </div>
+      <iframe src="./Mission Prompt Ops.dc.html" style="flex:1;border:none;width:100%;background:#04080f;" allow="autoplay"></iframe>
+    </div>
+  </sc-if>
+
+
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  BADGES = [
+    {id:'first',  iconClass:'medal',    name:'First Steps',   desc:'Complete your first mission'},
+    {id:'quick',  iconClass:'lightning',name:'Quick Learner', desc:'Complete 3 missions'},
+    {id:'halfway',iconClass:'trophy',   name:'Halfway There', desc:'Complete 4 missions'},
+    {id:'streak', iconClass:'flame',    name:'On a Roll',     desc:'3 high-score labs in a row'},
+    {id:'expert', iconClass:'star',     name:'CLEAR Expert',  desc:'Complete all 7 missions'},
+  ];
+  LEVELS = [
+    {num:1,name:'Cadet',     min:0,  max:49},
+    {num:2,name:'Operative', min:50, max:119},
+    {num:3,name:'Specialist',min:120,max:199},
+    {num:4,name:'Expert',    min:200,max:279},
+    {num:5,name:'Commander', min:280,max:Infinity},
+  ];
+  CLEAR_ELS = [
+    {letter:'C',label:'Command',    color:'#0ea5e9',desc:'Tell the AI exactly what to do. Use a precise action verb and specify the output you want.'},
+    {letter:'L',label:'Limits',     color:'#ef4444',desc:'Set boundaries: length, tone, and scope to prevent verbose or off-target output.'},
+    {letter:'E',label:'Environment',color:'#14b8a6',desc:'Give the AI context: your sector, a role or persona, and any relevant background.'},
+    {letter:'A',label:'Audience',   color:'#f59e0b',desc:'Describe who the output is for — their role, expertise level, and context.'},
+    {letter:'R',label:'Response',   color:'#22c55e',desc:'Shape the output format and structure, and unlock advanced output techniques.'},
+  ];
+  CLEAR_META = {C:{color:'#0ea5e9',label:'Command'},L:{color:'#ef4444',label:'Limits'},E:{color:'#14b8a6',label:'Environment'},A:{color:'#f59e0b',label:'Audience'},R:{color:'#22c55e',label:'Response'}};
+
+  MODULES = [
+    {id:'m1',number:'01',letter:null,iconClass:'lightning',color:'#0ea5e9',duration:'5 min',
+      title:'Why Prompts Matter',teaser:'Discover why most AI outputs disappoint — and what to do about it.',
+      objectives:['Understand why vague prompts consistently produce mediocre output','Compare a weak and a precise prompt side by side','Grasp the core principle behind effective AI prompting'],
+      lessons:[
+        {type:'concept',title:'The AI Gap',iconClass:'robot',
+          body:['Most people use AI like a search engine: type a vague question, skim the answer, feel vaguely underwhelmed.','The AI isn\'t the problem. The prompt is.','AI systems are powerful but literal — they do exactly what you ask, no more, no less. Vague input produces generic output. Structured input unlocks remarkable results.'],
+          callout:{label:'Core Principle',text:'The quality of your output is directly determined by the quality of your input.'}},
+        {type:'example',title:'Vague vs Precise in Action',
+          weak:{text:'"Write a summary of this report."',issues:['No length or format specified','No audience defined','No key focus areas requested','No action or output shape given']},
+          strong:{text:'"Summarise this compliance report in 150 words for a board audience. Use plain language, highlight the 3 key risks, and end with one recommended next action."',wins:['Specific length (150 words)','Audience named (board level)','Focus areas defined (3 key risks)','Action-oriented output requested']},
+          clearAnnotations:{C:'Summarise — a specific verb with a single, unambiguous task',L:'150 words, plain language — explicit length and tone constraint',E:null,A:'Board audience — expertise level and readership precisely named',R:'3 key risks + one next action — exact output structure defined'}},
+        {type:'prompt-lab',title:'Your First Prompt',
+          scenario:'Your manager has asked you to summarise a 30-page quarterly financial report for tomorrow\'s board meeting. The board needs clear, actionable information — not a wall of text.',
+          task:'Write an AI prompt that will get you a board-ready summary. Think about what specifics the AI needs.',
+          placeholder:'e.g. Summarise the attached quarterly financial report...',
+          focus:'general prompt quality, specificity and structure',
+          hints:{C:'Start with a specific verb: Summarise, Extract, Prepare. One clear task.',L:'Set a word limit. What should the AI focus on? What should it skip?',E:'Is there context the AI needs? Who is writing this, and why?',A:'Who will read the summary? What do they care about most?',R:'What format? Bullets? Sections? Should it end with a recommendation?'}},
+      ]},
+    {id:'m2',number:'02',letter:null,iconClass:'map-trifold',color:'#38bdf8',duration:'6 min',
+      title:'The CLEAR Framework',teaser:'Five elements that transform any prompt from average to exceptional.',
+      objectives:['Learn all five CLEAR elements by name and purpose','See how the parts combine to shape AI output quality','Diagnose which element is missing in any weak prompt'],
+      lessons:[
+        {type:'clear-grid',title:'Meet CLEAR',intro:'CLEAR is a five-part framework for writing AI prompts that consistently produce high-quality output. Each letter addresses a different aspect of what the AI needs to know.'},
+        {type:'concept',title:'How the Parts Work Together',iconClass:'link',
+          body:['No single CLEAR element works in isolation. A precise Command with no Audience context produces output that\'s accurate but pitched at the wrong level.','A well-defined Audience with no Limits might be perfectly aimed — but ten pages long when you needed one paragraph.','Think of CLEAR as a diagnostic checklist. You don\'t need every element every time — but when output disappoints, check which element is absent or weak.'],
+          callout:{label:'Field Rule',text:'When a prompt fails, identify which CLEAR element is missing — then add it.'}},
+        {type:'prompt-lab',title:'Apply CLEAR End-to-End',
+          scenario:'A retail manager needs to explain the company\'s new data privacy policy to 12 frontline staff at Monday\'s team briefing. The staff have no legal background and often find compliance language confusing.',
+          task:'Write a prompt covering as many CLEAR elements as you can. Command, Limits, Environment, Audience, Response — see how many you can hit.',
+          placeholder:'e.g. Write a 3-minute team briefing script...',
+          focus:'all five CLEAR elements — Command, Limits, Environment, Audience, Response',
+          hints:{C:'What exactly do you need the AI to produce? Start with a strong verb.',L:'How long? What tone? What should the AI NOT include?',E:'Set the scene — what organisation, what context, what role?',A:'Describe the audience beyond just their job title.',R:'What format? Script? Bullets? How should it open and close?'}},
+      ]},
+    {id:'m3',number:'03',letter:'C',iconClass:'crosshair',color:'#0ea5e9',duration:'5 min',
+      title:'C — Command',teaser:'Your directive to the AI. Be specific, verb-forward, and unambiguous.',
+      objectives:['Write Commands that are specific and verb-forward','Avoid vague, passive, and overloaded Commands','Spot the difference between a weak and a strong directive'],
+      lessons:[
+        {type:'concept',title:'Be Specific and Verb-Forward',iconClass:'crosshair',
+          body:['The Command is the core of your prompt — it tells the AI exactly what to do. A weak Command is vague ("help me with..."), passive ("can you..."), or overloaded with three tasks in one sentence.','Strong Commands start with a clear action verb: Write. Summarise. Analyse. Design. Generate. Identify. Compare. Draft.','The more specific your verb, the more targeted your output. "Write a summary" is weaker than "Extract the three key decisions from this document and list them as numbered bullet points."'],
+          callout:{label:'Command Rule',text:'Start with a precise action verb. One task per Command — if you have three tasks, write three Commands.'}},
+        {type:'example',title:'Weak vs Strong Command',
+          weak:{text:'"Can you help me with some feedback for a student?"',issues:['Vague — "help with" is not a directive','No task defined','No details about the student or work','Passive phrasing invites waffle']},
+          strong:{text:'"Write three specific, actionable feedback comments for a Year 9 student on their essay\'s argument structure. Each comment must identify one strength, one gap, and one next step."',wins:['Clear action verb: Write','Specific quantity (three comments)','Defined focus (argument structure)','Explicit output shape per comment']},
+          clearAnnotations:{C:'Write three specific, actionable feedback comments — precise verb, exact quantity, clear focus',L:null,E:'Year 9 student, argument structure — context and specificity provided',A:'Student level implied through Year 9 and essay context',R:'Each comment: strength + gap + next step — explicit per-item structure'}},
+        {type:'prompt-lab',title:'Command in Action',
+          scenario:'You\'re a senior L&D manager. A vendor has delivered a 60-page capability assessment on your leadership team. Your CEO needs a decision-ready summary before Friday\'s board meeting.',
+          task:'Write a prompt that opens with a strong action verb and leaves nothing for the AI to guess. Nail the Command element.',
+          placeholder:'e.g. Extract and summarise the top...',
+          focus:'Command element — precise action verb, single clear task, zero ambiguity',
+          hints:{C:'What\'s the ONE thing you need? Start with that verb. Make it undeniable.',L:'What would make the output more focused? Length? What to exclude?',E:'What context does the AI need about the report or the situation?',A:'Who reads the summary? What do they need from it?',R:'What format will work best for a CEO? How should it be structured?'}},
+      ]},
+    {id:'m4',number:'04',letter:'L',iconClass:'scales',color:'#ef4444',duration:'5 min',
+      title:'L — Limits',teaser:'Boundaries that focus the AI and prevent scope creep in your output.',
+      objectives:['Understand why setting Limits actually improves output quality','Set constraints for length, tone, and scope','Know when to add a limit and which type to choose'],
+      lessons:[
+        {type:'concept',title:'Boundaries Are a Feature',iconClass:'scales',
+          body:['Without Limits, an AI defaults to safe, comprehensive, and often verbose output. It errs on covering everything — because that feels "helpful" to a general audience.','Limits are constraints you deliberately set to narrow the output. Common limits: word count ("in 200 words"), tone ("plain language, no jargon"), scope ("focus only on financial risks"), and format ("flowing prose, no bullet points").','Counterintuitively, the more specific your Limits, the more useful the output. A tight brief produces sharper writing.'],
+          callout:{label:'Limits Rule',text:'If output is too long, too formal, or off-topic — you\'re missing a Limit. Add one constraint at a time.'}},
+        {type:'example',title:'Unconstrained vs Constrained',
+          weak:{text:'"Explain change management to my team."',issues:['No length (could be 3 paragraphs or 3 pages)','No tone set (academic? conversational?)','No scope boundary (all of change management?)','No format specified']},
+          strong:{text:'"Explain the three phases of change management in 150 words, using plain, jargon-free language for a team briefing. No academic theory — focus only on practical actions each person can take."',wins:['Length: 150 words','Tone: plain, jargon-free','Scope: three phases only','Practical focus, not theoretical']},
+          clearAnnotations:{C:'Explain the three phases — action verb with scoped, specific topic',L:'150 words, plain language, no theory, practical only — four explicit constraints',E:'Team briefing context — setting established',A:'Team implied through context',R:null}},
+        {type:'prompt-lab',title:'Set Your Limits',
+          scenario:'Your organisation is rolling out mandatory AI literacy training for 200 staff. You need an email announcement that\'s energising, not bureaucratic — but previous AI emails have always run too long.',
+          task:'Write a prompt with explicit Limits. Set the length, tone, and what to leave out. Turn constraints into a superpower.',
+          placeholder:'e.g. Write a 120-word announcement email...',
+          focus:'Limits element — word count, tone restrictions, scope boundaries, what to omit',
+          hints:{C:'What do you need the AI to produce? Be specific.',L:'How many words? What tone? What should it NOT include? What feeling should it NOT create?',E:'What\'s the organisation context? Is there a role worth assigning?',A:'Who receives this? What do they care about? What will make them engage?',R:'How should the email be structured? Does it need a subject line?'}},
+      ]},
+    {id:'m5',number:'05',letter:'E',iconClass:'globe',color:'#14b8a6',duration:'5 min',
+      title:'E — Environment',teaser:'The context the AI needs to give you grounded, relevant output.',
+      objectives:['Give the AI the context it needs to be specific and relevant','Assign roles and personas for better-targeted output','Recognise what\'s missing when AI output feels generic'],
+      lessons:[
+        {type:'concept',title:'What the AI Doesn\'t Know, It Invents',iconClass:'globe',
+          body:['AI has no access to your workplace, your sector, or the document on your desk. When context is missing, it fills the gap with plausible-sounding generalities.','The Environment element gives the AI the background it needs: your sector, organisation type, audience prior knowledge, relevant constraints, or tools being used.','One of the most powerful uses of Environment is assigning a role: "You are acting as a senior HR consultant" produces very different output than "You are a high school science teacher." Role shapes tone, assumptions, and vocabulary.'],
+          callout:{label:'Environment Rule',text:'If you\'re getting generic output, you\'re probably missing environment. Give the AI a role, a setting, or both.'}},
+        {type:'example',title:'No Context vs Rich Context',
+          weak:{text:'"Write an onboarding email for new employees."',issues:['No sector or organisation type','No role assigned','No company culture or values','Generic output almost guaranteed']},
+          strong:{text:'"You are an internal communications specialist at a mid-size healthcare organisation. Write a warm onboarding email for new clinical staff, referencing our values: compassion, integrity, and safety. Assume recipients are joining their first healthcare role."',wins:['Role clearly assigned','Sector and context defined','Organisational values provided','New-to-healthcare context set']},
+          clearAnnotations:{C:'Write a warm onboarding email — specific verb and tone directive',L:null,E:'You are an internal communications specialist at a mid-size healthcare organisation — full role and sector context',A:'New clinical staff joining their first healthcare role — experience level and context named',R:null}},
+        {type:'prompt-lab',title:'Set the Scene',
+          scenario:'You\'re designing a resilience workshop for a cohort of mid-level managers at a telecoms company who\'ve been through two rounds of redundancies in 18 months.',
+          task:'Write a prompt that assigns the AI a role and gives it everything it needs to understand the situation before writing a single word.',
+          placeholder:'e.g. You are an experienced organisational psychologist...',
+          focus:'Environment element — role assignment, organisational context, background information',
+          hints:{C:'What needs to be created? Workshop outline? Facilitator notes? Opening script?',L:'How long? What tone? What should the AI avoid given the sensitivity?',E:'Give the AI everything: your role, the organisation, the situation, the team\'s history.',A:'Who are these managers? What have they been through? What do they need?',R:'What format will be most useful — session plan, slide outline, discussion prompts?'}},
+      ]},
+    {id:'m6',number:'06',letter:'A',iconClass:'users',color:'#f59e0b',duration:'5 min',
+      title:'A — Audience',teaser:'Tell the AI exactly who the output is for — and watch the tone transform.',
+      objectives:['Define your audience precisely — beyond just a job title','Describe expertise level and emotional context','See how the same prompt transforms for different readers'],
+      lessons:[
+        {type:'concept',title:'Know Your Reader',iconClass:'users',
+          body:['When you don\'t specify an audience, the AI imagines a "general professional" — educated, English-speaking, familiar with common concepts. That default often produces output too complex for some and too basic for others.','The Audience element tells the AI precisely who will receive this output: their role, expertise level, language needs, and any characteristics that should shape tone or vocabulary.','Audience definition also helps when empathy matters: "frontline staff managing a sudden policy change" produces more human, grounded language than simply "employees".'],
+          callout:{label:'Audience Rule',text:'Describe your audience by role, expertise level, and context — not just a job title.'}},
+        {type:'example',title:'Generic vs Targeted Audience',
+          weak:{text:'"Explain the new data privacy policy."',issues:['No audience specified','AI assumes a generic professional','Could be too technical or too simple','No empathy or tone guidance']},
+          strong:{text:'"Explain the new data privacy policy to frontline retail staff with no legal background who may find compliance language confusing. Use simple, reassuring language. Focus only on the three actions they personally need to take."',wins:['Audience named (frontline retail)','Expertise level set (no legal background)','Emotional context given (may find it confusing)','Scope focused on what\'s relevant to them']},
+          clearAnnotations:{C:'Explain — direct verb, specific topic',L:'Simple, reassuring language + 3 actions only — tone and scope constrained',E:null,A:'Frontline retail staff, no legal background, may find it confusing — role, expertise and emotional state all named',R:'Focus only on 3 actions they personally need to take — structured, scoped deliverable'}},
+        {type:'prompt-lab',title:'Define Your Audience',
+          scenario:'HR is launching a new structured performance feedback culture. You need to communicate it to frontline supervisors who\'ve never given formal feedback before and are anxious about getting it wrong.',
+          task:'Write a prompt that defines the audience with enough precision that the AI knows exactly how to pitch its language and tone.',
+          placeholder:'e.g. Write a one-page guide for frontline supervisors...',
+          focus:'Audience element — role, expertise level, emotional context, language needs',
+          hints:{C:'What exactly do you need written or created?',L:'How long? What tone? What\'s out of scope?',E:'What\'s the organisational context? Is there a role worth assigning?',A:'Beyond job title — what do they know? What are they feeling? What do they need most?',R:'What format will work best for busy supervisors?'}},
+      ]},
+    {id:'m7',number:'07',letter:'R',iconClass:'file-text',color:'#22c55e',duration:'6 min',
+      title:'R — Response',teaser:'Shape your output. Format, structure, and advanced output techniques.',
+      objectives:['Specify the exact output format and structure you need','Unlock Multi-Option, Critique Engine, and Zero-Hallucination modes','Combine all five CLEAR elements in one complete, powerful prompt'],
+      lessons:[
+        {type:'concept',title:'Shape Your Output',iconClass:'file-text',
+          body:['The Response element tells the AI exactly how to structure and present its answer. Without it, the AI defaults to whatever format feels natural — often paragraphs when you need bullet points, or bullets when you need a script.','Specify the format (bullet list, numbered steps, table, two-column layout, script), the level of detail (high-level vs step-by-step), and the ending (conclusion, next steps, open question).','One underused technique: ask the AI to open with clarifying questions if key details are missing, rather than guessing. This dramatically improves output quality on complex tasks.'],
+          callout:{label:'Response Rule',text:'If you don\'t specify a format, you\'ll get the AI\'s default. Specify the exact structure you can actually use.'}},
+        {type:'concept',title:'Power Boosters',iconClass:'rocket',
+          body:['Beyond format, the Response element unlocks advanced output modes.','Multi-Option Mode: Ask for 2–3 alternatives rather than one answer. Great for creative tasks or when you\'re unsure which direction to take.','Critique Engine: Ask the AI to critique and improve its own first draft before delivering the final version. Produces significantly more refined output.'],
+          callout:{label:'Booster Rule',text:'Add one booster to unlock a higher tier of output. Don\'t stack them — pick the one that matters most.'}},
+        {type:'prompt-lab',title:'Full CLEAR Prompt',
+          scenario:'The L&D team is pitching a new "AI Skills for Leaders" programme to the executive team next week. You need a compelling one-pager: crisp, evidence-led, and built for busy senior decision-makers.',
+          task:'Write a complete CLEAR prompt using all five elements. But focus especially on R — specify the exact format, structure, and length you need.',
+          placeholder:'e.g. You are a senior L&D consultant at a global firm...',
+          focus:'all five CLEAR elements, with special emphasis on Response format and structure',
+          hints:{C:'What needs to be created? Be precise about the deliverable.',L:'How long? What should the AI avoid? What tone is right for an exec?',E:'Assign a role — what expert would write this one-pager best?',A:'Who will read this? What does an exec care about? What makes them say yes?',R:'This is the key element — specify format, sections, length, and structure in detail.'}},
+      ]},
+  ];
+
+  state = {
+    view:'welcome', learnerName:'', typeIdx:0, welcomeReady:false,
+    activeModuleId:null, lessonIndex:-1, showComplete:false,
+    completed:{}, xp:0, sessionXp:0, streak:0, badges:[], newBadge:null,
+    revealedParagraphs:1, expandedCards:{},
+    exampleRevealed:false, activeAnnotation:null,
+    clearFieldTestAnswer:null, clearFieldTestDone:false,
+    promptText:'', analyzing:false, analysisResult:null, analysisError:null, activeHint:null,
+    showXpPop:false, xpPopAmt:0, toastMsg:'', toastVisible:false,
+    musicOn:false, showGameOverlay:false,
+    demoMode:false, demoRunning:false, demoElapsed:0, demoStepIdx:0,
+    demoLabel:'Press ▶ to start demo', demoSceneNum:null, demoSceneName:null,
+  };
+
+  _xpTmr=null; _toastTmr=null; _typeTimer=null;
+  _audioCtx=null; _masterGain=null; _sfxGain=null; _musicGain=null;
+  _audioReady=false; _pingTimer=null;
+
+  componentDidMount() {
+    const isDemo = new URLSearchParams(window.location.search).get('demo') === '1';
+    if (isDemo) { this.setState({demoMode:true}); }
+    else {
+    try {
+      const d=JSON.parse(localStorage.getItem('promptOpsAcademy_v2')||'{}');
+      if(d.xp!==undefined||d.completed) this.setState({
+        completed:d.completed||{},xp:d.xp||0,streak:d.streak||0,
+        badges:d.badges||[],learnerName:d.learnerName||''
+      });
+    } catch(e){}
+    }
+    const title='PROMPT OPS ACADEMY';
+    this._typeTimer=setInterval(()=>{
+      this.setState(prev=>{
+        const next=Math.min(prev.typeIdx+1,title.length);
+        if(next===title.length){clearInterval(this._typeTimer);setTimeout(()=>this.setState({welcomeReady:true}),500);}
+        return {typeIdx:next};
+      });
+    },68);
+    document.addEventListener('click',()=>{if(!this._audioReady)this._initAudio();},{once:true});
+  }
+
+  componentWillUnmount() {
+    clearInterval(this._typeTimer); clearInterval(this._pingTimer);
+    try{if(this._audioCtx)this._audioCtx.close();}catch(e){}
+  }
+
+  _initAudio() {
+    try {
+      const ctx=new(window.AudioContext||window.webkitAudioContext)();
+      this._audioCtx=ctx;
+      this._masterGain=ctx.createGain(); this._masterGain.gain.value=0.5; this._masterGain.connect(ctx.destination);
+      this._sfxGain=ctx.createGain(); this._sfxGain.gain.value=0.7; this._sfxGain.connect(this._masterGain);
+      this._musicGain=ctx.createGain(); this._musicGain.gain.value=0; this._musicGain.connect(this._masterGain);
+      this._audioReady=true; this._buildAmbient();
+    } catch(e){}
+  }
+
+  _tone(freq,dur,type,vol,delay,dest) {
+    if(!this._audioReady)return;
+    const ctx=this._audioCtx,osc=ctx.createOscillator(),g=ctx.createGain();
+    osc.connect(g); g.connect(dest||this._sfxGain);
+    osc.type=type||'sine'; osc.frequency.value=freq;
+    const t=ctx.currentTime+(delay||0);
+    g.gain.setValueAtTime(0,t); g.gain.linearRampToValueAtTime(vol||0.25,t+0.008);
+    g.gain.exponentialRampToValueAtTime(0.001,t+dur);
+    osc.start(t); osc.stop(t+dur+0.05);
+  }
+
+  _buildAmbient() {
+    const ctx=this._audioCtx,mg=this._musicGain;
+    const bass=ctx.createOscillator(),bassF=ctx.createBiquadFilter(),bassG=ctx.createGain();
+    bass.type='sawtooth'; bass.frequency.value=55; bassF.type='lowpass'; bassF.frequency.value=130; bassG.gain.value=0.3;
+    bass.connect(bassF); bassF.connect(bassG); bassG.connect(mg); bass.start();
+    const pad=ctx.createOscillator(),padF=ctx.createBiquadFilter(),padG=ctx.createGain();
+    pad.type='triangle'; pad.frequency.value=82; padF.type='bandpass'; padF.frequency.value=240; padF.Q.value=0.8; padG.gain.value=0.16;
+    pad.connect(padF); padF.connect(padG); padG.connect(mg); pad.start();
+    const lfo=ctx.createOscillator(),lfoG=ctx.createGain();
+    lfo.frequency.value=0.07; lfoG.gain.value=35; lfo.connect(lfoG); lfoG.connect(bassF.frequency); lfo.start();
+    const bufLen=ctx.sampleRate*3,buf=ctx.createBuffer(1,bufLen,ctx.sampleRate),data=buf.getChannelData(0);
+    for(let i=0;i<bufLen;i++) data[i]=Math.random()*2-1;
+    const noise=ctx.createBufferSource(),noiseF=ctx.createBiquadFilter(),noiseG=ctx.createGain();
+    noise.buffer=buf; noise.loop=true; noiseF.type='bandpass'; noiseF.frequency.value=900; noiseF.Q.value=0.4; noiseG.gain.value=0.01;
+    noise.connect(noiseF); noiseF.connect(noiseG); noiseG.connect(mg); noise.start();
+    this._pingTimer=setInterval(()=>{
+      if(this.state.musicOn&&this._audioReady)
+        this._tone([440,550,660,880,330][Math.floor(Math.random()*5)],1.4,'sine',0.02,0,this._musicGain);
+    },4500+Math.random()*3000);
+  }
+
+  sndClick()   {this._tone(700,0.05,'square',0.07);}
+  sndNav()     {this._tone(440,0.06,'square',0.09);this._tone(660,0.09,'square',0.07,0.055);}
+  sndXp()      {[523,659,784].forEach((f,i)=>this._tone(f,0.14,'sine',0.14,i*0.065));}
+  sndCorrect() {[523,659,784,1047].forEach((f,i)=>this._tone(f,0.2,'sine',0.16,i*0.058));}
+  sndWrong()   {this._tone(200,0.28,'sawtooth',0.12);this._tone(160,0.22,'sawtooth',0.09,0.12);}
+  sndComplete(){[392,494,587,740,880].forEach((f,i)=>this._tone(f,0.25,'triangle',0.18,i*0.075));}
+  sndBadge()   {[660,880,1047,1320].forEach((f,i)=>this._tone(f,0.18,'sine',0.14,i*0.055));}
+
+  toggleMusic() {
+    const on=!this.state.musicOn; this.setState({musicOn:on});
+    if(this._audioReady&&this._musicGain){
+      this._musicGain.gain.cancelScheduledValues(this._audioCtx.currentTime);
+      this._musicGain.gain.setTargetAtTime(on?0.3:0,this._audioCtx.currentTime,0.6);
+    } else if(on) this._initAudio();
+  }
+
+  // ── DEMO MODE ──────────────────────────────────────────────
+  _DEMO_STEPS = [
+    {t:0,     label:'Welcome screen loading…',          scene:null},
+    {t:3500,  label:'Scene 1 — Welcome Screen',         scene:['01','Welcome Screen']},
+    {t:6000,  label:'Typing operative name…',           action:'typeName'},
+    {t:11000, label:'Enrolling…',                       action:'enroll'},
+    {t:14000, label:'Scene 2 — Command Center',         scene:['02','Command Center']},
+    {t:25000, label:'Opening Mission 1…',               action:'openM1'},
+    {t:29000, label:'Scene 3 — CLEAR Framework',        scene:['03','CLEAR Framework']},
+    {t:32000, label:'Tapping C…',                       action:'hint0'},
+    {t:36000, label:'Tapping L…',                       action:'hint1'},
+    {t:40000, label:'Tapping E…',                       action:'hint2'},
+    {t:44000, label:'Tapping A…',                       action:'hint3'},
+    {t:48000, label:'Tapping R…',                       action:'hint4'},
+    {t:52000, label:'Scene 4 — Prompt Lab',             scene:['04','Prompt Lab'], action:'scrollLab'},
+    {t:55000, label:'Writing prompt…',                  action:'typePrompt'},
+    {t:75000, label:'Submitting for AI scoring…',       action:'score'},
+    {t:79000, label:'Scene 5 — AI Scoring',             scene:['05','AI Scoring']},
+    {t:112000,label:'Completing mission…',              action:'complete'},
+    {t:116000,label:'Scene 6 — Mission Complete',       scene:['06','Mission Complete']},
+    {t:126000,label:'Returning to Command Center…',     action:'home'},
+    {t:130000,label:'Scene 7 — Progression & XP',       scene:['07','Progression & XP']},
+    {t:145000,label:'Opening Mission 2…',               action:'openM2'},
+    {t:150000,label:'Scene 8 — 7 Real-World Missions',  scene:['08','7 Real-World Missions']},
+    {t:168000,label:'Back to Command Center…',          action:'home'},
+    {t:172000,label:'Scene 9 — Grand Finale',           scene:['09','Grand Finale']},
+    {t:210000,label:'🎯 Demo complete.',                 action:'end'},
+  ];
+  _DEMO_PROMPT = `You are a senior financial analyst. Summarise the attached Q3 quarterly financial report in 200 words for a board-level audience with no finance background. Highlight the top 3 risks using plain language, quantify each risk with a specific figure from the report, and end with one prioritised recommendation. Format as: executive summary paragraph, then a numbered risk list, then a single "Recommended Action" line.`;
+  _demoRaf = null; _demoLastTs = null; _demoTotalDur = 215000;
+
+  demoPlay() {
+    if (this.state.demoRunning) return;
+    this.setState({demoRunning:true, demoLabel:'Welcome screen loading…'});
+    this._demoLastTs = performance.now();
+    this._demoRaf = requestAnimationFrame(ts => this._demoTick(ts));
+  }
+  demoPause() {
+    this.setState({demoRunning:false});
+    if (this._demoRaf) cancelAnimationFrame(this._demoRaf);
+  }
+  demoReset() {
+    this.demoPause();
+    this.setState({
+      demoElapsed:0, demoStepIdx:0, demoLabel:'Press ▶ to start demo',
+      demoSceneNum:null, demoSceneName:null,
+      view:'welcome', learnerName:'', typeIdx:0, welcomeReady:false,
+      completed:{}, xp:0, sessionXp:0, streak:0, badges:[], newBadge:null,
+      activeModuleId:null, lessonIndex:-1, showComplete:false,
+      promptText:'', analyzing:false, analysisResult:null, analysisError:null, activeHint:null,
+    });
+    clearInterval(this._typeTimer);
+    const title='PROMPT OPS ACADEMY';
+    this._typeTimer = setInterval(()=>{
+      this.setState(prev=>{
+        const next=Math.min(prev.typeIdx+1,title.length);
+        if(next===title.length){clearInterval(this._typeTimer);setTimeout(()=>this.setState({welcomeReady:true}),500);}
+        return {typeIdx:next};
+      });
+    },68);
+  }
+  _demoTick(ts) {
+    if (!this.state.demoRunning) return;
+    const dt = ts - this._demoLastTs; this._demoLastTs = ts;
+    this.setState(prev => {
+      const elapsed = Math.min(prev.demoElapsed + dt, this._demoTotalDur);
+      let idx = prev.demoStepIdx;
+      while (idx < this._DEMO_STEPS.length && elapsed >= this._DEMO_STEPS[idx].t) {
+        const step = this._DEMO_STEPS[idx];
+        if (step.label) setTimeout(() => this.setState({demoLabel: step.label}), 0);
+        if (step.scene) setTimeout(() => this.setState({demoSceneNum: step.scene[0], demoSceneName: step.scene[1]}), 0);
+        if (step.action) setTimeout(() => this._demoAct(step.action, 0), 0);
+        idx++;
+      }
+      return {demoElapsed: elapsed, demoStepIdx: idx};
+    });
+    if (this.state.demoElapsed < this._demoTotalDur)
+      this._demoRaf = requestAnimationFrame(ts2 => this._demoTick(ts2));
+    else this.demoPause();
+  }
+  _demoAct(a, attempt) {
+    const retry = () => { if (attempt < 12) setTimeout(() => this._demoAct(a, attempt+1), 500); };
+    switch(a) {
+      case 'typeName': {
+        let i = 0; const name = 'Jordan';
+        const t = setInterval(() => {
+          this.setState({learnerName: name.slice(0,++i)});
+          if (i >= name.length) clearInterval(t);
+        }, 90); break;
+      }
+      case 'enroll': this.setState({view:'home'}); break;
+      case 'openM1': {
+        const card = document.querySelectorAll('.ops-card')[0];
+        if (!card) { retry(); return; } card.click(); window.scrollTo({top:0,behavior:'smooth'}); break;
+      }
+      case 'hint0': case 'hint1': case 'hint2': case 'hint3': case 'hint4': {
+        const idx = parseInt(a.replace('hint',''));
+        const chips = document.querySelectorAll('button.hint-chip');
+        if (!chips[idx]) { retry(); return; } chips[idx].click(); break;
+      }
+      case 'scrollLab': {
+        const ta = document.querySelector('textarea');
+        if (!ta) { retry(); return; }
+        const y = ta.getBoundingClientRect().top + window.scrollY - 100;
+        window.scrollTo({top:Math.max(0,y), behavior:'smooth'}); break;
+      }
+      case 'typePrompt': {
+        const ta = document.querySelector('textarea');
+        if (!ta) { retry(); return; }
+        let i = 0; const txt = this._DEMO_PROMPT; const chunk = 8;
+        const t = setInterval(() => {
+          this.setState({promptText: txt.slice(0, i)});
+          i += chunk; if (i > txt.length + chunk) clearInterval(t);
+        }, 60); break;
+      }
+      case 'score': {
+        const btns = Array.from(document.querySelectorAll('button.btn-primary'));
+        const b = btns.find(b => !b.textContent.includes('ENROLL') && !b.textContent.includes('COMPLETE') && !b.disabled);
+        if (!b) { retry(); return; } b.click(); break;
+      }
+      case 'complete': {
+        const btns = Array.from(document.querySelectorAll('button.btn-primary'));
+        const b = btns.find(b => b.textContent.includes('COMPLETE'));
+        if (!b) { retry(); return; } b.click(); break;
+      }
+      case 'home': {
+        const btns = Array.from(document.querySelectorAll('button'));
+        const b = btns.find(b => b.textContent.includes('Command Center'));
+        if (!b) { retry(); return; } b.click(); window.scrollTo({top:0,behavior:'smooth'}); break;
+      }
+      case 'openM2': {
+        const cards = document.querySelectorAll('.ops-card');
+        if (cards.length < 2) { retry(); return; } cards[1].click(); break;
+      }
+      case 'end': this.setState({demoSceneNum:null, demoSceneName:null}); break;
+    }
+  }
+
+  save(data) {
+    try{localStorage.setItem('promptOpsAcademy_v2',JSON.stringify(data));}catch(e){}
+  }
+
+  resetProgress() {
+    if (!confirm('Reset all session progress? XP, completed missions and badges will be cleared.')) return;
+    try { localStorage.removeItem('promptOpsAcademy_v2'); } catch(e) {}
+    this.setState({ xp:0, completed:{}, streak:0, earnedBadges:[], view:'home', activeModule:null, lessonIndex:0, promptText:'', labResult:null });
+  }
+  resetHover(e) { e.target.style.color = 'rgba(255,51,85,.6)'; }
+  resetOut(e)   { e.target.style.color = 'rgba(233,233,237,.2)'; }
+
+  getLevel(xp){return this.LEVELS.find(l=>xp>=l.min&&(l.max===Infinity||xp<=l.max))||this.LEVELS[0];}
+
+  checkBadges(curr,completed,streak) {
+    const c=Object.keys(completed).length,earned=[...curr];let newest=null;
+    const add=id=>{if(!earned.includes(id)){earned.push(id);if(!newest)newest=id;}};
+    if(c>=1)add('first');if(streak>=3)add('streak');if(c>=3)add('quick');if(c>=4)add('halfway');if(c>=7)add('expert');
+    return {badges:earned,newBadge:newest};
+  }
+
+  confetti() {
+    const cols=['#0ea5e9','#ef4444','#38bdf8','#14b8a6','#f59e0b','#00e676'];
+    for(let i=0;i<60;i++){
+      const el=document.createElement('div');
+      el.style.cssText=`position:fixed;border-radius:2px;pointer-events:none;z-index:9998;left:${Math.random()*100}vw;top:-10px;width:${5+Math.random()*6}px;height:${5+Math.random()*6}px;background:${cols[Math.floor(Math.random()*cols.length)]};animation:confettiFall ${1.8+Math.random()*1.5}s ${Math.random()*.9}s ease-in forwards;`;
+      document.body.appendChild(el); setTimeout(()=>el.remove(),4000);
+    }
+  }
+
+  popXp(amt) {
+    clearTimeout(this._xpTmr);this.sndXp();
+    this.setState({showXpPop:true,xpPopAmt:amt});
+    this._xpTmr=setTimeout(()=>this.setState({showXpPop:false}),1800);
+  }
+
+  toast(msg) {
+    clearTimeout(this._toastTmr);this.setState({toastMsg:msg,toastVisible:true});
+    this._toastTmr=setTimeout(()=>this.setState({toastVisible:false}),2700);
+  }
+
+  async _doAnalysis(text,lesson) {
+    this.setState({analyzing:true,analysisError:null});
+    const sys=`You are a strict CLEAR framework prompt coach for an AI literacy training program.
+
+CRITICAL RULE: First determine if the input is actually an AI prompt. A valid prompt must be DIRECTED AT AN AI — it should tell the AI what to do (starts with or contains a clear action verb like Write, Summarise, Draft, Analyse, Create, Generate). If the input is just a description of a scenario, background context, or a sentence about a situation (e.g. "Your manager has asked you to..." or "A retail manager needs to..."), it is NOT a prompt — score it 0 and explain clearly that the learner needs to write a prompt TO the AI, not describe the situation.
+
+For valid prompts, apply these STRICT criteria:
+C - Command: Must start with or contain a specific action verb directed at the AI (Write, Summarise, Draft, Analyse, Create, Extract). "Help me with" or "Can you" are WEAK — only mark present if there's a clear, specific directive.
+L - Limits: Must contain EXPLICIT constraints — a word count, tone descriptor, or scope boundary. Vague is not enough.
+E - Environment: Must assign the AI a role ("You are a...") OR provide specific organisational/sector context beyond what's in the scenario. Simply restating the scenario does not count.
+A - Audience: Must name WHO receives the output with at least one detail beyond their job title (expertise level, background, emotional state, language needs).
+R - Response: Must specify output FORMAT or STRUCTURE (bullet points, numbered steps, table, script, sections, word limit on output shape). Simply asking for "a summary" without format does not count.
+
+Scoring philosophy: be REALISTIC, not harsh. A basic prompt like "Summarise this report in 200 words for my CEO" WOULD work with an AI — it's just not optimised. Acknowledge what works, identify what's missing. A score of 2-3 means "it'll produce something but not your best result." A score of 4-5 means genuinely well-crafted. A score of 0-1 means the AI would struggle or the input isn't a prompt at all. Notes under 12 words. Feedback: 2 honest sentences — acknowledge what works, name what's missing. Improvement: one concrete actionable sentence targeting the most impactful missing element.
+
+Score each element 0-10: 0=absent/wrong, 1-3=attempted but weak, 4-6=partially present, 7-9=solid, 10=excellent. The total score is the sum of all five elements (0-50).
+
+Return ONLY valid JSON no markdown: {"score":0,"elements":{"C":{"score":0,"note":""},"L":{"score":0,"note":""},"E":{"score":0,"note":""},"A":{"score":0,"note":""},"R":{"score":0,"note":""}},"feedback":"","improvement":""}`;
+    try {
+      const resp=await fetch('/api/score',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({system:sys,messages:[{role:'user',content:`Mission focus: ${lesson.focus}\nLearner's prompt: "${text}"`}]})});
+      if(!resp.ok)throw new Error('API error '+resp.status);
+      const raw=(await resp.json()).text;
+      const s=raw.indexOf('{'),e=raw.lastIndexOf('}')+1;
+      const data=JSON.parse(raw.slice(s,e));
+      const score=Math.max(0,Math.min(50,data.score||0));
+      const xp=Math.round((score/50)*32)+3;
+      this.setState({analyzing:false,analysisResult:{...data,score,xp}});
+      if(score>=35){this.sndCorrect();setTimeout(()=>this.sndComplete(),480);}
+      else if(score>=15)this.sndNav();
+      else this.sndWrong();
+    } catch(e) {
+      this.setState({analyzing:false,analysisError:'Analysis failed. Please try again.'});
+      this.sndWrong();
+    }
+  }
+
+  renderVals() {
+    const s=this.state;
+    const completedCount=Object.keys(s.completed).length;
+    const allComplete=completedCount===7;
+
+    // Welcome
+    const TITLE='PROMPT OPS ACADEMY';
+    const typedTitle=TITLE.substring(0,s.typeIdx);
+    const showCursor=!s.welcomeReady;
+    const wc0=s.welcomeReady?{opacity:1,transform:'translateY(0)',transition:'opacity .55s ease,transform .55s ease'}:{opacity:0,transform:'translateY(14px)',transition:'opacity .55s ease,transform .55s ease'};
+    const wcSub={...wc0,transitionDelay:'.1s',transition:'opacity .55s .1s ease,transform .55s .1s ease'};
+
+    const onNameChange=e=>this.setState({learnerName:e.target.value});
+    const onNameKeyDown=e=>{if(e.key==='Enter')this.setState({view:'home'});};
+    const enroll=()=>{
+      this.sndNav();
+      const n=s.learnerName.trim();
+      this.save({completed:s.completed,xp:s.xp,streak:s.streak,badges:s.badges,learnerName:n});
+      this.setState({view:'home',learnerName:n});
+    };
+
+    const isWelcomeView=s.view==='welcome';
+    const isHomeView=s.view==='home';
+    const isModuleView=s.view==='module';
+    const showHeader=!isWelcomeView;
+    const operativeLabel=s.learnerName?`[ OPERATIVE: ${s.learnerName.toUpperCase()} ]`:'[ 7 MISSIONS · ~35 MINUTES · LIVE AI FEEDBACK ]';
+
+    // XP / Level
+    const lv=this.getLevel(s.xp);
+    const xpDisplay=s.xp;
+    const levelLabel=`LVL ${lv.num} · ${lv.name.toUpperCase()}`;
+    const lvPct=lv.max===Infinity?100:Math.round(((s.xp-lv.min)/(lv.max-lv.min+1))*100);
+    const levelBadgeStyle={fontFamily:"'Share Tech Mono',monospace",fontSize:'12px',color:'var(--c-blue)',fontWeight:'700',letterSpacing:'.06em'};
+    const levelBarStyle={height:'100%',width:`${lvPct}%`,background:'linear-gradient(90deg,var(--c-blue),rgba(14,165,233,.4))',transition:'width .6s ease'};
+    const xpToNextLabel=lv.max===Infinity?'MAX LEVEL':`${lv.max-s.xp+1} XP TO LVL ${lv.num+1}`;
+    const courseProgressStyle={height:'100%',width:`${(completedCount/7)*100}%`,background:'linear-gradient(90deg,var(--c-blue),rgba(14,165,233,.35))',transition:'width .6s ease'};
+
+    // Music
+    const musicBtnStyle={border:`1px solid ${s.musicOn?'rgba(14,165,233,.5)':'rgba(233,233,237,.14)'}`,color:s.musicOn?'var(--c-blue)':'rgba(233,233,237,.35)'};
+    const musicBtnIcon=s.musicOn?'ph-bold ph-speaker-high':'ph-bold ph-speaker-slash';
+    const musicBtnTitle=s.musicOn?'Mute ambient':'Play ambient';
+    const toggleMusic=()=>this.toggleMusic();
+
+    // Badges
+    const badgeDisplay=this.BADGES.map(b=>{
+      const earned=s.badges.includes(b.id);
+      return {iconClass:b.iconClass,tooltip:earned?b.name:`??? — ${b.desc}`,
+        iconStyle:{fontSize:earned?'16px':'13px',color:earned?'var(--c-blue)':'rgba(233,233,237,.16)'},
+        chipStyle:{width:'36px',height:'36px',borderRadius:'6px',display:'flex',alignItems:'center',justifyContent:'center',cursor:'default',background:earned?'rgba(14,165,233,.12)':'rgba(233,233,237,.04)',border:`1px solid ${earned?'rgba(14,165,233,.3)':'rgba(233,233,237,.08)'}`}};
+    });
+
+    // Module cards
+    const resetLesson={revealedParagraphs:1,exampleRevealed:false,activeAnnotation:null,clearFieldTestAnswer:null,clearFieldTestDone:false,promptText:'',analyzing:false,analysisResult:null,analysisError:null,activeHint:null};
+    const moduleCards=this.MODULES.map(m=>{
+      const done=!!s.completed[m.id];
+      return {
+        iconClass:m.iconClass,number:m.number,letter:m.letter||'',hasLetter:!!m.letter,
+        title:m.title,teaser:m.teaser,duration:m.duration,done,notDone:!done,
+        numStyle:{fontSize:'9px',letterSpacing:'.2em',color:m.color,textTransform:'uppercase',fontFamily:"'Share Tech Mono',monospace"},
+        letterBadge:{display:'inline-block',fontFamily:"'Rajdhani',sans-serif",fontSize:'11px',fontWeight:'700',color:m.color,background:m.color+'18',border:`1px solid ${m.color}38`,borderRadius:'4px',padding:'1px 6px',marginTop:'3px',letterSpacing:'.04em'},
+        accentLine:{height:'2px',background:`linear-gradient(90deg,${m.color},transparent)`,borderRadius:'6px 6px 0 0'},
+        cardStyle:{background:'#080f1a',border:`1px solid ${done?'rgba(0,230,118,.15)':'rgba(14,165,233,.1)'}`,borderRadius:'6px',overflow:'hidden'},
+        iconWrap:{width:'40px',height:'40px',borderRadius:'8px',background:m.color+'18',border:`1px solid ${m.color}28`,display:'flex',alignItems:'center',justifyContent:'center',flexShrink:0},
+        iconPh:{fontSize:'20px',color:m.color},
+        open:()=>{this.sndNav();this.setState({view:'module',activeModuleId:m.id,lessonIndex:-1,sessionXp:0,showComplete:false,newBadge:null,expandedCards:{},...resetLesson});},
+      };
+    });
+
+    // Finale
+    const finaleCardCls='ops-card'+(allComplete?' finale-ready':' finale-locked');
+    const finaleCardStyle={background:allComplete?'linear-gradient(135deg,rgba(14,165,233,.1),rgba(0,230,118,.04))':'#080f1a',border:`1px solid ${allComplete?'rgba(14,165,233,.4)':'rgba(233,233,237,.07)'}`,borderRadius:'8px',padding:'22px 26px',cursor:allComplete?'pointer':'default'};
+    const finaleSubtitle=allComplete?'Apply everything in a gamified prompt-building challenge.':`Complete all 7 missions to unlock — ${7-completedCount} remaining.`;
+    const finaleCta=allComplete?'⚡ LAUNCH MISSION →':`🔒 ${7-completedCount} missions remaining`;
+    const finaleCtaStyle={fontFamily:"'Share Tech Mono',monospace",fontSize:'12px',padding:'9px 20px',whiteSpace:'nowrap',borderRadius:'4px',background:allComplete?'rgba(14,165,233,.12)':'rgba(233,233,237,.04)',border:`1px solid ${allComplete?'rgba(14,165,233,.4)':'rgba(233,233,237,.1)'}`,color:allComplete?'rgba(233,233,237,.9)':'rgba(233,233,237,.3)',letterSpacing:'.06em'};
+    const openFinale=()=>{if(allComplete){this.sndNav();this.setState({showGameOverlay:true});}else{this.sndWrong();this.toast(`${7-completedCount} more mission${7-completedCount===1?'':'s'} to go before the finale unlocks.`);}};
+    const showGameOverlay=s.showGameOverlay;
+    const closeGame=()=>{this.sndClick();this.setState({showGameOverlay:false});};
+
+    // Active module
+    const activeMod=s.activeModuleId?this.MODULES.find(m=>m.id===s.activeModuleId):null;
+    const activeLesson=activeMod&&s.lessonIndex>=0?activeMod.lessons[s.lessonIndex]:null;
+    const lessonType=activeLesson?activeLesson.type:'';
+    const isIntroScreen=s.view==='module'&&s.lessonIndex===-1&&!s.showComplete;
+    const isLessonScreen=s.view==='module'&&s.lessonIndex>=0&&!s.showComplete;
+    const isCompleteScreen=s.view==='module'&&s.showComplete;
+    const showModuleNav=s.view==='module'&&!s.showComplete;
+
+    const modLabel=activeMod?`[ MISSION ${activeMod.number} · ${activeMod.title.toUpperCase()} ]`:'';
+    const modLabelStyle={fontSize:'10px',color:activeMod?activeMod.color:'rgba(233,233,237,.4)',letterSpacing:'.08em',fontFamily:"'Share Tech Mono',monospace"};
+    const modIconClass=activeMod?activeMod.iconClass:'lightning';
+    const modIconPhStyle={fontSize:'44px',color:activeMod?activeMod.color:'var(--c-blue)',lineHeight:1};
+    const modTitle=activeMod?activeMod.title:'';
+    const modTeaser=activeMod?activeMod.teaser:'';
+    const modDuration=activeMod?activeMod.duration:'';
+    const modNumber=activeMod?`MISSION ${activeMod.number}`:'';
+    const modHasLetter=!!(activeMod&&activeMod.letter);
+    const modLetter=activeMod?activeMod.letter||'':'';
+
+    const lessonDots=[0,1,2].map(i=>({style:{width:'24px',height:'3px',borderRadius:'2px',flexShrink:0,background:i<=s.lessonIndex?(activeMod?activeMod.color:'var(--c-blue)'):'rgba(233,233,237,.1)',transition:'background .3s'}}));
+    const lessonCountLabel=s.lessonIndex===-1?'BRIEFING':`${s.lessonIndex+1} / 3`;
+
+    const introBubbleStyle={width:'88px',height:'88px',borderRadius:'16px',margin:'0 auto 16px',background:activeMod?activeMod.color+'18':'rgba(14,165,233,.1)',border:`2px solid ${activeMod?activeMod.color+'30':'rgba(14,165,233,.2)'}`,boxShadow:`0 0 48px ${activeMod?activeMod.color+'22':'rgba(14,165,233,.14)'}`,display:'flex',alignItems:'center',justifyContent:'center',animation:'popIn .4s .1s ease-out both'};
+    const introNumStyle={fontSize:'10px',fontWeight:'700',letterSpacing:'.18em',color:activeMod?activeMod.color:'var(--c-blue)',textTransform:'uppercase',margin:'0 0 4px',display:'block',fontFamily:"'Share Tech Mono',monospace"};
+    const introLetterStyle={display:'inline-block',fontFamily:"'Rajdhani',sans-serif",fontSize:'12px',fontWeight:'700',color:activeMod?activeMod.color:'var(--c-blue)',background:activeMod?activeMod.color+'20':'rgba(14,165,233,.1)',border:`1px solid ${activeMod?activeMod.color+'40':'rgba(14,165,233,.2)'}`,borderRadius:'4px',padding:'2px 8px',marginBottom:'8px',letterSpacing:'.04em'};
+
+    const objectives=activeMod?(activeMod.objectives||[]).map((text,i)=>({text,
+      rowStyle:{display:'flex',alignItems:'flex-start',gap:'10px',marginBottom:'10px',animation:`fadeUp .3s ${.22+i*.09}s ease-out both`},
+      checkStyle:{fontSize:'13px',color:activeMod?activeMod.color:'var(--c-blue)',flexShrink:0,marginTop:'2px'}})):[];
+    const startModule=()=>{this.sndNav();this.setState({lessonIndex:0,...resetLesson});};
+
+    const isConceptLesson=lessonType==='concept';
+    const isClearGridLesson=lessonType==='clear-grid';
+    const isExampleLesson=lessonType==='example';
+    const isPromptLabLesson=lessonType==='prompt-lab';
+
+    const lessonTitle=activeLesson?activeLesson.title:'';
+    const lessonIconClass=isConceptLesson&&activeLesson?activeLesson.iconClass||'lightbulb':'lightning';
+    const lessonIconStyle={fontSize:'26px',color:activeMod?activeMod.color:'var(--c-blue)',lineHeight:1};
+    const iconBubble={width:'52px',height:'52px',borderRadius:'10px',flexShrink:0,background:activeMod?activeMod.color+'18':'rgba(14,165,233,.1)',border:`1px solid ${activeMod?activeMod.color+'28':'rgba(14,165,233,.15)'}`,display:'flex',alignItems:'center',justifyContent:'center'};
+
+    // Concept progressive reveal
+    const conceptBody=isConceptLesson&&activeLesson?activeLesson.body||[]:[];
+    const conceptCallout=isConceptLesson&&activeLesson?activeLesson.callout:null;
+    const displayedBodyItems=conceptBody.map((text,i)=>({text,
+      pStyle:{fontSize:'15px',lineHeight:'1.85',color:'rgba(233,233,237,.82)',margin:'0 0 18px',animation:`fadeUp .3s ${i*0.1}s ease-out both`}}));
+    const showConceptCallout=!!conceptCallout;
+    const showRevealNext=false;
+    const revealNextParagraph=()=>{};
+    const calloutStyle={background:(activeMod?activeMod.color:'#0ea5e9')+'10',borderLeft:`3px solid ${activeMod?activeMod.color:'#0ea5e9'}`,borderRadius:'0 8px 8px 0',padding:'14px 18px',marginTop:'4px',animation:'fadeUp .3s ease-out both'};
+    const calloutLblStyle={fontSize:'9px',fontWeight:'700',letterSpacing:'.18em',textTransform:'uppercase',color:activeMod?activeMod.color:'var(--c-blue)',display:'block',marginBottom:'6px',fontFamily:"'Share Tech Mono',monospace"};
+    const calloutLabel=conceptCallout?conceptCallout.label:'';
+    const calloutText=conceptCallout?conceptCallout.text:'';
+
+    // CLEAR grid
+    const clearIntro=isClearGridLesson&&activeLesson?activeLesson.intro:'';
+    const clearEls=this.CLEAR_ELS.map((ce,i)=>{
+      const exp=!!s.expandedCards[ce.letter];
+      return {letter:ce.letter,label:ce.label,desc:ce.desc,isExpanded:exp,isCollapsed:!exp,chevron:exp?'▲':'▼',
+        chevronStyle:{fontSize:'10px',color:exp?ce.color:'rgba(233,233,237,.18)',flexShrink:0,marginLeft:'8px',transition:'color .15s'},
+        toggle:()=>{this.sndClick();this.setState({expandedCards:{...s.expandedCards,[ce.letter]:!s.expandedCards[ce.letter]}});},
+        cardStyle:{display:'flex',alignItems:'flex-start',gap:'14px',padding:'13px 15px',background:exp?ce.color+'0e':'rgba(14,165,233,.03)',border:`1px solid ${exp?ce.color+'45':'rgba(14,165,233,.1)'}`,borderLeft:`3px solid ${ce.color}`,borderRadius:'6px',cursor:'pointer',transition:'background .15s,border-color .15s',animation:`fadeUp .3s ${i*.07}s ease-out both`},
+        bubbleStyle:{width:'36px',height:'36px',borderRadius:'8px',background:ce.color+'20',display:'flex',alignItems:'center',justifyContent:'center',flexShrink:0,border:`1px solid ${ce.color}30`},
+        letterStyle:{fontSize:'18px',fontWeight:'700',color:ce.color,lineHeight:1},
+        labelStyle:{fontWeight:'700',fontSize:'15px',marginBottom:exp?'5px':'0',color:ce.color,transition:'margin .15s',letterSpacing:'.04em',textTransform:'uppercase'}};
+    });
+
+    // Field test
+    const allClearExpanded=isClearGridLesson&&this.CLEAR_ELS.every(ce=>!!s.expandedCards[ce.letter]);
+    const showFieldTest=allClearExpanded;
+    const fieldTestOptions=['C','L','E','A','R'].map(letter=>{
+      const correct=letter==='R';
+      const selected=s.clearFieldTestAnswer===letter;
+      const done=s.clearFieldTestDone;
+      let bg='rgba(14,165,233,.04)',bc='rgba(14,165,233,.15)',col='rgba(233,233,237,.65)';
+      if(done&&correct){bg='rgba(0,230,118,.1)';bc='rgba(0,230,118,.4)';col='var(--c-green)';}
+      else if(done&&selected&&!correct){bg='rgba(255,51,85,.08)';bc='rgba(255,51,85,.35)';col='#ff6b80';}
+      else if(!done&&selected){bg='rgba(14,165,233,.12)';bc='rgba(14,165,233,.5)';col='var(--c-blue)';}
+      return {letter,style:{background:bg,border:`1px solid ${bc}`,cursor:done?'default':'pointer'},
+        letterStyle:{fontSize:'20px',fontWeight:'700',color:col,fontFamily:"'Rajdhani',sans-serif"},
+        select:done?()=>{}:()=>{
+          this.sndClick();
+          const isCorrect=letter==='R';
+          if(isCorrect){this.sndCorrect();this.popXp(5);this.setState(prev=>({xp:prev.xp+5,sessionXp:prev.sessionXp+5}));}
+          else this.sndWrong();
+          this.setState({clearFieldTestAnswer:letter,clearFieldTestDone:true});
+        }};
+    });
+    const fieldTestDone=s.clearFieldTestDone;
+    const fieldTestFeedback=fieldTestDone?(s.clearFieldTestAnswer==='R'?'Correct! R — Response is the element that controls format, structure, and how the AI presents its answer.':'Not quite — it\'s R (Response). It tells the AI exactly how to structure its answer: bullets, tables, scripts, and more.'):'';
+    const ftFbStyle={background:s.clearFieldTestAnswer==='R'?'rgba(0,230,118,.07)':'rgba(255,51,85,.07)',border:`1px solid ${s.clearFieldTestAnswer==='R'?'rgba(0,230,118,.25)':'rgba(255,51,85,.22)'}`,borderRadius:'6px',padding:'12px 16px'};
+
+    // Example
+    const weakText=isExampleLesson?activeLesson.weak.text:'';
+    const weakIssues=isExampleLesson?activeLesson.weak.issues.map(t=>({text:t})):[];
+    const strongText=isExampleLesson?activeLesson.strong.text:'';
+    const strongWins=isExampleLesson?activeLesson.strong.wins.map(t=>({text:t})):[];
+    const exampleRevealed=s.exampleRevealed;
+    const showRevealBtn=!s.exampleRevealed;
+    const revealExample=()=>{this.sndNav();this.setState({exampleRevealed:true});};
+    const revealBtnStyle={fontSize:'13px',padding:'10px 24px',letterSpacing:'.06em'};
+
+    // Annotations
+    const rawAnnotations=isExampleLesson&&activeLesson.clearAnnotations?activeLesson.clearAnnotations:{};
+    const hasAnnotations=exampleRevealed&&Object.values(rawAnnotations).some(v=>v!==null&&v!==undefined);
+    const annotationChips=Object.entries(rawAnnotations).filter(([,v])=>v).map(([letter,text])=>{
+      const m=this.CLEAR_META[letter];
+      const active=s.activeAnnotation===letter;
+      return {letter,label:m.label,color:m.color,
+        chipStyle:{background:active?m.color+'14':'transparent',border:`1px solid ${active?m.color+'55':m.color+'25'}`,cursor:'pointer',transition:'all .15s'},
+        letterStyle:{fontSize:'15px',fontWeight:'700',color:active?m.color:m.color+'99',fontFamily:"'Rajdhani',sans-serif"},
+        labelStyle:{fontFamily:"'Share Tech Mono',monospace",fontSize:'9px',letterSpacing:'.08em',color:active?'rgba(233,233,237,.7)':'rgba(233,233,237,.3)'},
+        select:()=>{this.sndClick();this.setState({activeAnnotation:active?null:letter});}};
+    });
+    const showAnnotation=!!s.activeAnnotation&&!!rawAnnotations[s.activeAnnotation];
+    const activeAnnotationText=showAnnotation?rawAnnotations[s.activeAnnotation]:'';
+
+    // Prompt lab
+    const labKickerStyle={fontSize:'10px',letterSpacing:'.18em',textTransform:'uppercase',color:activeMod?activeMod.color:'var(--c-blue)',display:'block',marginBottom:'4px',fontFamily:"'Share Tech Mono',monospace"};
+    const labScenario=isPromptLabLesson?activeLesson.scenario:'';
+    const labTask=isPromptLabLesson?activeLesson.task:'';
+    const labPlaceholder=isPromptLabLesson?activeLesson.placeholder||'Write your AI prompt here...':'';
+
+    // Hints
+    const labHints=isPromptLabLesson&&activeLesson.hints?activeLesson.hints:{};
+    const hintChips=['C','L','E','A','R'].map(letter=>{
+      const m=this.CLEAR_META[letter];
+      const active=s.activeHint===letter;
+      return {letter,label:m.label,
+        style:{border:`1px solid ${active?m.color+'55':m.color+'22'}`,background:active?m.color+'10':'transparent',transition:'all .15s'},
+        letterStyle:{fontSize:'16px',fontWeight:'700',color:active?m.color:m.color+'88',fontFamily:"'Rajdhani',sans-serif"},
+        subStyle:{fontFamily:"'Share Tech Mono',monospace",fontSize:'9px',letterSpacing:'.06em',color:active?'rgba(233,233,237,.6)':'rgba(233,233,237,.25)'},
+        select:()=>{this.sndClick();this.setState({activeHint:s.activeHint===letter?null:letter});}};
+    });
+    const showHint=!!s.activeHint&&!!labHints[s.activeHint];
+    const activeHintText=showHint?labHints[s.activeHint]:'';
+    const labCharCount=s.promptText.length;
+    const labAnalyzing=s.analyzing;
+    const labAnalyzed=!!s.analysisResult;
+    const labNotAnalyzed=!labAnalyzed;
+    const labError=!!s.analysisError;
+    const labErrorMsg=s.analysisError||'';
+    const labBtnIcon=labAnalyzing?'ph-bold ph-circle-notch':'ph-bold ph-sparkle';
+    const labBtnLabel=labAnalyzing?'ANALYSING...':'ANALYSE WITH CLEAR →';
+    const analyzePrompt=()=>{
+      if(s.promptText.trim().length<10){this.toast('Write a few more words before analysing.');return;}
+      this._doAnalysis(s.promptText,activeLesson);
+    };
+    const onPromptChange=e=>this.setState({promptText:e.target.value});
+    const retryLab=()=>{this.sndClick();this.setState({analysisResult:null,analysisError:null,activeHint:null});};
+
+    // Analysis results
+    const ar=s.analysisResult;
+    const labScoreDisplay=ar?ar.score:0;
+    const labXp=ar?ar.xp:0;
+    const labFeedback=ar?ar.feedback:'';
+    const labImprovement=ar?ar.improvement:'';
+    const elColor=(n)=>n>=7?'#00e676':n>=4?'#f59e0b':'#ff3355';
+    const scLabel=(n)=>n>=45?'EXCELLENT':n>=35?'STRONG':n>=25?'SOLID':n>=15?'PROGRESSING':n>=8?'DEVELOPING':'NEEDS WORK';
+    const scColor=(n)=>n>=45?'#00e676':n>=35?'#22c55e':n>=25?'#84cc16':n>=15?'#f59e0b':n>=8?'#ff6b35':'#ff3355';
+    const sc={c:ar?scColor(ar.score):'#ff3355',l:ar?scLabel(ar.score):'NEEDS WORK'};
+    const labScoreBannerStyle={display:'flex',alignItems:'center',gap:'16px',padding:'14px 18px',borderRadius:'6px',background:sc.c+'0e',border:`1px solid ${sc.c}30`,marginBottom:'14px'};
+    const labScoreNumStyle={fontFamily:"'Share Tech Mono',monospace",fontSize:'36px',fontWeight:'800',color:sc.c,lineHeight:1,minWidth:'60px'};
+    const labScoreLabelStyle={fontFamily:"'Share Tech Mono',monospace",fontSize:'12px',color:sc.c,fontWeight:'700',letterSpacing:'.08em'};
+    const labScoreLabel=sc.l;
+    const labElements=ar?['C','L','E','A','R'].map(letter=>{
+      const el=ar.elements&&ar.elements[letter];
+      const m=this.CLEAR_META[letter];
+      const n=el?(el.score||0):0;
+      const c=elColor(n);
+      return {letter,label:m.label.toUpperCase(),note:el?el.note:'',statusIcon:`${n}/10`,
+        chipStyle:{padding:'10px 8px',borderRadius:'6px',background:c+'0d',border:`1px solid ${c}35`,borderLeft:`3px solid ${c}`,display:'flex',flexDirection:'column',gap:'3px',textAlign:'center',alignItems:'center'},
+        statusStyle:{fontSize:'11px',fontWeight:'700',color:c,fontFamily:"'Share Tech Mono',monospace",letterSpacing:'.04em'},
+        letterStyle:{fontSize:'22px',fontWeight:'700',color:c,fontFamily:"'Rajdhani',sans-serif",lineHeight:1},
+        labelStyle:{fontSize:'8px',letterSpacing:'.06em',color:c+'aa',fontFamily:"'Share Tech Mono',monospace",textTransform:'uppercase'},
+        noteStyle:{fontSize:'10px',color:'rgba(233,233,237,.58)',lineHeight:1.5,marginTop:'2px',textAlign:'center'}};
+    }):[];
+    const completeBtnStyle={fontSize:'12px',padding:'8px 20px',background:'rgba(0,230,118,.08)',borderColor:'rgba(0,230,118,.3)',color:'var(--c-green)',letterSpacing:'.06em'};
+
+    const doComplete=()=>{
+      const score=ar?ar.score:0;
+      const gain=ar?ar.xp:3;
+      if(score>=35){this.sndCorrect();setTimeout(()=>this.sndComplete(),480);}else if(score>=15)this.sndNav();else this.sndWrong();
+      this.popXp(gain);
+      if(score>=4)this.confetti();
+      this.setState(prev=>{
+        const nc={...prev.completed,[s.activeModuleId]:true};
+        const ns=score>=4?prev.streak+1:0;
+        const {badges,newBadge}=this.checkBadges(prev.badges,nc,ns);
+        const nx=prev.xp+gain,nsx=prev.sessionXp+gain;
+        this.save({completed:nc,xp:nx,streak:ns,badges,learnerName:prev.learnerName});
+        if(newBadge)setTimeout(()=>this.sndBadge(),900);
+        return {completed:nc,xp:nx,sessionXp:nsx,streak:ns,badges,newBadge,showComplete:true};
+      });
+    };
+
+    // Nav
+    const showLessonNav=isLessonScreen&&!isPromptLabLesson;
+    const showNext=(isConceptLesson&&!showRevealNext)||(isClearGridLesson)||(isExampleLesson&&s.exampleRevealed);
+    const prevLabel=s.lessonIndex>0?'PREVIOUS':'BRIEFING';
+    const prevAction=()=>{
+      this.sndClick();
+      if(s.lessonIndex>0)this.setState({lessonIndex:s.lessonIndex-1,...resetLesson});
+      else this.setState({lessonIndex:-1,...resetLesson,expandedCards:{}});
+    };
+    const nextLesson=()=>{
+      if(s.lessonIndex<2){this.sndNav();this.popXp(10);
+        this.setState(prev=>({lessonIndex:prev.lessonIndex+1,xp:prev.xp+10,sessionXp:prev.sessionXp+10,...resetLesson}));
+      }
+    };
+
+    // Complete screen
+    const sessionXp=s.sessionXp;
+    const showStreak=s.streak>=2;
+    const streakText=`🔥 ${s.streak} HIGH SCORES IN A ROW`;
+    const nbDef=s.newBadge?this.BADGES.find(b=>b.id===s.newBadge):null;
+    const showNewBadge=!!nbDef;
+    const newBadgeIconClass=nbDef?nbDef.iconClass:'medal';
+    const newBadgeName=nbDef?nbDef.name:'';
+    const completeHeading=s.learnerName?`WELL DONE, ${s.learnerName.toUpperCase()}`:(activeMod?activeMod.title:'');
+
+    const activeModIdx=this.MODULES.findIndex(m=>m.id===s.activeModuleId);
+    const nextMod=activeModIdx>=0?this.MODULES[activeModIdx+1]:null;
+    const hasNextMission=!!nextMod;
+    const goNextMission=nextMod?()=>{this.sndNav();this.setState({view:'module',activeModuleId:nextMod.id,lessonIndex:-1,sessionXp:0,showComplete:false,newBadge:null,expandedCards:{},...resetLesson});}:()=>{};
+
+    const toastStyle={position:'fixed',bottom:'22px',left:'50%',zIndex:9999,pointerEvents:'none',transform:s.toastVisible?'translateX(-50%) translateY(0)':'translateX(-50%) translateY(8px)',background:'#080f1a',border:'1px solid rgba(14,165,233,.25)',borderRadius:'999px',padding:'8px 22px',fontSize:'13px',fontFamily:"'Share Tech Mono',monospace",boxShadow:'0 6px 24px rgba(0,0,0,.6)',opacity:s.toastVisible?1:0,transition:'opacity .22s,transform .22s',letterSpacing:'.04em'};
+    const goHome=()=>{this.sndClick();this.setState({view:'home',activeModuleId:null,showComplete:false});};
+
+    return {
+      isWelcomeView,isHomeView,isModuleView,showHeader,
+      typedTitle,showCursor,wcSub,learnerName:s.learnerName,onNameChange,onNameKeyDown,enroll,operativeLabel,
+      completedCount,courseProgressStyle,xpDisplay,levelLabel,levelBadgeStyle,levelBarStyle,xpToNextLabel,
+      musicBtnStyle,musicBtnIcon,musicBtnTitle,toggleMusic,badgeDisplay,moduleCards,
+      finaleCardCls,finaleCardStyle,finaleSubtitle,finaleCta,finaleCtaStyle,openFinale,showGameOverlay,closeGame,
+      showModuleNav,modLabel,modLabelStyle,lessonDots,lessonCountLabel,
+      isIntroScreen,modIconClass,modIconPhStyle,modTitle,modTeaser,modDuration,modNumber,modHasLetter,modLetter,
+      introBubbleStyle,introNumStyle,introLetterStyle,objectives,startModule,
+      isLessonScreen,isConceptLesson,isClearGridLesson,isExampleLesson,isPromptLabLesson,
+      lessonTitle,lessonIconClass,lessonIconStyle,iconBubble,
+      displayedBodyItems,showConceptCallout,showRevealNext,revealNextParagraph,
+      calloutStyle,calloutLblStyle,calloutLabel,calloutText,
+      clearIntro,clearEls,showFieldTest,fieldTestOptions,fieldTestDone,fieldTestFeedback,ftFbStyle,
+      weakText,weakIssues,strongText,strongWins,exampleRevealed,showRevealBtn,revealExample,revealBtnStyle,
+      hasAnnotations,annotationChips,showAnnotation,activeAnnotationText,
+      labKickerStyle,labScenario,labTask,labPlaceholder,
+      hintChips,showHint,activeHintText,
+      promptText:s.promptText,onPromptChange,labCharCount,labAnalyzing,labAnalyzed,labNotAnalyzed,
+      labError,labErrorMsg,labBtnIcon,labBtnLabel,analyzePrompt,retryLab,
+      labScoreDisplay,labXp,labFeedback,labImprovement,labScoreBannerStyle,labScoreNumStyle,labScoreLabelStyle,labScoreLabel,labElements,
+      completeBtnStyle,doComplete,
+      showLessonNav,showNext,prevLabel,prevAction,nextLesson,
+      isCompleteScreen,sessionXp,showStreak,streakText,showNewBadge,newBadgeIconClass,newBadgeName,completeHeading,
+      hasNextMission,goNextMission,
+      showXpPop:s.showXpPop,xpPopAmt:s.xpPopAmt,toastMsg:s.toastMsg,toastStyle,goHome,
+      resetProgress:()=>this.resetProgress(),resetHover:e=>this.resetHover(e),resetOut:e=>this.resetOut(e),
+      demoMode:s.demoMode,demoRunning:s.demoRunning,
+      demoPlay:()=>this.demoPlay(),demoPause:()=>this.demoPause(),demoReset:()=>this.demoReset(),
+      demoLabel:s.demoLabel,demoSceneNum:s.demoSceneNum,demoSceneName:s.demoSceneName,
+      demoProgress:Math.min(100,(s.demoElapsed/this._demoTotalDur)*100),
+      demoTimer:(()=>{const sec=Math.floor(s.demoElapsed/1000);return Math.floor(sec/60)+':'+String(sec%60).padStart(2,'0');})(),
+    };
+  }
+}
+</script>
+</body>
+</html>
