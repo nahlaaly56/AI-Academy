@@ -29,7 +29,7 @@ module.exports = async function handler(req, res) {
       }),
     });
     const data = await response.json();
-    if (!response.ok) return res.status(response.status).json({ error: data });
+    if (!response.ok) { console.log('Anthropic error:', JSON.stringify(data)); return res.status(response.status).json({ error: data }); }
     const text = data.content?.[0]?.text || '';
     return res.status(200).json({ text });
   } catch (err) {
