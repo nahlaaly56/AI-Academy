@@ -8,8 +8,15 @@ module.exports = async function handler(req, res) {
   const apiKey = process.env.ANTHROPIC_API_KEY;
   if (!apiKey) return res.status(500).json({ error: 'ANTHROPIC_API_KEY env var not set' });
 
-  let body = req.body;
-  if (typeof body === 'string') { try { body = JSON.parse(body); } catch(e) {} }
+  let body;
+  try {
+    const chunks = [];
+    for await (const chunk of req) chunks.push(chunk);
+    body = JSON.parse(Buffer.concat(chunks).toString());
+  } catch (e) {
+    return res.status(400).json({ error: 'Invalid JSON body' });
+  }
+
   const { system, messages } = body || {};
   if (!system || !messages) return res.status(400).json({ error: 'Missing system or messages' });
 
@@ -29,7 +36,10 @@ module.exports = async function handler(req, res) {
       }),
     });
     const data = await response.json();
-    if (!response.ok) { console.log('Anthropic error:', JSON.stringify(data)); return res.status(response.status).json({ error: data }); }
+    if (!response.ok) {
+      console.log('Anthropic error:', JSON.stringify(data));
+      return res.status(response.status).json({ error: data });
+    }
     const text = data.content?.[0]?.text || '';
     return res.status(200).json({ text });
   } catch (err) {
