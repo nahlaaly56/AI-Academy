@@ -36,7 +36,7 @@ module.exports = async function handler(req, res) {
         'anthropic-version': '2023-06-01',
         'content-type': 'application/json',
       },
-      body: JSON.stringify({ model: 'claude-3-5-haiku-latest', max_tokens: 1024, system, messages }),
+      body: JSON.stringify({ model: 'claude-3-5-haiku-20240307', max_tokens: 1024, system, messages }),
     });
     const data = await response.json();
     if (!response.ok) {
