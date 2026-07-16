@@ -8,16 +8,24 @@ module.exports = async function handler(req, res) {
   const apiKey = process.env.ANTHROPIC_API_KEY;
   if (!apiKey) return res.status(500).json({ error: 'ANTHROPIC_API_KEY env var not set' });
 
-  let body;
-  try {
-    const chunks = [];
-    for await (const chunk of req) chunks.push(chunk);
-    body = JSON.parse(Buffer.concat(chunks).toString());
-  } catch (e) {
-    return res.status(400).json({ error: 'Invalid JSON body' });
+  let body = req.body;
+  console.log('req.body type:', typeof body, '| value:', JSON.stringify(body)?.slice(0, 200));
+
+  if (!body || typeof body !== 'object') {
+    try {
+      const chunks = [];
+      for await (const chunk of req) chunks.push(chunk);
+      const raw = Buffer.concat(chunks).toString();
+      console.log('raw stream length:', raw.length, '| preview:', raw.slice(0, 200));
+      body = raw ? JSON.parse(raw) : null;
+    } catch (e) {
+      console.log('body parse error:', e.message);
+      return res.status(400).json({ error: 'Invalid JSON body: ' + e.message });
+    }
   }
 
   const { system, messages } = body || {};
+  console.log('system length:', system?.length, '| messages count:', messages?.length);
   if (!system || !messages) return res.status(400).json({ error: 'Missing system or messages' });
 
   try {
@@ -28,12 +36,7 @@ module.exports = async function handler(req, res) {
         'anthropic-version': '2023-06-01',
         'content-type': 'application/json',
       },
-      body: JSON.stringify({
-        model: 'claude-3-5-haiku-20241022',
-        max_tokens: 1024,
-        system,
-        messages,
-      }),
+      body: JSON.stringify({ model: 'claude-3-5-haiku-20241022', max_tokens: 1024, system, messages }),
     });
     const data = await response.json();
     if (!response.ok) {
@@ -43,6 +46,7 @@ module.exports = async function handler(req, res) {
     const text = data.content?.[0]?.text || '';
     return res.status(200).json({ text });
   } catch (err) {
+    console.log('fetch error:', err.message);
     return res.status(500).json({ error: err.message });
   }
 };
