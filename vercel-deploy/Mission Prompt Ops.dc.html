@@ -1,0 +1,1093 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="_ds/nocturne-113e411d-462a-44fd-9fb9-d527d382c80b/styles.css">
+<script src="_ds/nocturne-113e411d-462a-44fd-9fb9-d527d382c80b/_ds_bundle.js"></script>
+<style>
+  /* ── BeyondTalent brand overrides ── */
+  :root {
+    --color-accent:   #1170a1;
+    --color-accent-300: #45b8dc;
+    --color-accent-400: #2a9ec4;
+    --color-accent-600: #0d5a84;
+    --color-accent-700: #0a4a6e;
+    --color-accent-800: #083d5a;
+    --color-accent-900: #062f45;
+    --color-bg:       #07111a;
+    --color-surface:  #0c1824;
+    --bt-red:         #ac1225;
+    --bt-red-dim:     rgba(172,18,37,0.18);
+  }
+
+  *,*::before,*::after{box-sizing:border-box;}
+  a{color:var(--color-accent);}a:hover{color:var(--color-accent-300);}
+
+  @keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+  @keyframes blinkDot{0%,100%{opacity:1}50%{opacity:0.25}}
+  @keyframes pulseRing{0%{box-shadow:0 0 0 0 rgba(17,112,161,0.5)}70%{box-shadow:0 0 0 8px rgba(17,112,161,0)}100%{box-shadow:0 0 0 0 rgba(17,112,161,0)}}
+  @keyframes glitchReveal{0%{opacity:0;letter-spacing:0.6em;filter:blur(8px);color:rgba(17,112,161,0.4)}50%{opacity:0.8;letter-spacing:0.15em;filter:blur(2px)}100%{opacity:1;letter-spacing:0.07em;filter:blur(0);color:var(--color-accent)}}
+  @keyframes descReveal{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+  @keyframes scanPulse{0%,100%{opacity:0.4}50%{opacity:1}}
+  @keyframes confettiFall{0%{transform:translateY(-10px) rotate(0deg);opacity:1}100%{transform:translateY(105vh) rotate(880deg);opacity:0}}
+
+  .step-panel{animation:fadeUp 0.3s ease-out;}
+
+  .map-bg{
+    position:fixed;inset:0;pointer-events:none;z-index:0;
+    background-image:linear-gradient(rgba(17,112,161,0.04)1px,transparent 1px),linear-gradient(90deg,rgba(17,112,161,0.04)1px,transparent 1px);
+    background-size:52px 52px;
+  }
+
+  /* ─── GAME CARDS ─── */
+  .gcard{
+    background:var(--color-surface);border:1px solid var(--color-divider);
+    border-radius:12px;padding:16px;cursor:pointer;position:relative;
+    transition:border-color 0.15s,transform 0.12s,box-shadow 0.15s,background 0.15s;
+  }
+  .gcard:hover{border-color:rgba(17,112,161,0.45);transform:translateY(-2px);box-shadow:0 10px 28px rgba(0,0,0,0.5);}
+  .gcard:active{transform:translateY(0);}
+  .gcard.on{border-color:var(--color-accent);background:rgba(17,112,161,0.07);box-shadow:0 0 0 1px var(--color-accent),0 6px 20px rgba(17,112,161,0.14);}
+  .gcard.on::after{content:'✓';position:absolute;top:10px;right:12px;font-size:11px;color:var(--color-accent);font-weight:600;}
+
+  /* ─── CHIPS ─── */
+  .chip{
+    display:inline-flex;align-items:center;gap:4px;
+    padding:5px 12px;border-radius:999px;
+    border:1px solid var(--color-divider);background:var(--color-surface);
+    color:var(--color-text);cursor:pointer;font-size:12.5px;font-family:inherit;
+    transition:all 0.12s;white-space:nowrap;line-height:1.2;
+  }
+  .chip:hover{border-color:rgba(17,112,161,0.5);}
+  .chip.on{border-color:var(--color-accent);background:rgba(17,112,161,0.14);color:var(--color-accent);}
+  .chip.on:hover{background:rgba(17,112,161,0.22);}
+
+  /* ─── SEARCH ─── */
+  .search-inp{
+    width:100%;padding:9px 14px 9px 38px;
+    background:var(--color-surface);border:1px solid var(--color-divider);
+    border-radius:999px;color:var(--color-text);font:inherit;font-size:14px;
+    transition:border-color 0.15s;
+  }
+  .search-inp::placeholder{color:rgba(233,233,237,0.3);}
+  .search-inp:focus{outline:none;border-color:var(--color-accent);}
+
+  /* ─── PROGRESS ─── */
+  .prog-track{height:2px;background:rgba(17,112,161,0.1);}
+  .prog-fill{height:100%;background:linear-gradient(90deg,var(--color-accent),rgba(17,112,161,0.5));transition:width 0.5s ease;}
+
+  /* ─── MISSION BOX ─── */
+  .mission-box{
+    background:rgba(0,0,0,0.4);border:1px solid rgba(17,112,161,0.2);
+    border-radius:10px;padding:20px 22px;
+  }
+  .mission-title{font-family:'Courier New',monospace;font-size:14px;letter-spacing:0.07em;text-transform:uppercase;}
+  .mission-title.reveal{animation:glitchReveal 0.75s ease-out forwards;}
+  .mission-desc.reveal{animation:descReveal 0.5s 0.35s ease-out both;}
+  .blink-cursor{display:inline-block;width:2px;height:1em;background:var(--color-accent);vertical-align:middle;margin-left:3px;animation:blinkDot 0.9s infinite;}
+
+  /* ─── PROMPT AREA ─── */
+  .prompt-ta{
+    width:100%;min-height:210px;
+    background:rgba(0,0,0,0.35);border:1px solid rgba(17,112,161,0.22);
+    border-radius:10px;padding:16px;color:var(--color-text);
+    font:inherit;font-size:13.5px;line-height:1.8;resize:vertical;
+  }
+  .prompt-ta:focus{outline:none;border-color:var(--color-accent);}
+
+  /* ─── CLEAR ANNOTATION ─── */
+  .clear-block{border-left:3px solid;padding:10px 14px;border-radius:0 8px 8px 0;margin-bottom:8px;background:rgba(0,0,0,0.25);}
+  .clear-lbl{display:block;font-size:10px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:4px;}
+  .clear-txt{font-size:13px;line-height:1.6;color:rgba(233,233,237,0.78);margin:0;}
+
+  /* ─── TOAST ─── */
+  .toast{
+    position:fixed;bottom:22px;left:50%;transform:translateX(-50%) translateY(8px);
+    background:var(--color-surface);border:1px solid var(--color-divider);
+    border-radius:999px;padding:8px 20px;font-size:13px;
+    box-shadow:0 6px 24px rgba(0,0,0,0.55);opacity:0;pointer-events:none;
+    transition:opacity 0.22s,transform 0.22s;z-index:9999;
+  }
+  .toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+
+  /* ─── CONFETTI ─── */
+  .conf-p{position:fixed;width:7px;height:7px;border-radius:2px;pointer-events:none;z-index:9998;animation:confettiFall 2.8s ease-in forwards;}
+
+  /* ─── MISC ─── */
+  .kicker{font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:var(--color-accent);display:block;margin-bottom:4px;}
+  .scan-line{font-size:11px;color:rgba(17,112,161,0.6);animation:scanPulse 1.2s infinite;font-family:'Courier New',monospace;letter-spacing:0.05em;}
+  .mode-tab{display:inline-flex;align-items:center;padding:5px 14px;border-radius:999px;font-size:12px;cursor:pointer;border:1px solid var(--color-divider);background:transparent;color:rgba(233,233,237,0.5);font-family:inherit;transition:all 0.13s;}
+  .mode-tab.active{background:rgba(17,112,161,0.12);border-color:var(--color-accent);color:var(--color-accent);}
+</style>
+</helmet>
+
+<div style="min-height:100vh;background:var(--color-bg);position:relative;overflow-x:hidden;">
+  <div class="map-bg"></div>
+
+  <!-- ══ HEADER ══ -->
+  <div style="position:sticky;top:0;z-index:100;background:rgba(22,24,38,0.94);backdrop-filter:blur(14px);border-bottom:1px solid var(--color-divider);">
+    <div style="max-width:920px;margin:0 auto;padding:0 20px;display:flex;align-items:center;justify-content:space-between;height:52px;gap:12px;">
+      <div style="display:flex;align-items:center;gap:10px;flex-shrink:0;">
+        <div style="width:8px;height:8px;border-radius:50%;background:var(--color-accent);flex-shrink:0;animation:blinkDot 2.4s infinite;"></div>
+        <div style="display:flex;flex-direction:column;gap:1px;line-height:1;">
+          <span style="font-size:8px;letter-spacing:0.18em;text-transform:uppercase;color:var(--color-accent);font-weight:600;">BeyondTalent</span>
+          <span style="font-size:11px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--color-text);">Mission Prompt Ops</span>
+        </div>
+        <span style="font-size:9px;padding:2px 6px;background:var(--bt-red-dim);border:1px solid var(--bt-red);border-radius:4px;color:#e05060;letter-spacing:0.07em;font-weight:600;">BETA</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:14px;">
+        <span style="font-size:12px;color:rgba(233,233,237,0.4);">{{ stepLabel }}</span>
+        <button class="btn btn-secondary" onClick="{{ restart }}" style="font-size:11px;padding:4px 12px;">↺ Restart</button>
+      </div>
+    </div>
+    <div class="prog-track"><div class="prog-fill" style="{{ progressStyle }}"></div></div>
+  </div>
+
+  <!-- ══ CONTENT ══ -->
+  <div style="max-width:880px;margin:0 auto;padding:28px 20px 64px;position:relative;z-index:1;">
+
+    <!-- ───────────── STEP 0: FIELD ───────────── -->
+    <sc-if value="{{ isStep0 }}" hint-placeholder-val="{{ true }}">
+      <div class="step-panel">
+        <span class="kicker">Step 01 · Choose Your Field</span>
+        <h2 style="font-size:26px;margin:0 0 6px;">Where are you operating?</h2>
+        <p style="font-size:14px;color:rgba(233,233,237,0.5);margin:0 0 22px;max-width:480px;">Select your field. This shapes your available missions and subject areas.</p>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:10px;margin-bottom:24px;">
+          <sc-for list="{{ fields }}" as="f" hint-placeholder-count="6">
+            <div class="{{ f.cls }}" onClick="{{ f.select }}">
+              <div style="font-size:32px;margin-bottom:10px;line-height:1;">{{ f.icon }}</div>
+              <div style="font-weight:500;font-size:15px;margin-bottom:4px;">{{ f.name }}</div>
+              <div style="font-size:12px;color:rgba(233,233,237,0.5);line-height:1.45;">{{ f.description }}</div>
+            </div>
+          </sc-for>
+        </div>
+        <button class="btn btn-primary" onClick="{{ proceedToMission }}" disabled="{{ fieldNotSelected }}" style="font-size:13px;padding:8px 20px;">Continue → Mission Briefing</button>
+      </div>
+    </sc-if>
+
+    <!-- ───────────── STEP 1: MISSION ───────────── -->
+    <sc-if value="{{ isStep1 }}" hint-placeholder-val="{{ false }}">
+      <div class="step-panel">
+        <span class="kicker">Step 02 · Mission Briefing</span>
+        <h2 style="font-size:26px;margin:0 0 18px;">Your mission, Commander</h2>
+
+        <!-- Transmission box -->
+        <div class="mission-box" style="margin-bottom:22px;">
+          <sc-if value="{{ missionNotRevealed }}" hint-placeholder-val="{{ false }}">
+            <div style="text-align:center;padding:10px 0 6px;">
+              <p class="scan-line" style="margin:0 0 14px;">◈ INCOMING ENCRYPTED TRANSMISSION ◈</p>
+              <p style="font-size:13px;color:rgba(233,233,237,0.4);margin:0 0 16px;">Ready to decrypt your assignment?</p>
+              <button class="btn btn-primary" onClick="{{ decryptMission }}" style="animation:pulseRing 2s infinite;">⬡ Decrypt Mission</button>
+            </div>
+          </sc-if>
+          <sc-if value="{{ missionRevealed }}" hint-placeholder-val="{{ false }}">
+            <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;">
+              <span style="font-size:10px;color:rgba(17,112,161,0.6);font-family:'Courier New',monospace;letter-spacing:0.06em;">MISSION DECRYPTED</span>
+              <div style="flex:1;height:1px;background:rgba(17,112,161,0.15);"></div>
+            </div>
+            <div class="mission-title reveal" style="color:var(--color-accent);margin-bottom:10px;">{{ missionTitleDisplay }}</div>
+            <p class="mission-desc reveal" style="font-size:13.5px;color:rgba(233,233,237,0.72);line-height:1.65;margin:0 0 14px;">{{ missionDescDisplay }}</p>
+            <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
+              <sc-if value="{{ canNewMission }}" hint-placeholder-val="{{ false }}">
+                <button class="btn btn-secondary" onClick="{{ requestNewMission }}" style="font-size:12px;padding:5px 12px;">⟳ New Mission <span style="color:rgba(233,233,237,0.35);margin-left:4px;">{{ triesRemaining }} left</span></button>
+              </sc-if>
+              <sc-if value="{{ forcedChoiceVisible }}" hint-placeholder-val="{{ false }}">
+                <span style="font-size:11px;color:rgba(233,233,237,0.38);font-style:italic;">All options revealed — pick one below ↓</span>
+              </sc-if>
+            </div>
+          </sc-if>
+        </div>
+
+        <!-- Forced choice -->
+        <sc-if value="{{ forcedChoiceVisible }}" hint-placeholder-val="{{ false }}">
+          <div style="margin-bottom:18px;">
+            <div style="font-size:11px;color:rgba(233,233,237,0.4);margin-bottom:8px;letter-spacing:0.04em;">SELECT ONE MISSION TO PROCEED:</div>
+            <div style="display:flex;flex-wrap:wrap;gap:7px;">
+              <sc-for list="{{ forcedMissions }}" as="fm" hint-placeholder-count="3">
+                <button class="{{ fm.cls }}" onClick="{{ fm.select }}" style="border-radius:8px;padding:6px 13px;font-size:12.5px;">{{ fm.title }}</button>
+              </sc-for>
+            </div>
+          </div>
+        </sc-if>
+
+        <!-- Subject + Audience — revealed after mission -->
+        <sc-if value="{{ missionRevealed }}" hint-placeholder-val="{{ false }}">
+
+          <!-- Subject matter -->
+          <div style="margin-bottom:22px;">
+            <div style="font-size:11px;font-weight:600;letter-spacing:0.08em;color:rgba(233,233,237,0.55);text-transform:uppercase;margin-bottom:10px;">
+              Subject Matter <span style="font-weight:400;color:rgba(233,233,237,0.28);letter-spacing:0.02em;text-transform:none;font-size:11px;">— select all that apply</span>
+            </div>
+
+            <!-- Selected tags row -->
+            <sc-if value="{{ hasSubjects }}" hint-placeholder-val="{{ false }}">
+              <div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px;padding:8px 12px;background:rgba(17,112,161,0.06);border:1px solid rgba(17,112,161,0.14);border-radius:8px;">
+                <span style="font-size:10px;color:rgba(233,233,237,0.35);align-self:center;margin-right:2px;white-space:nowrap;text-transform:uppercase;letter-spacing:0.06em;">Added:</span>
+                <sc-for list="{{ selectedSubjectChips }}" as="sc" hint-placeholder-count="0">
+                  <button class="chip on" onClick="{{ sc.remove }}" style="padding:4px 9px;font-size:12px;">{{ sc.label }} <span style="opacity:0.6;margin-left:2px;">×</span></button>
+                </sc-for>
+              </div>
+            </sc-if>
+
+            <!-- Search -->
+            <div style="position:relative;margin-bottom:10px;">
+              <span style="position:absolute;left:13px;top:50%;transform:translateY(-50%);color:rgba(233,233,237,0.28);font-size:15px;pointer-events:none;line-height:1;">⌕</span>
+              <input class="search-inp" type="text" placeholder="{{ subjectPlaceholder }}" value="{{ subjectSearch }}" onInput="{{ onSubjectSearch }}" />
+            </div>
+
+            <!-- Chips grid -->
+            <div style="display:flex;flex-wrap:wrap;gap:6px;min-height:32px;">
+              <sc-for list="{{ filteredSubjects }}" as="s" hint-placeholder-count="6">
+                <button class="chip" onClick="{{ s.add }}">{{ s.label }}</button>
+              </sc-for>
+            </div>
+            <sc-if value="{{ noSubjectsFound }}" hint-placeholder-val="{{ false }}">
+              <p style="font-size:12px;color:rgba(233,233,237,0.3);margin:6px 0 0;">No matches — try a different search term.</p>
+            </sc-if>
+          </div>
+
+          <!-- Audience -->
+          <div style="margin-bottom:26px;">
+            <div style="font-size:11px;font-weight:600;letter-spacing:0.08em;color:rgba(233,233,237,0.55);text-transform:uppercase;margin-bottom:10px;">
+              Target Audience <span style="font-weight:400;color:rgba(233,233,237,0.28);letter-spacing:0.02em;text-transform:none;font-size:11px;">— select all that apply</span>
+            </div>
+            <div style="display:flex;flex-wrap:wrap;gap:6px;">
+              <sc-for list="{{ audienceChips }}" as="ac" hint-placeholder-count="8">
+                <button class="{{ ac.cls }}" onClick="{{ ac.toggle }}">{{ ac.label }}</button>
+              </sc-for>
+            </div>
+          </div>
+
+          <div style="display:flex;gap:8px;flex-wrap:wrap;">
+            <button class="btn btn-primary" onClick="{{ proceedToAgent }}" style="font-size:13px;padding:8px 20px;">Accept Mission → Select Agent</button>
+            <button class="btn btn-secondary" onClick="{{ backToField }}" style="font-size:13px;">← Change Field</button>
+          </div>
+        </sc-if>
+      </div>
+    </sc-if>
+
+    <!-- ───────────── STEP 2: AGENT ───────────── -->
+    <sc-if value="{{ isStep2 }}" hint-placeholder-val="{{ false }}">
+      <div class="step-panel">
+        <span class="kicker">Step 03 · Agent Selection</span>
+        <h2 style="font-size:26px;margin:0 0 6px;">Select your agent</h2>
+        <p style="font-size:14px;color:rgba(233,233,237,0.5);margin:0 0 20px;max-width:520px;">Your agent becomes the AI's persona. Their expertise frames how the prompt is written and the output is shaped.</p>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:10px;margin-bottom:20px;">
+          <sc-for list="{{ agentCards }}" as="ag" hint-placeholder-count="6">
+            <div class="{{ ag.cls }}" onClick="{{ ag.select }}">
+              <div style="font-size:34px;margin-bottom:10px;line-height:1;">{{ ag.icon }}</div>
+              <div style="font-weight:500;font-size:15px;margin-bottom:2px;">{{ ag.name }}</div>
+              <div style="font-size:11px;color:var(--color-accent);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:7px;">{{ ag.role }}</div>
+              <div style="font-size:12.5px;color:rgba(233,233,237,0.58);line-height:1.45;margin-bottom:10px;">{{ ag.tagline }}</div>
+              <div style="display:flex;flex-wrap:wrap;gap:4px;">
+                <sc-for list="{{ ag.skills }}" as="sk" hint-placeholder-count="2">
+                  <span class="tag tag-neutral" style="font-size:10px;padding:2px 7px;">{{ sk }}</span>
+                </sc-for>
+              </div>
+            </div>
+          </sc-for>
+        </div>
+        <div style="display:flex;gap:8px;">
+          <button class="btn btn-primary" onClick="{{ proceedToGear }}" disabled="{{ agentNotSelected }}" style="font-size:13px;padding:8px 20px;">Gear Up →</button>
+          <button class="btn btn-secondary" onClick="{{ backToMission }}" style="font-size:13px;">← Back to Mission</button>
+        </div>
+      </div>
+    </sc-if>
+
+    <!-- ───────────── STEP 3: GEAR ───────────── -->
+    <sc-if value="{{ isStep3 }}" hint-placeholder-val="{{ false }}">
+      <div class="step-panel">
+        <span class="kicker">Step 04 · Gear Loadout</span>
+        <h2 style="font-size:26px;margin:0 0 6px;">Equip your agent</h2>
+        <p style="font-size:14px;color:rgba(233,233,237,0.5);margin:0 0 14px;max-width:520px;">Choose exactly <strong style="color:var(--color-text);">2 gear items</strong>. Gear shapes limits, context, and quality of the output.</p>
+        <div class="counter-badge" style="display:inline-flex;align-items:center;gap:6px;padding:5px 14px;border-radius:999px;background:rgba(17,112,161,0.08);border:1px solid rgba(17,112,161,0.2);font-size:12px;color:rgba(233,233,237,0.6);margin-bottom:18px;">
+          Gear equipped: <strong style="color:var(--color-accent);font-size:14px;">{{ gearCount }}</strong><span style="color:rgba(233,233,237,0.35);">/2</span>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px;margin-bottom:20px;">
+          <sc-for list="{{ gearCards }}" as="g" hint-placeholder-count="8">
+            <div class="{{ g.cls }}" onClick="{{ g.toggle }}">
+              <div style="display:flex;align-items:flex-start;gap:12px;">
+                <span style="font-size:24px;flex-shrink:0;margin-top:1px;line-height:1;">{{ g.icon }}</span>
+                <div>
+                  <div style="font-weight:500;font-size:14px;margin-bottom:2px;">{{ g.name }}</div>
+                  <div style="font-size:10px;color:var(--color-accent);text-transform:uppercase;letter-spacing:0.07em;margin-bottom:5px;">{{ g.type }}</div>
+                  <div style="font-size:12px;color:rgba(233,233,237,0.52);line-height:1.45;">{{ g.description }}</div>
+                </div>
+              </div>
+            </div>
+          </sc-for>
+        </div>
+        <div style="display:flex;gap:8px;">
+          <button class="btn btn-primary" onClick="{{ proceedToBooster }}" disabled="{{ gearNotReady }}" style="font-size:13px;padding:8px 20px;">Boosters →</button>
+          <button class="btn btn-secondary" onClick="{{ backToAgent }}" style="font-size:13px;">← Back to Agent</button>
+        </div>
+      </div>
+    </sc-if>
+
+    <!-- ───────────── STEP 4: BOOSTERS ───────────── -->
+    <sc-if value="{{ isStep4 }}" hint-placeholder-val="{{ false }}">
+      <div class="step-panel">
+        <span class="kicker">Step 05 · Power Boosters</span>
+        <h2 style="font-size:26px;margin:0 0 6px;">Level up with a booster</h2>
+        <p style="font-size:14px;color:rgba(233,233,237,0.5);margin:0 0 20px;max-width:520px;">Pick <strong style="color:var(--color-text);">1 booster badge</strong> to unlock an advanced output capability for this mission.</p>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:10px;margin-bottom:20px;">
+          <sc-for list="{{ boosterCards }}" as="b" hint-placeholder-count="6">
+            <div class="{{ b.cls }}" onClick="{{ b.select }}">
+              <div style="display:flex;align-items:flex-start;gap:12px;">
+                <span style="font-size:28px;flex-shrink:0;margin-top:1px;line-height:1;">{{ b.icon }}</span>
+                <div>
+                  <div style="font-weight:500;font-size:14px;margin-bottom:5px;">{{ b.name }}</div>
+                  <div style="font-size:12.5px;color:rgba(233,233,237,0.55);line-height:1.5;">{{ b.description }}</div>
+                </div>
+              </div>
+            </div>
+          </sc-for>
+        </div>
+        <div style="display:flex;gap:8px;">
+          <button class="btn btn-primary" onClick="{{ proceedToReview }}" disabled="{{ boosterNotSelected }}" style="font-size:13px;padding:8px 20px;">Review Loadout →</button>
+          <button class="btn btn-secondary" onClick="{{ backToGear }}" style="font-size:13px;">← Back to Gear</button>
+        </div>
+      </div>
+    </sc-if>
+
+    <!-- ───────────── STEP 5: REVIEW ───────────── -->
+    <sc-if value="{{ isStep5 }}" hint-placeholder-val="{{ false }}">
+      <div class="step-panel">
+        <span class="kicker">Step 06 · Loadout Review</span>
+        <h2 style="font-size:26px;margin:0 0 6px;">Mission loadout</h2>
+        <p style="font-size:14px;color:rgba(233,233,237,0.5);margin:0 0 20px;">Your full selection. Edit any piece before generating THE PROMPT.</p>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:10px;margin-bottom:24px;">
+
+          <div class="rev-card" style="background:var(--color-surface);border:1px solid var(--color-divider);border-radius:12px;padding:14px 16px;">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+              <span class="card-kicker">Mission</span>
+              <button class="btn btn-ghost" onClick="{{ editMission }}" style="font-size:11px;padding:2px 8px;">Edit</button>
+            </div>
+            <div style="font-size:11px;color:var(--color-accent);font-weight:500;margin-bottom:3px;">{{ revField }}</div>
+            <div style="font-weight:500;font-size:14px;margin-bottom:6px;">{{ revMissionTitle }}</div>
+            <div style="font-size:11px;color:rgba(233,233,237,0.45);line-height:1.5;">{{ revSubjectsText }}</div>
+            <div style="font-size:11px;color:rgba(233,233,237,0.45);margin-top:2px;line-height:1.5;">{{ revAudiencesText }}</div>
+          </div>
+
+          <div class="rev-card" style="background:var(--color-surface);border:1px solid var(--color-divider);border-radius:12px;padding:14px 16px;">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+              <span class="card-kicker">Agent</span>
+              <button class="btn btn-ghost" onClick="{{ editAgent }}" style="font-size:11px;padding:2px 8px;">Edit</button>
+            </div>
+            <div style="font-size:28px;margin-bottom:6px;line-height:1;">{{ revAgentIcon }}</div>
+            <div style="font-weight:500;font-size:14px;margin-bottom:2px;">{{ revAgentName }}</div>
+            <div style="font-size:12px;color:rgba(233,233,237,0.5);">{{ revAgentTagline }}</div>
+          </div>
+
+          <div class="rev-card" style="background:var(--color-surface);border:1px solid var(--color-divider);border-radius:12px;padding:14px 16px;">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+              <span class="card-kicker">Gear × 2</span>
+              <button class="btn btn-ghost" onClick="{{ editGear }}" style="font-size:11px;padding:2px 8px;">Edit</button>
+            </div>
+            <sc-for list="{{ revGear }}" as="rg" hint-placeholder-count="2">
+              <div style="display:flex;align-items:center;gap:8px;margin-bottom:9px;">
+                <span style="font-size:20px;line-height:1;">{{ rg.icon }}</span>
+                <div>
+                  <div style="font-size:13px;font-weight:500;line-height:1.2;">{{ rg.name }}</div>
+                  <div style="font-size:10px;color:var(--color-accent);text-transform:uppercase;letter-spacing:0.05em;">{{ rg.type }}</div>
+                </div>
+              </div>
+            </sc-for>
+          </div>
+
+          <div class="rev-card" style="background:var(--color-surface);border:1px solid var(--color-divider);border-radius:12px;padding:14px 16px;">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+              <span class="card-kicker">Booster</span>
+              <button class="btn btn-ghost" onClick="{{ editBooster }}" style="font-size:11px;padding:2px 8px;">Edit</button>
+            </div>
+            <div style="font-size:28px;margin-bottom:6px;line-height:1;">{{ revBoosterIcon }}</div>
+            <div style="font-weight:500;font-size:14px;margin-bottom:3px;">{{ revBoosterName }}</div>
+            <div style="font-size:12px;color:rgba(233,233,237,0.5);">{{ revBoosterDesc }}</div>
+          </div>
+
+        </div>
+        <button class="btn btn-primary" onClick="{{ doGeneratePrompt }}" style="font-size:14px;padding:9px 22px;">⚡ Generate THE PROMPT</button>
+      </div>
+    </sc-if>
+
+    <!-- ───────────── STEP 6: THE PROMPT ───────────── -->
+    <sc-if value="{{ isStep6 }}" hint-placeholder-val="{{ false }}">
+      <div class="step-panel">
+        <span class="kicker">Step 07 · THE PROMPT</span>
+        <h2 style="font-size:26px;margin:0 0 6px;">Your prompt is ready</h2>
+        <p style="font-size:14px;color:rgba(233,233,237,0.5);margin:0 0 16px;max-width:560px;">Each section maps to one letter of CLEAR. Review, switch to edit mode to tweak, then deploy.</p>
+
+        <!-- Mode tabs -->
+        <div style="display:flex;gap:6px;margin-bottom:16px;">
+          <button class="{{ annotatedTabCls }}" onClick="{{ setAnnotatedMode }}">◈ Annotated View</button>
+          <button class="{{ editTabCls }}" onClick="{{ setEditMode }}">✎ Edit Mode</button>
+        </div>
+
+        <!-- Annotated view -->
+        <sc-if value="{{ isAnnotatedMode }}" hint-placeholder-val="{{ true }}">
+          <div style="margin-bottom:14px;">
+            <p style="font-size:12px;color:rgba(233,233,237,0.4);margin:0 0 12px;font-style:italic;">Acting as: <strong style="color:rgba(233,233,237,0.65);font-style:normal;">{{ promptAgentRole }}</strong></p>
+            <sc-for list="{{ clearSections }}" as="cs" hint-placeholder-count="5">
+              <div class="clear-block" style="{{ cs.borderStyle }}">
+                <span class="clear-lbl" style="{{ cs.labelStyle }}">{{ cs.letter }} — {{ cs.label }}</span>
+                <p class="clear-txt">{{ cs.text }}</p>
+                <div style="{{ cs.pbStyle }}">↳ {{ cs.poweredBy }}</div>
+              </div>
+            </sc-for>
+          </div>
+        </sc-if>
+
+        <!-- Edit view -->
+        <sc-if value="{{ isEditMode }}" hint-placeholder-val="{{ false }}">
+          <textarea class="prompt-ta" value="{{ generatedPrompt }}" onInput="{{ onPromptEdit }}" style="margin-bottom:14px;"></textarea>
+        </sc-if>
+
+        <div style="display:flex;flex-wrap:wrap;gap:8px;">
+          <button class="btn btn-primary" onClick="{{ proceedToDebrief }}" style="font-size:13px;padding:8px 20px;">Submit for Assessment →</button>
+          <button class="btn btn-secondary" onClick="{{ doCopyPrompt }}" style="font-size:13px;">⎘ Copy Prompt</button>
+          <button class="btn btn-secondary" onClick="{{ backToAgent }}" style="font-size:13px;">↩ New Agent</button>
+          <button class="btn btn-secondary" onClick="{{ editBooster }}" style="font-size:13px;">↩ New Booster</button>
+        </div>
+      </div>
+    </sc-if>
+
+    <!-- ───────────── STEP 7: DEBRIEF ───────────── -->
+    <sc-if value="{{ isStep7 }}" hint-placeholder-val="{{ false }}">
+      <div class="step-panel">
+        <span class="kicker">Step 08 · Mission Debrief</span>
+        <h2 style="font-size:26px;margin:0 0 4px;">Loadout Assessment</h2>
+        <p style="font-size:14px;color:rgba(233,233,237,0.5);margin:0 0 22px;max-width:560px;">Your choices are scored against the CLEAR framework — the same scale used throughout your missions.</p>
+
+        <!-- Score banner -->
+        <div style="{{ debriefBannerStyle }}">
+          <span style="font-size:34px;line-height:1;">{{ debriefBadgeIcon }}</span>
+          <div style="flex:1;">
+            <div style="font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:rgba(233,233,237,0.4);margin-bottom:2px;">Overall Rating</div>
+            <div style="font-size:20px;font-weight:700;color:rgba(233,233,237,0.95);">{{ debriefBadgeLabel }}</div>
+          </div>
+          <div style="text-align:right;">
+            <div style="font-size:38px;font-weight:700;line-height:1;color:var(--color-accent);">{{ debriefTotal }}</div>
+            <div style="font-size:11px;color:rgba(233,233,237,0.38);">out of 50</div>
+          </div>
+        </div>
+
+        <!-- CLEAR element score chips -->
+        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px;">
+          <sc-for list="{{ debriefElements }}" as="de" hint-placeholder-count="5">
+            <div style="{{ de.chipStyle }}">
+              <div style="{{ de.letterStyle }}">{{ de.letter }}</div>
+              <div style="font-size:10px;color:rgba(233,233,237,0.4);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:3px;">{{ de.label }}</div>
+              <div style="{{ de.scoreStyle }}">{{ de.score }}/10</div>
+            </div>
+          </sc-for>
+        </div>
+
+        <!-- Per-element feedback rows -->
+        <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:20px;">
+          <sc-for list="{{ debriefElements }}" as="de" hint-placeholder-count="5">
+            <div style="{{ de.rowStyle }}">
+              <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:5px;">
+                <div style="{{ de.badgeStyle }}">{{ de.letter }} — {{ de.label }}</div>
+                <div style="{{ de.scoreStyle }}">{{ de.score }}/10</div>
+              </div>
+              <div style="font-size:13px;color:rgba(233,233,237,0.80);line-height:1.6;">{{ de.feedback }}</div>
+            </div>
+          </sc-for>
+        </div>
+
+        <!-- How to score higher -->
+        <div style="background:rgba(17,112,161,0.06);border:1px solid rgba(17,112,161,0.18);border-left:3px solid var(--color-accent);border-radius:0 10px 10px 0;padding:14px 18px;margin-bottom:24px;">
+          <div style="font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:var(--color-accent);margin-bottom:8px;">How to Score Higher on This Mission</div>
+          <div style="font-size:13px;color:rgba(233,233,237,0.72);line-height:1.7;">{{ debriefIdealTip }}</div>
+        </div>
+
+        <div style="display:flex;gap:8px;flex-wrap:wrap;">
+          <button class="btn btn-primary" onClick="{{ restart }}" style="font-size:13px;padding:9px 22px;">🚀 New Mission</button>
+          <button class="btn btn-secondary" onClick="{{ editAgent }}" style="font-size:13px;">↩ Refine Loadout</button>
+        </div>
+      </div>
+    </sc-if>
+
+  </div>
+
+  <!-- TOAST -->
+  <div class="{{ toastCls }}">{{ toastMsg }}</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+
+  /* ══════════════════ DATA ══════════════════ */
+
+  FIELDS = [
+    { id:'edu',  icon:'🎓', name:'Education',         description:'Schools, universities, tutoring, curriculum, and classroom learning.' },
+    { id:'corp', icon:'💼', name:'Corporate & Business', description:'Training, operations, sales, leadership, and L&D.' },
+    { id:'gov',  icon:'🏛️', name:'Government & Public', description:'Policy, public services, compliance, and governance.' },
+    { id:'hlth', icon:'⚕️', name:'Healthcare',         description:'Hospitals, patient care, clinical training, and wellness.' },
+    { id:'ngo',  icon:'🌱', name:'Nonprofit & NGO',    description:'Community programs, advocacy, fundraising, and volunteering.' },
+    { id:'pers', icon:'✨', name:'Personal',           description:'Life admin, skills development, and personal projects.' },
+  ];
+
+  SUBJECTS = {
+    edu:  ['Mathematics','Science','English & Literacy','History','Geography','Arts & Music','PE & Health','Technology','Languages','Religious Studies','STEM','Special Education'],
+    corp: ['Leadership','Sales & Revenue','Customer Experience','Compliance','Onboarding','HR & Talent','Finance','Operations','Safety','Communication','Change Management','Product & Innovation'],
+    gov:  ['Policy & Legislation','Public Communication','Compliance','Procurement','Risk Management','Digital Transformation','Citizen Services','Governance','Data & Analytics'],
+    hlth: ['Clinical Practice','Patient Communication','Infection Control','Healthcare Compliance','Mental Health','Nutrition','Administration','Emergency Response'],
+    ngo:  ['Fundraising','Volunteer Management','Community Outreach','Advocacy','Grant Writing','Program Delivery','Donor Relations'],
+    pers: ['Productivity','Writing & Communication','Career Development','Learning Skills','Health & Wellness','Personal Finance','Creativity','Relationships'],
+  };
+
+  AUDIENCES = [
+    'K–12 Students','University Students','New Employees','Frontline Staff',
+    'Managers & Team Leads','Senior Leadership','Government Officials','Parents & Caregivers',
+    'General Public','Subject-Matter Experts','Remote Workers','International Audience',
+    'Non-Native Speakers','Adults with Disabilities',
+  ];
+
+  MISSIONS = [
+    { id:'m1', title:'Student Feedback Uplink',  desc:'Generate constructive feedback comments for a learner based on one area from a rubric. The feedback must be kind, specific, and actionable.' },
+    { id:'m2', title:'Lesson Plan Drop',          desc:'Design a 45-minute learning session on a specific topic, including objectives, at least two activities, and a quick assessment.' },
+    { id:'m3', title:'Policy Intel Brief',        desc:'Summarize a policy document into a one-page, plain-language brief suitable for a non-expert audience.' },
+    { id:'m4', title:'Diplomatic Dispatch',       desc:'Draft a professional email to a stakeholder about a sensitive situation, maintaining clarity, empathy, and a calm tone.' },
+    { id:'m5', title:'Meeting Ops Plan',          desc:'Create a detailed 60-minute meeting agenda to achieve a specific goal with cross-functional stakeholders.' },
+    { id:'m6', title:'Training Activity Kit',     desc:'Generate 5 interactive activity ideas to teach a given concept to a specific audience, including instructions for each.' },
+    { id:'m7', title:'Report Extraction',         desc:'Rewrite a dense paragraph into clear bullet points suitable for a slide deck, retaining all key information.' },
+    { id:'m8', title:'Explain Like I\'m New',     desc:'Explain a complex topic in plain, accessible language tailored to a specific audience\'s background and context.' },
+    { id:'m9', title:'Risk Scan',                 desc:'Identify the top 5 potential risks for a given project or initiative and propose a concrete mitigation for each.' },
+    { id:'m10',title:'Rubric Builder',            desc:'Design a rubric with 3–4 criteria to assess a specific task or piece of work, with clear descriptors for each level.' },
+  ];
+
+  AGENTS = [
+    { id:'ag1', icon:'🎨', name:'Danny the Designer',      role:'Learning Experience Designer', tagline:'Thinks in layouts, flows, and visual clarity.',           skills:['Visual Structure','Creative Flow'] },
+    { id:'ag2', icon:'📋', name:'Maria the PM',            role:'Project Manager',               tagline:'Keeps everything scoped, sequenced, and deliverable.',    skills:['Goal Clarity','Time-Bound Output'] },
+    { id:'ag3', icon:'📊', name:'Anna the Analyst',        role:'Data Analyst',                  tagline:'Obsessed with precision, patterns, and evidence.',        skills:['Precision','Evidence-Based'] },
+    { id:'ag4', icon:'🎓', name:'Omar the Educator',       role:'Teacher & Facilitator',         tagline:'Always speaks from the learner\'s perspective.',          skills:['Learner-Centred','Adaptive Tone'] },
+    { id:'ag5', icon:'🔬', name:'Nina the Researcher',     role:'Researcher',                    tagline:'Curious, thorough, and always asks one more question.',   skills:['Inquiry Depth','Source-Aware'] },
+    { id:'ag6', icon:'💬', name:'Carlos the Communicator', role:'Communications Specialist',     tagline:'Makes every message land with exactly the right tone.',   skills:['Empathy','Audience Awareness'] },
+  ];
+
+  GEAR = [
+    { id:'g1', icon:'🧭', name:'Context Scanner',  type:'Environment', desc:'Add key details about the setting, sector, or background context so the AI understands the environment.' },
+    { id:'g2', icon:'📦', name:'Example Pack',     type:'Enhancer',    desc:'Ask the AI to include concrete examples or sample phrases in its output.' },
+    { id:'g3', icon:'📐', name:'Rubric Radar',     type:'Enhancer',    desc:'Align the response to a rubric or clear success criteria.' },
+    { id:'g4', icon:'🎯', name:'Audience Analyzer',type:'Audience',    desc:'Profile the output audience by level, needs, and context so the AI adapts accordingly.' },
+    { id:'g5', icon:'🎚️', name:'Tone Tuner',       type:'Limit',       desc:'Set the desired tone: formal, friendly, neutral, empathetic, or plain language.' },
+    { id:'g6', icon:'⏱️', name:'Timebox Timer',    type:'Limit',       desc:'Constrain the output to fit a specific time limit or realistic scope.' },
+    { id:'g7', icon:'✂️', name:'Word Count Clip',  type:'Limit',       desc:'Set a target length — a word count, sentence range, or level of detail.' },
+    { id:'g8', icon:'🗂️', name:'Structure Grid',   type:'Enhancer',    desc:'Request a specific output structure: headings, numbered steps, or bullet points.' },
+  ];
+
+  BOOSTERS = [
+    { id:'b1', icon:'🧠', name:'Perspective Shift',          desc:'The AI considers and compares multiple viewpoints or stakeholder perspectives before answering.' },
+    { id:'b2', icon:'🔀', name:'Multi-Option Mode',          desc:'The AI generates 2–3 different versions or alternatives for you to choose from.' },
+    { id:'b3', icon:'🛠️', name:'Critique Engine',            desc:'The AI critiques and iteratively improves its own initial answer before delivering the final version.' },
+    { id:'b4', icon:'🛡️', name:'Zero-Hallucination Protocol',desc:'The AI prioritises accuracy and explicitly flags anything uncertain rather than guessing.' },
+    { id:'b5', icon:'📋', name:'Format Shift',               desc:'Request a specific output format — table, checklist, two-column layout, or script.' },
+    { id:'b6', icon:'🌍', name:'Cultural Context Chip',      desc:'Adapt the response to a specific region, culture, or organisational context.' },
+  ];
+
+  GEAR_PROMPT = {
+    g1: 'Ground your response in the sector and operational environment described. Apply domain-specific knowledge and contextual awareness throughout.',
+    g2: 'Include at least two concrete examples or sample phrases to illustrate your key points — do not speak in abstractions.',
+    g3: 'Align your response explicitly to clear success criteria. Address each criterion in turn.',
+    g4: 'Calibrate your language, tone, and depth precisely to the expertise level and context of the audience described above.',
+    g5: 'Use a tone that is appropriate to the context — professional, clear, and calibrated. Avoid overly formal or casual register.',
+    g6: 'Keep your response concise and realistic in scope. Do not over-explain, pad, or repeat content.',
+    g7: 'Limit your response to a focused, appropriate length. Prioritise precision over completeness.',
+    g8: 'Structure your response using clear headings, numbered steps, or bullet points — choose whichever best fits the content.',
+  };
+
+  BOOSTER_PROMPT = {
+    b1: 'Before answering, consider at least two distinct stakeholder perspectives or viewpoints. Briefly reflect how each shapes the response before delivering your final output.',
+    b2: 'Generate two or three distinct alternatives or versions, each clearly labelled (Option A, Option B, Option C). Let the user choose.',
+    b3: 'Draft an initial response, then critically evaluate and improve it. Present only your refined final version — not the draft.',
+    b4: 'Prioritise factual accuracy above all else. Explicitly flag any information you are uncertain about rather than guessing or inferring.',
+    b5: 'Present your response in a structured format — use a table, numbered checklist, or two-column layout as appropriate.',
+    b6: 'Adapt your language, examples, and framing to the specific regional, cultural, and organisational context described.',
+  };
+
+  CLEAR_COLORS = {
+    C: { border:'#1170a1', label:'rgba(69,184,220,0.95)' },  // BT blue  — Command
+    L: { border:'#ac1225', label:'rgba(220,70,85,0.95)'  },  // BT red   — Limits
+    E: { border:'#0d9488', label:'rgba(20,184,166,0.95)' },  // teal     — Environment
+    A: { border:'#f59e0b', label:'rgba(251,191,36,0.95)' },  // amber    — Audience
+    R: { border:'#4ade80', label:'rgba(74,222,128,0.95)' },  // emerald  — Response
+  };
+
+  /* ══════════════════ STATE ══════════════════ */
+
+  state = {
+    step: 0,
+    field: null,
+    mission: null,
+    missionHistory: [],
+    missionRevealed: false,
+    subjectSearch: '',
+    selectedSubjects: [],
+    selectedAudiences: [],
+    agent: null,
+    gear: [],
+    booster: null,
+    generatedPrompt: '',
+    promptMode: 'annotated', // 'annotated' | 'edit'
+    debriefMessage: '',
+    toastMsg: '',
+    toastVisible: false,
+  };
+
+  _toastTimer = null;
+
+  /* ══════════════════ HELPERS ══════════════════ */
+
+  toast(msg) {
+    if (this._toastTimer) clearTimeout(this._toastTimer);
+    this.setState({ toastMsg: msg, toastVisible: true });
+    this._toastTimer = setTimeout(() => this.setState({ toastVisible: false }), 2200);
+  }
+
+  pickMission() {
+    const used = this.state.missionHistory.map(m => m.id);
+    const pool = this.MISSIONS.filter(m => !used.includes(m.id));
+    const src = pool.length > 0 ? pool : this.MISSIONS;
+    return src[Math.floor(Math.random() * src.length)];
+  }
+
+  buildParts() {
+    const { field, mission, selectedSubjects, selectedAudiences, agent, gear, booster } = this.state;
+    if (!mission || !agent) return null;
+
+    const limitGear  = gear.filter(g => g.type === 'Limit');
+    const envGear    = gear.filter(g => g.type === 'Environment' || g.type === 'Enhancer');
+    const audGear    = gear.filter(g => g.type === 'Audience');
+
+    const C = mission.desc
+      + (field           ? ` Domain: ${field.name}.` : '')
+      + (selectedSubjects.length ? ` Subject area(s): ${selectedSubjects.join(', ')}.` : '');
+
+    const L = limitGear.length
+      ? limitGear.map(g => this.GEAR_PROMPT[g.id] || g.desc).join(' ')
+      : 'Maintain a professional tone and appropriate length. Be concise and direct — avoid padding or unnecessary elaboration.';
+
+    const envParts = envGear.map(g => this.GEAR_PROMPT[g.id] || g.desc);
+    const E = envParts.length ? envParts.join(' ') : 'Draw on relevant context and concrete examples to make your output immediately actionable and specific.';
+
+    const audParts = [];
+    if (selectedAudiences.length) audParts.push(`The output is intended for: ${selectedAudiences.join(', ')}. Adapt your language, tone, and complexity accordingly.`);
+    if (audGear.length) audParts.push(...audGear.map(g => this.GEAR_PROMPT[g.id] || g.desc));
+    const A = audParts.length ? audParts.join(' ') : 'Assume a general professional audience. Pitch your language and tone accordingly.';
+
+    const R = booster ? (this.BOOSTER_PROMPT[booster.id] || booster.desc) : 'Structure your answer clearly with headings or bullet points as appropriate.';
+
+    return { agentRole: agent.role, agentTagline: agent.tagline, C, L, E, A, R };
+  }
+
+  buildPromptText(parts) {
+    if (!parts) return '';
+    return `You are acting as a ${parts.agentRole}. ${parts.agentTagline}
+
+— COMMAND —
+${parts.C}
+
+— LIMITS —
+${parts.L}
+
+— ENVIRONMENT & ENHANCERS —
+${parts.E}
+
+— AUDIENCE —
+${parts.A}
+
+— RESPONSE —
+${parts.R}
+
+Note: If any key details are missing (the specific topic, name, or parameters), open your response with 2–3 focused clarification questions before producing the final output.`.trim();
+  }
+
+  confetti() {
+    const colors = ['#1170a1','#ac1225','#45b8dc','#0d9488','#f59e0b','#4ade80','#e9e9ed'];
+    for (let i = 0; i < 60; i++) {
+      const el = document.createElement('div');
+      el.className = 'conf-p';
+      el.style.cssText = `
+        left:${Math.random()*100}vw;
+        top:-10px;
+        background:${colors[Math.floor(Math.random()*colors.length)]};
+        animation-delay:${Math.random()*1.2}s;
+        animation-duration:${2.2 + Math.random()*1.2}s;
+        transform:rotate(${Math.random()*360}deg);
+        width:${6+Math.random()*6}px;
+        height:${6+Math.random()*6}px;
+      `;
+      document.body.appendChild(el);
+      setTimeout(() => el.remove(), 4000);
+    }
+  }
+
+  /* ══════════════════ DEBRIEF SCORING ══════════════════ */
+
+  buildDebrief() {
+    const s = this.state;
+    const { mission, agent, gear, booster } = s;
+    if (!mission || !agent || gear.length < 2 || !booster) return null;
+    const CC = {
+      C:{ border:'rgba(14,165,233,0.5)', bg:'rgba(14,165,233,0.08)', text:'#38bdf8' },
+      L:{ border:'rgba(239,68,68,0.5)',  bg:'rgba(239,68,68,0.08)',  text:'#f87171' },
+      E:{ border:'rgba(20,184,166,0.5)', bg:'rgba(20,184,166,0.08)', text:'#2dd4bf' },
+      A:{ border:'rgba(245,158,11,0.5)', bg:'rgba(245,158,11,0.08)', text:'#fbbf24' },
+      R:{ border:'rgba(34,197,94,0.5)',  bg:'rgba(34,197,94,0.08)',  text:'#4ade80' },
+    };
+    const AF = {
+      m1:{ best:['ag4','ag6'], names:['Omar the Educator','Carlos the Communicator'], why:'student feedback needs a learner-centred educator or empathetic communicator' },
+      m2:{ best:['ag4','ag1'], names:['Omar the Educator','Danny the Designer'],      why:'lesson planning needs pedagogical depth and visual structure' },
+      m3:{ best:['ag3','ag5'], names:['Anna the Analyst','Nina the Researcher'],      why:'policy briefs need analytical precision and research rigour' },
+      m4:{ best:['ag6','ag2'], names:['Carlos the Communicator','Maria the PM'],      why:'diplomatic emails need empathy, tone control, and stakeholder clarity' },
+      m5:{ best:['ag2','ag6'], names:['Maria the PM','Carlos the Communicator'],      why:'meeting planning needs a PM\'s goal-clarity and scope discipline' },
+      m6:{ best:['ag4','ag1'], names:['Omar the Educator','Danny the Designer'],      why:'training activities need a facilitator\'s lens and creative structure' },
+      m7:{ best:['ag3','ag2'], names:['Anna the Analyst','Maria the PM'],            why:'report extraction needs analyst precision and PM-level brevity' },
+      m8:{ best:['ag4','ag6'], names:['Omar the Educator','Carlos the Communicator'],why:'plain-language explanation needs a teacher or communicator' },
+      m9:{ best:['ag5','ag3'], names:['Nina the Researcher','Anna the Analyst'],     why:'risk scanning needs a researcher\'s thoroughness and analyst precision' },
+      m10:{ best:['ag4','ag3'], names:['Omar the Educator','Anna the Analyst'],      why:'rubric building combines pedagogical knowledge and analytical structure' },
+    };
+    const af = AF[mission.id] || { best:[], names:['a specialist agent'], why:'a domain-expert agent would sharpen the Command direction' };
+    let cScore, cFb;
+    if (af.best[0]===agent.id)      { cScore=10; cFb=agent.name+'\'s expertise anchors the Command with exactly the right intent and scope for this mission.'; }
+    else if (af.best[1]===agent.id) { cScore=8;  cFb=agent.name+' is a strong choice here. '+af.names[0]+' would sharpen it slightly further — '+af.why+'.'; }
+    else                             { cScore=5;  cFb=agent.name+' can approach this, but is not the best fit. '+af.why+'. Try '+af.names.join(' or ')+'.'; }
+
+    const LIM = { g5:'Tone Tuner', g6:'Timebox Timer', g7:'Word Count Clip' };
+    const limGear = gear.filter(function(g){ return LIM[g.id]; });
+    let lScore, lFb;
+    if (limGear.length>=2)     { lScore=10; lFb=limGear.map(function(g){return g.name;}).join(' + ')+' give the AI clear boundaries. Expect focused, on-scope output.'; }
+    else if (limGear.length===1){ lScore=7;  lFb=limGear[0].name+' adds a useful constraint. A second Limits item would sharpen the output further.'; }
+    else                        { lScore=3;  lFb='No Limits gear selected. Without length, tone, or scope constraints, expect verbose generic output. Add Tone Tuner, Timebox Timer, or Word Count Clip.'; }
+
+    const envGear = gear.filter(function(g){ return ['g1','g2','g3','g8'].indexOf(g.id)>-1; });
+    let eScore, eFb;
+    if (envGear.some(function(g){return g.id==='g1';})) { eScore=10; eFb='Context Scanner gives the AI rich sector and background detail — grounded, relevant output follows.'; }
+    else if (envGear.length>0)                          { eScore=8;  eFb=envGear[0].name+' adds useful context. Context Scanner would complete the picture — sector, role, and background in one.'; }
+    else                                                { eScore=3;  eFb='No Environment gear selected. Without setting or background context, output will feel generic. Add Context Scanner.'; }
+
+    const hasAudGear = gear.some(function(g){return g.id==='g4';});
+    const agAudAware = agent.id==='ag6' || agent.id==='ag4';
+    let aScore, aFb;
+    if (hasAudGear && agAudAware) { aScore=10; aFb='Audience Analyzer combined with '+agent.name+'\'s audience instincts — the AI knows exactly who it\'s writing for and how to pitch its language.'; }
+    else if (hasAudGear)          { aScore=8;  aFb='Audience Analyzer profiles the reader clearly. Pairing it with Carlos or Omar would complete the picture.'; }
+    else if (agAudAware)          { aScore=6;  aFb=agent.name+' brings natural audience awareness, but Audience Analyzer gear would pin down expertise level more precisely.'; }
+    else                          { aScore=4;  aFb='Audience is undefined. Neither your agent nor your gear tells the AI who it\'s writing for. Add Audience Analyzer or choose Carlos or Omar.'; }
+
+    const BF = {
+      m1: { best:['b3','b1'], names:['Critique Engine','Perspective Shift'],            why:'Critique Engine refines feedback; Perspective Shift ensures empathy in every comment' },
+      m2: { best:['b2','b3'], names:['Multi-Option Mode','Critique Engine'],            why:'Multi-Option gives lesson plan variants; Critique Engine sharpens each activity' },
+      m3: { best:['b4','b5'], names:['Zero-Hallucination Protocol','Format Shift'],     why:'Zero-Hallucination grounds policy content; Format Shift structures the brief' },
+      m4: { best:['b1','b3'], names:['Perspective Shift','Critique Engine'],            why:'Perspective Shift builds the stakeholder view; Critique Engine perfects the tone' },
+      m5: { best:['b5','b2'], names:['Format Shift','Multi-Option Mode'],              why:'Format Shift creates a clean agenda; Multi-Option offers alternative running orders' },
+      m6: { best:['b2','b1'], names:['Multi-Option Mode','Perspective Shift'],          why:'Multi-Option generates activity range; Perspective Shift covers diverse learner needs' },
+      m7: { best:['b5','b4'], names:['Format Shift','Zero-Hallucination Protocol'],     why:'Format Shift creates slide-ready bullets; Zero-Hallucination keeps extraction accurate' },
+      m8: { best:['b6','b1'], names:['Cultural Context Chip','Perspective Shift'],      why:'Cultural Context Chip adapts the register; Perspective Shift calibrates simplicity' },
+      m9: { best:['b4','b1'], names:['Zero-Hallucination Protocol','Perspective Shift'],why:'Zero-Hallucination keeps risk analysis credible; Perspective Shift surfaces stakeholder views' },
+      m10:{ best:['b5','b3'], names:['Format Shift','Critique Engine'],                 why:'Format Shift structures the rubric table; Critique Engine sharpens descriptors' },
+    };
+    const bf = BF[mission.id] || { best:[], names:['a targeted booster'], why:'a focused booster would shape the response format more effectively' };
+    let rScore, rFb;
+    if (bf.best[0]===booster.id)      { rScore=10; rFb=booster.name+' is optimal for this mission — '+bf.why+'.'; }
+    else if (bf.best[1]===booster.id) { rScore=8;  rFb=booster.name+' shapes the response well. '+bf.names[0]+' would be the top pick: '+bf.why+'.'; }
+    else                               { rScore=5;  rFb=booster.name+' is workable, but doesn\'t optimally shape the output. '+bf.names[0]+' would be stronger: '+bf.why+'.'; }
+
+    const total = cScore+lScore+eScore+aScore+rScore;
+    let badgeIcon, badgeLabel, badgeBg;
+    if (total>=40)      { badgeIcon='🏆'; badgeLabel='Elite Operative';  badgeBg='rgba(74,222,128,0.08)'; }
+    else if (total>=28) { badgeIcon='⭐'; badgeLabel='Field Ready';      badgeBg='rgba(17,112,161,0.08)'; }
+    else if (total>=18) { badgeIcon='🎖️'; badgeLabel='Competent Agent'; badgeBg='rgba(245,158,11,0.08)'; }
+    else                { badgeIcon='🔧'; badgeLabel='Needs Refinement'; badgeBg='rgba(172,18,37,0.08)'; }
+
+    const sc = function(n){ return n>=8?'#4ade80':n>=5?'#fbbf24':'#f87171'; };
+    const elements = [
+      {letter:'C',label:'Command',    score:cScore,feedback:cFb},
+      {letter:'L',label:'Limits',     score:lScore,feedback:lFb},
+      {letter:'E',label:'Environment',score:eScore,feedback:eFb},
+      {letter:'A',label:'Audience',   score:aScore,feedback:aFb},
+      {letter:'R',label:'Response',   score:rScore,feedback:rFb},
+    ].map(function(el){
+      const cc=CC[el.letter];
+      return Object.assign({},el,{
+        chipStyle:  {textAlign:'center',padding:'12px 8px',borderRadius:'10px',background:cc.bg,border:'1px solid '+cc.border,minWidth:72,flex:'1 1 72px'},
+        letterStyle:{fontSize:20,fontWeight:700,color:cc.text,marginBottom:4},
+        scoreStyle: {fontSize:14,fontWeight:700,color:sc(el.score)},
+        rowStyle:   {padding:'10px 14px',borderRadius:'8px',background:'rgba(0,0,0,0.2)',border:'1px solid '+cc.border,marginBottom:0},
+        badgeStyle: {display:'block',fontSize:10,fontWeight:700,letterSpacing:'0.1em',textTransform:'uppercase',color:cc.text,marginBottom:5},
+      });
+    });
+    const gaps=[];
+    if (cScore<7) gaps.push('Agent: swap to '+af.names[0]+' for a sharper Command');
+    if (lScore<5) gaps.push('Gear: add a Limits item — Tone Tuner, Timebox, or Word Count Clip');
+    if (eScore<5) gaps.push('Gear: add Context Scanner for Environment grounding');
+    if (aScore<5) gaps.push('Gear: add Audience Analyzer, or choose Carlos or Omar');
+    if (rScore<7) gaps.push('Booster: switch to '+bf.names[0]+' for better Response shaping');
+    const idealTip = gaps.length ? gaps.join('. ')+'.': 'Strong loadout. Focus on deploying your prompt and refining based on the actual AI output.';
+    return { total, badgeIcon, badgeLabel, badgeBg, elements, idealTip };
+  }
+
+  /* ══════════════════ RENDER ══════════════════ */
+
+  renderVals() {
+    const s = this.state;
+    const LABELS = ['Field','Mission','Agent','Gear','Boosters','Review','Prompt','Debrief'];
+    const stepLabel = `Step ${s.step + 1} of 8 — ${LABELS[s.step]}`;
+    const progressStyle = { width: `${((s.step + 1) / 8) * 100}%` };
+
+    /* ── Fields ── */
+    const fields = this.FIELDS.map(f => ({
+      ...f,
+      cls: `gcard${s.field && s.field.id === f.id ? ' on' : ''}`,
+      select: () => this.setState({ field: f, selectedSubjects: [], subjectSearch: '' }),
+    }));
+
+    /* ── Mission ── */
+    const missionNotRevealed = !s.missionRevealed;
+    const missionRevealed    = s.missionRevealed;
+    const missionTitleDisplay = s.mission ? `// ${s.mission.title} //` : '';
+    const missionDescDisplay  = s.mission ? s.mission.desc : '';
+    const triesRemaining      = 3 - s.missionHistory.length;
+    const canNewMission       = s.missionRevealed && s.missionHistory.length < 3;
+    const forcedChoiceVisible = s.missionRevealed && s.missionHistory.length >= 3;
+    const forcedMissions      = s.missionHistory.map(m => ({
+      title: m.title,
+      cls: `chip${s.mission && s.mission.id === m.id ? ' on' : ''}`,
+      select: () => this.setState({ mission: m }),
+    }));
+
+    /* ── Subjects ── */
+    const pool   = s.field ? (this.SUBJECTS[s.field.id] || []) : [];
+    const q      = s.subjectSearch.toLowerCase().trim();
+    const filteredSubjects = pool
+      .filter(sub => !s.selectedSubjects.includes(sub))
+      .filter(sub => !q || sub.toLowerCase().includes(q))
+      .map(sub => ({
+        label: sub,
+        add: () => this.setState({ selectedSubjects: [...this.state.selectedSubjects, sub] }),
+      }));
+    const selectedSubjectChips = s.selectedSubjects.map(sub => ({
+      label: sub,
+      remove: () => this.setState({ selectedSubjects: this.state.selectedSubjects.filter(x => x !== sub) }),
+    }));
+    const hasSubjects    = s.selectedSubjects.length > 0;
+    const noSubjectsFound = q.length > 0 && filteredSubjects.length === 0;
+    const subjectPlaceholder = s.field ? `Search ${s.field.name} subjects…` : 'Search subjects…';
+
+    /* ── Audiences ── */
+    const audienceChips = this.AUDIENCES.map(a => ({
+      label: a,
+      cls: `chip${s.selectedAudiences.includes(a) ? ' on' : ''}`,
+      toggle: () => {
+        const sel = this.state.selectedAudiences;
+        this.setState({ selectedAudiences: sel.includes(a) ? sel.filter(x => x !== a) : [...sel, a] });
+      },
+    }));
+
+    /* ── Agents ── */
+    const agentCards = this.AGENTS.map(ag => ({
+      ...ag,
+      cls: `gcard${s.agent && s.agent.id === ag.id ? ' on' : ''}`,
+      select: () => this.setState({ agent: ag }),
+    }));
+
+    /* ── Gear ── */
+    const gearCards = this.GEAR.map(g => ({
+      ...g,
+      cls: `gcard${s.gear.find(x => x.id === g.id) ? ' on' : ''}`,
+      toggle: () => {
+        const sel = this.state.gear;
+        if (sel.find(x => x.id === g.id)) {
+          this.setState({ gear: sel.filter(x => x.id !== g.id) });
+        } else if (sel.length < 2) {
+          this.setState({ gear: [...sel, g] });
+        } else {
+          this.toast('Max 2 gear items — deselect one first.');
+        }
+      },
+    }));
+    const gearCount   = s.gear.length;
+
+    /* ── Boosters ── */
+    const boosterCards = this.BOOSTERS.map(b => ({
+      ...b,
+      cls: `gcard${s.booster && s.booster.id === b.id ? ' on' : ''}`,
+      select: () => this.setState({ booster: s.booster && s.booster.id === b.id ? null : b }),
+    }));
+
+    /* ── Review ── */
+    const revField        = s.field ? s.field.name : '';
+    const revMissionTitle = s.mission ? s.mission.title : '';
+    const revSubjectsText = s.selectedSubjects.length ? `Subjects: ${s.selectedSubjects.join(', ')}` : 'No subjects specified';
+    const revAudiencesText= s.selectedAudiences.length ? `Audience: ${s.selectedAudiences.join(', ')}` : 'No audience specified';
+    const revAgentIcon    = s.agent ? s.agent.icon : '';
+    const revAgentName    = s.agent ? s.agent.name : '';
+    const revAgentTagline = s.agent ? s.agent.tagline : '';
+    const revGear         = s.gear;
+    const revBoosterIcon  = s.booster ? s.booster.icon : '';
+    const revBoosterName  = s.booster ? s.booster.name : '';
+    const revBoosterDesc  = s.booster ? s.booster.desc : '';
+
+    /* ── Prompt / CLEAR sections ── */
+    const parts = this.buildParts();
+    const isAnnotatedMode = s.promptMode === 'annotated';
+    const isEditMode      = s.promptMode === 'edit';
+    const annotatedTabCls = `mode-tab${isAnnotatedMode ? ' active' : ''}`;
+    const editTabCls      = `mode-tab${isEditMode ? ' active' : ''}`;
+    const promptAgentRole = s.agent ? `${s.agent.name} (${s.agent.role})` : '';
+
+    const CLEAR_META = [
+      { letter:'C', label:'Command'    },
+      { letter:'L', label:'Limits'     },
+      { letter:'E', label:'Environment'},
+      { letter:'A', label:'Audience'   },
+      { letter:'R', label:'Response'   },
+    ];
+    const _limG = s.gear.filter(function(g){return ['g5','g6','g7'].indexOf(g.id)>-1;});
+    const _envG = s.gear.filter(function(g){return ['g1','g2','g3','g8'].indexOf(g.id)>-1;});
+    const _audG = s.gear.some(function(g){return g.id==='g4';});
+    const _agAud = s.agent&&(s.agent.id==='ag6'||s.agent.id==='ag4');
+    const _pb = {
+      C: s.agent ? s.agent.icon+' '+s.agent.name+' (Agent)' : '',
+      L: _limG.length ? _limG.map(function(g){return g.icon+' '+g.name;}).join(' + ')+' (Gear)' : '⚠️ No Limits gear — default applied',
+      E: _envG.length ? _envG.map(function(g){return g.icon+' '+g.name;}).join(' + ')+' (Gear)' : '⚠️ No Environment gear — default applied',
+      A: _audG ? '🎯 Audience Analyzer (Gear)' : (_agAud ? s.agent.icon+' '+s.agent.name+' audience awareness (Agent)' : '⚠️ No audience defined'),
+      R: s.booster ? s.booster.icon+' '+s.booster.name+' (Booster)' : '',
+    };
+    const clearSections = parts ? CLEAR_META.map(m => ({
+      letter:      m.letter,
+      label:       m.label,
+      text:        parts[m.letter],
+      borderStyle: { borderLeftColor: this.CLEAR_COLORS[m.letter].border },
+      labelStyle:  { color: this.CLEAR_COLORS[m.letter].label },
+      poweredBy:   _pb[m.letter],
+      pbStyle:     { fontSize:11, marginTop:8, color:_pb[m.letter]&&_pb[m.letter].startsWith('⚠️')?'rgba(248,113,113,0.7)':'rgba(233,233,237,0.32)', fontStyle:'italic' },
+    })) : [];
+
+    /* ── Nav shortcuts ── */
+    const go = n => () => this.setState({ step: n });
+
+    return {
+      /* step flags */
+      isStep0: s.step === 0,
+      isStep1: s.step === 1,
+      isStep2: s.step === 2,
+      isStep3: s.step === 3,
+      isStep4: s.step === 4,
+      isStep5: s.step === 5,
+      isStep6: s.step === 6,
+      isStep7: s.step === 7,
+
+      /* header */
+      stepLabel, progressStyle,
+
+      /* step 0 */
+      fields,
+      fieldNotSelected: !s.field,
+      proceedToMission: () => { if (s.field) this.setState({ step: 1 }); },
+
+      /* step 1 */
+      missionNotRevealed, missionRevealed,
+      missionTitleDisplay, missionDescDisplay,
+      triesRemaining, canNewMission, forcedChoiceVisible, forcedMissions,
+      filteredSubjects, selectedSubjectChips, hasSubjects,
+      noSubjectsFound, subjectPlaceholder,
+      subjectSearch: s.subjectSearch,
+      audienceChips,
+      backToField: go(0),
+      proceedToAgent: () => { if (s.mission) this.setState({ step: 2 }); },
+      decryptMission: () => {
+        const m = this.pickMission();
+        const hist = s.missionHistory;
+        const newHist = hist.find(x => x.id === m.id) ? hist : [...hist, m];
+        this.setState({ mission: m, missionHistory: newHist, missionRevealed: true });
+      },
+      requestNewMission: () => {
+        if (s.missionHistory.length >= 3) { this.toast('All missions revealed — pick one from the list.'); return; }
+        const m = this.pickMission();
+        const hist = s.missionHistory;
+        const newHist = hist.find(x => x.id === m.id) ? hist : [...hist, m];
+        this.setState({ mission: m, missionHistory: newHist });
+      },
+      onSubjectSearch: e => this.setState({ subjectSearch: e.target.value }),
+
+      /* step 2 */
+      agentCards,
+      agentNotSelected: !s.agent,
+      proceedToGear: () => { if (s.agent) this.setState({ step: 3 }); },
+      backToMission: go(1),
+
+      /* step 3 */
+      gearCards, gearCount,
+      gearNotReady: s.gear.length !== 2,
+      proceedToBooster: () => { if (s.gear.length === 2) this.setState({ step: 4 }); },
+      backToAgent: go(2),
+
+      /* step 4 */
+      boosterCards,
+      boosterNotSelected: !s.booster,
+      proceedToReview: () => { if (s.booster) this.setState({ step: 5 }); },
+      backToGear: go(3),
+
+      /* step 5 */
+      revField, revMissionTitle, revSubjectsText, revAudiencesText,
+      revAgentIcon, revAgentName, revAgentTagline,
+      revGear, revBoosterIcon, revBoosterName, revBoosterDesc,
+      editMission: go(1), editAgent: go(2), editGear: go(3), editBooster: go(4),
+      doGeneratePrompt: () => {
+        const p = this.buildParts();
+        this.setState({ step: 6, generatedPrompt: this.buildPromptText(p), promptMode: 'annotated' });
+      },
+
+      /* step 6 */
+      isAnnotatedMode, isEditMode,
+      annotatedTabCls, editTabCls,
+      promptAgentRole,
+      clearSections,
+      generatedPrompt: s.generatedPrompt,
+      onPromptEdit: e => this.setState({ generatedPrompt: e.target.value }),
+      setAnnotatedMode: () => this.setState({ promptMode: 'annotated' }),
+      setEditMode:      () => this.setState({ promptMode: 'edit' }),
+      doCopyPrompt: () => {
+        navigator.clipboard
+          ? navigator.clipboard.writeText(s.generatedPrompt).then(() => this.toast('Prompt copied! ✓')).catch(() => this.toast('Copy failed — select text manually.'))
+          : this.toast('Clipboard unavailable in this browser.');
+      },
+      proceedToDebrief: () => { this.confetti(); this.setState({ step: 7 }); },
+
+      /* step 7 */
+      ...((function(db){
+        if(!db) return {debriefBannerStyle:{},debriefBadgeIcon:'🎖️',debriefBadgeLabel:'',debriefTotal:0,debriefElements:[],debriefIdealTip:''};
+        return {
+          debriefBannerStyle:{display:'flex',alignItems:'center',gap:16,padding:'16px 20px',borderRadius:'12px',background:db.badgeBg,border:'1px solid rgba(255,255,255,0.06)',marginBottom:'20px'},
+          debriefBadgeIcon:  db.badgeIcon,
+          debriefBadgeLabel: db.badgeLabel,
+          debriefTotal:      db.total,
+          debriefElements:   db.elements,
+          debriefIdealTip:   db.idealTip,
+        };
+      })(this.buildDebrief())),
+
+      /* global */
+      restart: () => this.setState({
+        step:0, field:null, mission:null, missionHistory:[], missionRevealed:false,
+        subjectSearch:'', selectedSubjects:[], selectedAudiences:[],
+        agent:null, gear:[], booster:null, generatedPrompt:'',
+        promptMode:'annotated', debriefMessage:'', toastMsg:'', toastVisible:false,
+      }),
+
+      /* toast */
+      toastCls: `toast${s.toastVisible ? ' show' : ''}`,
+      toastMsg: s.toastMsg,
+    };
+  }
+}
+</script>
+</body>
+</html>

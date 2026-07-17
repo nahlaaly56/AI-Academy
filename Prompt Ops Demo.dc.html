@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <style>
+    *,*::before,*::after{box-sizing:border-box;}
+    body{margin:0;background:#04080f;overflow:hidden;}
+    @keyframes fadeIn{from{opacity:0}to{opacity:1}}
+    @keyframes fadeOut{from{opacity:1}to{opacity:0}}
+    @keyframes slideUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+    @keyframes sceneIn{0%{opacity:0;transform:translateY(6px) scale(.97)}100%{opacity:1;transform:translateY(0) scale(1)}}
+    @keyframes pulse{0%,100%{opacity:.6}50%{opacity:1}}
+    @keyframes prog{from{width:0}to{width:100%}}
+  </style>
+</helmet>
+
+<div style="position:fixed;inset:0;background:#04080f;">
+
+  <!-- Academy iframe -->
+  <iframe id="af" src="./Prompt Ops Academy.dc.html"
+    style="width:100%;height:100%;border:none;display:block;"
+    allow="autoplay"></iframe>
+
+  <!-- Scene label (top-center) -->
+  <div id="scene-pill" style="position:fixed;top:18px;left:50%;transform:translateX(-50%);background:rgba(0,0,0,.72);backdrop-filter:blur(10px);border:1px solid rgba(14,165,233,.35);border-radius:20px;padding:6px 18px;display:none;z-index:9999;pointer-events:none;">
+    <span id="scene-num" style="font-family:'Share Tech Mono',monospace;font-size:9px;letter-spacing:.18em;color:#0ea5e9;text-transform:uppercase;margin-right:8px;"></span>
+    <span id="scene-name" style="font-family:'Share Tech Mono',monospace;font-size:11px;color:rgba(233,233,237,.88);letter-spacing:.06em;"></span>
+  </div>
+
+  <!-- Bottom controller -->
+  <div id="ctrl" style="position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:rgba(4,8,15,.92);backdrop-filter:blur(16px);border:1px solid rgba(14,165,233,.22);border-radius:12px;padding:12px 18px;display:flex;align-items:center;gap:14px;z-index:9999;min-width:340px;">
+    <button id="play-btn" style="width:36px;height:36px;border-radius:50%;background:rgba(14,165,233,.15);border:1px solid rgba(14,165,233,.4);color:#0ea5e9;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0;transition:background .15s;" onclick="demoToggle()">▶</button>
+    <div style="flex:1;min-width:0;">
+      <div id="step-label" style="font-family:'Share Tech Mono',monospace;font-size:10px;color:rgba(233,233,237,.55);letter-spacing:.08em;margin-bottom:5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Press ▶ to start demo</div>
+      <div style="height:3px;background:rgba(14,165,233,.1);border-radius:2px;overflow:hidden;">
+        <div id="prog-bar" style="height:100%;background:linear-gradient(90deg,#0ea5e9,rgba(14,165,233,.4));width:0%;transition:width .4s linear;"></div>
+      </div>
+    </div>
+    <span id="timer-display" style="font-family:'Share Tech Mono',monospace;font-size:11px;color:rgba(233,233,237,.35);flex-shrink:0;">0:00</span>
+    <button onclick="demoReset()" style="background:transparent;border:none;color:rgba(233,233,237,.3);cursor:pointer;font-size:14px;padding:4px;flex-shrink:0;" title="Reset">↺</button>
+  </div>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  componentDidMount() {
+    window.demoToggle = () => this.toggle();
+    window.demoReset  = () => this.reset();
+    this._elapsed = 0;
+    this._running = false;
+    this._raf = null;
+    this._lastTs = null;
+    this._stepIdx = 0;
+    this._totalDur = 215000; // ~3:35
+
+    this._steps = [
+      { t:0,     label:'Welcome screen loading…',         scene:null,                         action:null },
+      { t:3500,  label:'Scene 1 — Hook',                  scene:['01','Welcome Screen'],       action:null },
+      { t:6000,  label:'Typing operative name…',          scene:null,                         action:'typeName' },
+      { t:11000, label:'Enrolling…',                      scene:null,                         action:'clickEnroll' },
+      { t:14000, label:'Scene 2 — Command Center',        scene:['02','Command Center'],       action:null },
+      { t:19000, label:'Browsing mission cards…',         scene:null,                         action:'hoverCards' },
+      { t:25000, label:'Opening Mission 1…',              scene:null,                         action:'clickMission1' },
+      { t:29000, label:'Scene 3 — CLEAR Framework',       scene:['03','CLEAR Framework'],     action:null },
+      { t:32000, label:'Tapping C — Command…',            scene:null,                         action:'tapHint0' },
+      { t:36000, label:'Tapping L — Limits…',             scene:null,                         action:'tapHint1' },
+      { t:40000, label:'Tapping E — Environment…',        scene:null,                         action:'tapHint2' },
+      { t:44000, label:'Tapping A — Audience…',           scene:null,                         action:'tapHint3' },
+      { t:48000, label:'Tapping R — Response…',           scene:null,                         action:'tapHint4' },
+      { t:52000, label:'Scene 4 — Prompt Lab',            scene:['04','Prompt Lab'],          action:'scrollToLab' },
+      { t:55000, label:'Writing prompt…',                 scene:null,                         action:'typePrompt' },
+      { t:75000, label:'Submitting for AI scoring…',      scene:null,                         action:'clickScore' },
+      { t:79000, label:'Scene 5 — AI Scoring',            scene:['05','AI Scoring'],          action:null },
+      { t:102000,label:'Reviewing feedback…',             scene:null,                         action:'scrollToResults' },
+      { t:112000,label:'Completing mission…',             scene:null,                         action:'clickComplete' },
+      { t:116000,label:'Scene 6 — Mission Complete',      scene:['06','Mission Complete'],    action:null },
+      { t:126000,label:'Returning to Command Center…',    scene:null,                         action:'clickHome' },
+      { t:130000,label:'Scene 7 — Progression & XP',     scene:['07','Progression & XP'],    action:null },
+      { t:145000,label:'Opening Mission 2…',              scene:null,                         action:'clickMission2' },
+      { t:150000,label:'Scene 8 — Mission Variety',       scene:['08','7 Real-World Missions'],action:null },
+      { t:168000,label:'Returning to Command Center…',    scene:null,                         action:'clickHome2' },
+      { t:172000,label:'Scene 9 — Grand Finale',          scene:['09','Grand Finale'],        action:null },
+      { t:185000,label:'Launching Prompt Ops finale…',    scene:null,                         action:'clickFinale' },
+      { t:192000,label:'Scene 10 — Live AI Sandbox',      scene:['10','Live AI Sandbox'],     action:null },
+      { t:210000,label:'Demo complete.',                  scene:null,                         action:'demoEnd' },
+    ];
+
+    this._PROMPT = `You are a senior financial analyst. Summarise the attached Q3 quarterly financial report in 200 words for a board-level audience with no finance background. Highlight the top 3 risks using plain language, quantify each risk with a specific figure from the report, and end with one prioritised recommendation. Format as: executive summary paragraph, then a numbered risk list, then a single "Recommended Action" line.`;
+  }
+
+  iw() {
+    const f = document.getElementById('af');
+    return f ? f.contentWindow : null;
+  }
+  id() {
+    const f = document.getElementById('af');
+    return f ? f.contentDocument : null;
+  }
+
+  toggle() {
+    this._running ? this.pause() : this.play();
+  }
+
+  play() {
+    this._running = true;
+    document.getElementById('play-btn').textContent = '⏸';
+    this._lastTs = performance.now();
+    this._raf = requestAnimationFrame(ts => this.tick(ts));
+  }
+
+  pause() {
+    this._running = false;
+    document.getElementById('play-btn').textContent = '▶';
+    if (this._raf) cancelAnimationFrame(this._raf);
+  }
+
+  reset() {
+    this.pause();
+    this._elapsed = 0;
+    this._stepIdx = 0;
+    this.updateUI(0);
+    this.setScene(null);
+    this.setLabel('Press ▶ to start demo');
+    // reload iframe
+    const f = document.getElementById('af');
+    if (f) f.src = f.src;
+  }
+
+  tick(ts) {
+    if (!this._running) return;
+    const dt = ts - this._lastTs;
+    this._lastTs = ts;
+    this._elapsed += dt;
+
+    // clamp
+    if (this._elapsed > this._totalDur) {
+      this._elapsed = this._totalDur;
+      this.pause();
+    }
+
+    // fire steps
+    while (this._stepIdx < this._steps.length &&
+           this._elapsed >= this._steps[this._stepIdx].t) {
+      this.fireStep(this._steps[this._stepIdx]);
+      this._stepIdx++;
+    }
+
+    this.updateUI(this._elapsed);
+    this._raf = requestAnimationFrame(ts2 => this.tick(ts2));
+  }
+
+  fireStep(step) {
+    if (step.label) this.setLabel(step.label);
+    if (step.scene) this.setScene(step.scene);
+    if (step.action) this.runAction(step.action);
+  }
+
+  runAction(a) {
+    const d = this.id();
+    const w = this.iw();
+    if (!d || !w) return;
+    switch (a) {
+      case 'typeName':    this.typeName(d, w, 'Jordan'); break;
+      case 'clickEnroll': { const b = d.querySelector('button.btn-primary'); if (b) b.click(); break; }
+      case 'hoverCards':  break; // visual only — cards lift on hover automatically
+      case 'clickMission1': {
+        const cards = d.querySelectorAll('.ops-card');
+        if (cards[0]) cards[0].click();
+        break;
+      }
+      case 'tapHint0': case 'tapHint1': case 'tapHint2': case 'tapHint3': case 'tapHint4': {
+        const idx = parseInt(a.replace('tapHint',''));
+        const chips = d.querySelectorAll('button.hint-chip');
+        if (chips[idx]) chips[idx].click();
+        break;
+      }
+      case 'scrollToLab': {
+        const ta = d.querySelector('textarea');
+        if (ta) { const y = ta.getBoundingClientRect().top + w.scrollY - 120; w.scrollTo({top:y,behavior:'smooth'}); }
+        break;
+      }
+      case 'typePrompt': this.typeIntoTextarea(d, w, this._PROMPT); break;
+      case 'clickScore': {
+        // find the primary button inside the lab section (not complete)
+        const btns = Array.from(d.querySelectorAll('button.btn-primary'));
+        const sb = btns.find(b => b.textContent.includes('SCORE') || b.textContent.includes('ANALYZE') || b.textContent.includes('ANALYSE') || (b.getAttribute('disabled') !== '' && b.querySelector('i.ph-brain')));
+        // fallback: last visible primary btn that isn't the enroll button
+        const fb = btns.filter(b => !b.textContent.includes('ENROLL')).pop();
+        if (sb) sb.click(); else if (fb) fb.click();
+        break;
+      }
+      case 'scrollToResults': {
+        const res = d.querySelector('[class*="labScore"], textarea');
+        if (res) { w.scrollTo({top:0,behavior:'smooth'}); }
+        break;
+      }
+      case 'clickComplete': {
+        const btns = Array.from(d.querySelectorAll('button.btn-primary'));
+        const cb = btns.find(b => b.textContent.includes('COMPLETE'));
+        if (cb) cb.click();
+        break;
+      }
+      case 'clickHome': case 'clickHome2': {
+        const btns = Array.from(d.querySelectorAll('button'));
+        const hb = btns.find(b => b.textContent.includes('Command Center'));
+        if (hb) hb.click();
+        w.scrollTo({top:0,behavior:'smooth'});
+        break;
+      }
+      case 'clickMission2': {
+        const cards = d.querySelectorAll('.ops-card');
+        if (cards[1]) cards[1].click();
+        break;
+      }
+      case 'clickFinale': {
+        const el = d.querySelector('.finale-ready, [class*="finale"]');
+        if (el) el.click();
+        break;
+      }
+      case 'demoEnd': {
+        this.setLabel('🎯 Demo complete — 7 missions, live AI scoring, full gamification');
+        break;
+      }
+    }
+  }
+
+  typeName(d, w, name) {
+    const input = d.querySelector('input[type="text"]');
+    if (!input) return;
+    let i = 0;
+    const setter = Object.getOwnPropertyDescriptor(w.HTMLInputElement.prototype, 'value').set;
+    const tick = () => {
+      if (i > name.length) return;
+      setter.call(input, name.slice(0, i));
+      input.dispatchEvent(new w.Event('input', {bubbles:true}));
+      input.dispatchEvent(new w.Event('change', {bubbles:true}));
+      i++;
+      if (i <= name.length) setTimeout(tick, 90);
+    };
+    tick();
+  }
+
+  typeIntoTextarea(d, w, text) {
+    const ta = d.querySelector('textarea');
+    if (!ta) return;
+    let i = 0;
+    const setter = Object.getOwnPropertyDescriptor(w.HTMLTextAreaElement.prototype, 'value').set;
+    const chunkSize = 8;
+    const tick = () => {
+      if (i > text.length) return;
+      setter.call(ta, text.slice(0, i));
+      ta.dispatchEvent(new w.Event('input', {bubbles:true}));
+      ta.dispatchEvent(new w.Event('change', {bubbles:true}));
+      i += chunkSize;
+      if (i <= text.length + chunkSize) setTimeout(tick, 60);
+    };
+    tick();
+  }
+
+  setScene([num, name] = [null, null]) {
+    const pill = document.getElementById('scene-pill');
+    if (!num) { pill.style.display = 'none'; return; }
+    document.getElementById('scene-num').textContent = `SCENE ${num}`;
+    document.getElementById('scene-name').textContent = name;
+    pill.style.display = 'block';
+    pill.style.animation = 'sceneIn .35s ease-out both';
+    setTimeout(() => { pill.style.animation = ''; }, 400);
+  }
+
+  setLabel(txt) {
+    document.getElementById('step-label').textContent = txt;
+  }
+
+  updateUI(ms) {
+    const pct = Math.min(100, (ms / this._totalDur) * 100);
+    document.getElementById('prog-bar').style.width = pct + '%';
+    const s = Math.floor(ms / 1000);
+    document.getElementById('timer-display').textContent =
+      Math.floor(s/60) + ':' + String(s%60).padStart(2,'0');
+  }
+}
+
+</script>
+</body>
+</html>

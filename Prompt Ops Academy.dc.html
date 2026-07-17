@@ -7,13 +7,6 @@
 </head>
 <body>
 <x-dc>
-<template id="__bundler_thumbnail" data-bg-color="#0a0f1e">
-  <svg viewBox="0 0 120 80" xmlns="http://www.w3.org/2000/svg">
-    <rect width="120" height="80" fill="#0a0f1e"/>
-    <text x="60" y="38" text-anchor="middle" font-family="monospace" font-size="10" fill="#0ea5e9" font-weight="bold">PROMPT OPS</text>
-    <text x="60" y="52" text-anchor="middle" font-family="monospace" font-size="8" fill="#0ea5e9">ACADEMY</text>
-  </svg>
-</template>
 <helmet>
   <link rel="stylesheet" href="_ds/nocturne-113e411d-462a-44fd-9fb9-d527d382c80b/styles.css">
   <script src="_ds/nocturne-113e411d-462a-44fd-9fb9-d527d382c80b/_ds_bundle.js"></script>
@@ -60,13 +53,13 @@
     .corner-tr{top:22px;right:22px;border-top:1px solid rgba(14,165,233,.45);border-right:1px solid rgba(14,165,233,.45);}
     .corner-bl{bottom:22px;left:22px;border-bottom:1px solid rgba(14,165,233,.45);border-left:1px solid rgba(14,165,233,.45);}
     .corner-br{bottom:22px;right:22px;border-bottom:1px solid rgba(14,165,233,.45);border-right:1px solid rgba(14,165,233,.45);}
-    .reveal-btn{background:transparent;border:1px solid rgba(14,165,233,.2);border-radius:6px;padding:7px 16px;cursor:pointer;font-family:'Share Tech Mono',monospace;font-size:10px;letter-spacing:.12em;color:rgba(233,233,237,.66);text-transform:uppercase;transition:all .2s;}
-    .reveal-btn:hover{border-color:rgba(14,165,233,.82);color:rgba(233,233,237,.90);background:rgba(14,165,233,.06);}
+    .reveal-btn{background:transparent;border:1px solid rgba(14,165,233,.2);border-radius:6px;padding:7px 16px;cursor:pointer;font-family:'Share Tech Mono',monospace;font-size:10px;letter-spacing:.12em;color:rgba(233,233,237,.42);text-transform:uppercase;transition:all .2s;}
+    .reveal-btn:hover{border-color:rgba(14,165,233,.5);color:rgba(233,233,237,.75);background:rgba(14,165,233,.06);}
     .hint-chip{background:transparent;border-radius:6px;padding:8px 14px;cursor:pointer;transition:all .15s;display:flex;align-items:center;gap:4px;}
     .hint-chip:hover{background:rgba(14,165,233,.08);}
     .anno-chip{border-radius:6px;padding:7px 14px;cursor:pointer;transition:all .15s;display:flex;align-items:center;gap:6px;border:1px solid transparent;}
     .ft-chip{border-radius:6px;padding:10px 18px;cursor:pointer;transition:all .2s;display:flex;align-items:center;justify-content:center;min-width:52px;}
-    textarea:focus,input[type="text"]:focus{border-color:rgba(14,165,233,.85)!important;outline:none;}
+    textarea:focus,input[type="text"]:focus{border-color:rgba(14,165,233,.55)!important;outline:none;}
   </style>
 </helmet>
 
@@ -83,20 +76,16 @@
     <div class="corner corner-br"></div>
     <div style="position:absolute;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(14,165,233,.3),transparent);animation:scanLine 4s linear infinite;top:0;"></div>
     <div style="max-width:580px;width:100%;text-align:center;">
-      <div style="display:flex;flex-direction:column;align-items:center;gap:2px;margin-bottom:36px;animation:fadeUp .4s .05s both;">
-        <div style="display:flex;align-items:center;gap:10px;">
-          <div style="width:28px;height:1px;background:linear-gradient(90deg,transparent,rgba(14,165,233,.5));"></div>
-          <span style="font-family:'Anton',sans-serif;font-size:22px;letter-spacing:.12em;text-transform:uppercase;color:rgba(233,233,237,.92);line-height:1;">BeyondTalent</span>
-          <div style="width:28px;height:1px;background:linear-gradient(90deg,rgba(14,165,233,.5),transparent);"></div>
-        </div>
-        <span class="mono" style="font-size:11px;letter-spacing:.28em;text-transform:uppercase;color:#38bdf8;font-weight:700;">presents</span>
+      <div style="display:flex;align-items:center;justify-content:center;gap:8px;margin-bottom:32px;animation:fadeUp .4s .05s both;">
+        <i class="ph-bold ph-radar" style="font-size:13px;color:var(--c-blue);animation:blinkDot 2.4s infinite;"></i>
+        <span class="mono" style="font-size:9px;letter-spacing:.26em;text-transform:uppercase;color:var(--c-blue);">BeyondTalent</span>
       </div>
       <div class="hdg" style="font-size:16px;font-weight:600;letter-spacing:.32em;text-transform:uppercase;color:rgba(233,233,237,.6);margin-bottom:10px;animation:fadeUp .4s .14s both;">WELCOME TO</div>
       <h1 class="hdg" style="font-size:clamp(42px,8vw,70px);font-weight:700;line-height:.92;letter-spacing:.04em;text-transform:uppercase;color:rgba(233,233,237,.98);margin:0;min-height:0.84em;">{{ typedTitle }}<sc-if value="{{ showCursor }}" hint-placeholder-val="{{ true }}"><span style="color:var(--c-blue);animation:blinkDot .75s infinite;">|</span></sc-if></h1>
       <div style="{{ wcSub }}">
-        <p style="font-size:18px;color:rgba(233,233,237,.90);line-height:1.6;max-width:600px;margin:16px auto 10px;width:100%;">The home of the CLEAR framework for AI prompting.</p>
-        <p style="font-size:15px;color:rgba(233,233,237,.90);line-height:1.72;max-width:520px;margin:0 auto 8px;">Master AI prompting; from principles, examples and applications, to a live AI-graded prompt lab.</p>
-        <p style="font-size:14.5px;color:rgba(233,233,237,.84);line-height:1.7;max-width:480px;margin:0 auto 28px;">So join us! Earn XP, unlock clearance levels, and become an AI prompting super-operative.</p>
+        <p style="font-size:18px;color:rgba(233,233,237,.75);line-height:1.6;max-width:600px;margin:16px auto 10px;width:100%;">The home of the CLEAR framework for AI prompting.</p>
+        <p style="font-size:15px;color:rgba(233,233,237,.58);line-height:1.72;max-width:520px;margin:0 auto 8px;">Master AI prompting; from principles, examples and applications, to a live AI-graded prompt lab.</p>
+        <p style="font-size:14.5px;color:rgba(233,233,237,.46);line-height:1.7;max-width:480px;margin:0 auto 28px;">So join us! Earn XP, unlock clearance levels, and become an AI prompting super-operative.</p>
         <div style="display:flex;gap:7px;justify-content:center;margin-bottom:8px;">
           <div style="padding:10px 15px;border-radius:8px;background:rgba(14,165,233,.12);border:1px solid rgba(14,165,233,.3);"><span class="hdg" style="font-size:24px;font-weight:700;color:#0ea5e9;line-height:1;">C</span></div>
           <div style="padding:10px 15px;border-radius:8px;background:rgba(239,68,68,.09);border:1px solid rgba(239,68,68,.28);"><span class="hdg" style="font-size:24px;font-weight:700;color:#ef4444;line-height:1;">L</span></div>
@@ -104,18 +93,18 @@
           <div style="padding:10px 15px;border-radius:8px;background:rgba(245,158,11,.09);border:1px solid rgba(245,158,11,.28);"><span class="hdg" style="font-size:24px;font-weight:700;color:#f59e0b;line-height:1;">A</span></div>
           <div style="padding:10px 15px;border-radius:8px;background:rgba(34,197,94,.09);border:1px solid rgba(34,197,94,.28);"><span class="hdg" style="font-size:24px;font-weight:700;color:#22c55e;line-height:1;">R</span></div>
         </div>
-        <div class="mono" style="font-size:11px;letter-spacing:.12em;color:rgba(233,233,237,.85);margin-bottom:28px;font-weight:600;">Command · Limits · Environment · Audience · Response</div>
+        <div class="mono" style="font-size:9px;letter-spacing:.1em;color:rgba(233,233,237,.3);margin-bottom:28px;">Command · Limits · Environment · Audience · Response</div>
         <div style="max-width:360px;margin:0 auto 20px;text-align:left;">
-          <label class="mono" style="display:block;font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:rgba(233,233,237,.70);margin-bottom:9px;">[ OPERATIVE DESIGNATION — OPTIONAL ]</label>
+          <label class="mono" style="display:block;font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:rgba(233,233,237,.45);margin-bottom:9px;">[ OPERATIVE DESIGNATION — OPTIONAL ]</label>
           <input type="text" value="{{ learnerName }}" onChange="{{ onNameChange }}" onKeyDown="{{ onNameKeyDown }}" placeholder="Your first name" style="width:100%;background:rgba(14,165,233,.06);border:1px solid rgba(14,165,233,.22);border-radius:6px;padding:12px 16px;font-family:'Share Tech Mono',monospace;font-size:14px;color:rgba(233,233,237,.92);box-sizing:border-box;color-scheme:dark;transition:border-color .2s;">
         </div>
         <button class="btn btn-primary" onClick="{{ enroll }}" style="font-size:14px;padding:13px 44px;letter-spacing:.1em;font-family:'Rajdhani',sans-serif;font-weight:700;">ENROLL →</button>
         <div style="display:flex;gap:20px;justify-content:center;margin-top:28px;">
-          <span class="mono" style="font-size:9px;color:rgba(233,233,237,.60);letter-spacing:.08em;">7 MISSIONS</span>
-          <span class="mono" style="font-size:9px;color:rgba(233,233,237,.70);">·</span>
-          <span class="mono" style="font-size:9px;color:rgba(233,233,237,.60);letter-spacing:.08em;">~35 MIN</span>
-          <span class="mono" style="font-size:9px;color:rgba(233,233,237,.70);">·</span>
-          <span class="mono" style="font-size:9px;color:rgba(233,233,237,.60);letter-spacing:.08em;">LIVE AI FEEDBACK</span>
+          <span class="mono" style="font-size:9px;color:rgba(233,233,237,.3);letter-spacing:.08em;">7 MISSIONS</span>
+          <span class="mono" style="font-size:9px;color:rgba(233,233,237,.15);">·</span>
+          <span class="mono" style="font-size:9px;color:rgba(233,233,237,.3);letter-spacing:.08em;">~35 MIN</span>
+          <span class="mono" style="font-size:9px;color:rgba(233,233,237,.15);">·</span>
+          <span class="mono" style="font-size:9px;color:rgba(233,233,237,.3);letter-spacing:.08em;">LIVE AI FEEDBACK</span>
         </div>
       </div>
     </div>
@@ -135,7 +124,7 @@
       </div>
       <div style="display:flex;align-items:center;gap:12px;">
         <span class="mono" style="font-size:12px;color:var(--c-green);font-weight:700;letter-spacing:.04em;">⚡ {{ xpDisplay }} XP</span>
-        <span class="mono" style="font-size:10px;color:rgba(233,233,237,.60);letter-spacing:.06em;">{{ completedCount }}/7</span>
+        <span class="mono" style="font-size:10px;color:rgba(233,233,237,.3);letter-spacing:.06em;">{{ completedCount }}/7</span>
         <button class="music-btn" style="{{ musicBtnStyle }}" onClick="{{ toggleMusic }}" title="{{ musicBtnTitle }}">
           <i class="{{ musicBtnIcon }}" style="font-size:15px;"></i>
         </button>
@@ -150,52 +139,20 @@
   </div>
   </sc-if>
 
-  <!-- ━━ CHOICE ━━ -->
-  <sc-if value="{{ isChoiceView }}" hint-placeholder-val="{{ false }}">
-  <div style="min-height:100vh;display:flex;align-items:center;justify-content:center;position:relative;z-index:1;padding:40px 20px;">
-    <div class="corner corner-tl"></div><div class="corner corner-tr"></div><div class="corner corner-bl"></div><div class="corner corner-br"></div>
-    <div style="max-width:720px;width:100%;text-align:center;">
-      <div class="mono" style="font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--c-blue);margin-bottom:10px;animation:fadeUp .3s both;">[ OPERATIVE: {{ choiceName }} ]</div>
-      <h2 class="hdg" style="font-size:34px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:rgba(233,233,237,.97);margin:0 0 8px;animation:fadeUp .35s .06s both;">Choose Your Path</h2>
-      <p style="font-size:15px;color:rgba(233,233,237,.74);margin:0 0 36px;animation:fadeUp .35s .1s both;">Complete the full training, or jump straight into the sandbox.</p>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;animation:fadeUp .4s .14s both;">
-        <div class="ops-card" style="padding:32px 24px;cursor:pointer;text-align:left;border:1px solid rgba(14,165,233,.3);" onClick="{{ chooseBootcamp }}">
-          <div style="width:52px;height:52px;border-radius:8px;background:rgba(14,165,233,.1);border:1px solid rgba(14,165,233,.3);display:flex;align-items:center;justify-content:center;margin-bottom:20px;">
-            <i class="ph-bold ph-graduation-cap" style="font-size:24px;color:var(--c-blue);"></i>
-          </div>
-          <div class="mono" style="font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--c-blue);margin-bottom:8px;">[ RECOMMENDED ]</div>
-          <div class="hdg" style="font-size:20px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:rgba(233,233,237,.97);margin-bottom:10px;">Enter Bootcamp</div>
-          <p style="font-size:13px;color:rgba(233,233,237,.80);line-height:1.65;margin:0 0 24px;">7 guided missions. Learn the CLEAR framework step by step, earn XP and badges, and unlock the sandbox when you're ready.</p>
-          <button class="btn btn-primary" style="font-size:13px;padding:9px 20px;width:100%;">Begin Training →</button>
-        </div>
-        <div class="ops-card" style="padding:32px 24px;cursor:pointer;text-align:left;border:1px solid rgba(0,230,118,.25);" onClick="{{ chooseSkip }}">
-          <div style="width:52px;height:52px;border-radius:8px;background:rgba(0,230,118,.08);border:1px solid rgba(0,230,118,.25);display:flex;align-items:center;justify-content:center;margin-bottom:20px;">
-            <i class="ph-bold ph-rocket" style="font-size:24px;color:var(--c-green);"></i>
-          </div>
-          <div class="mono" style="font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--c-green);margin-bottom:8px;">[ EXPERIENCED / DEMO ]</div>
-          <div class="hdg" style="font-size:20px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:rgba(233,233,237,.97);margin-bottom:10px;">Mission Prompt Ops</div>
-          <p style="font-size:13px;color:rgba(233,233,237,.80);line-height:1.65;margin:0 0 24px;">Skip the missions and go straight to the live prompt sandbox. Build, test, and score real-world prompts immediately.</p>
-          <button class="btn btn-secondary" style="font-size:13px;padding:9px 20px;width:100%;border-color:rgba(0,230,118,.4);color:var(--c-green);">Proceed to Sandbox →</button>
-        </div>
-      </div>
-    </div>
-  </div>
-  </sc-if>
-
   <!-- ━━ HOME / COMMAND CENTER ━━ -->
   <sc-if value="{{ isHomeView }}" hint-placeholder-val="{{ false }}">
   <div style="max-width:960px;margin:0 auto;padding:40px 20px 80px;position:relative;z-index:1;">
     <div style="margin-bottom:46px;max-width:660px;">
       <div class="mono" style="font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:var(--c-blue);margin-bottom:10px;">{{ operativeLabel }}</div>
       <h1 class="hdg" style="font-size:48px;font-weight:700;margin:0 0 10px;letter-spacing:.04em;line-height:1.05;color:rgba(233,233,237,.97);text-transform:uppercase;">Command<br>Center</h1>
-      <p style="font-size:15px;color:rgba(233,233,237,.84);line-height:1.82;margin:0 0 22px;max-width:520px;">Master the CLEAR framework for AI prompting. Complete all missions, then deploy your skills in the grand finale.</p>
+      <p style="font-size:15px;color:rgba(233,233,237,.68);line-height:1.82;margin:0 0 22px;max-width:520px;">Master the CLEAR framework for AI prompting. Complete all missions, then deploy your skills in the grand finale.</p>
       <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:16px;">
         <span style="{{ levelBadgeStyle }}">{{ levelLabel }}</span>
         <div style="height:3px;width:160px;background:rgba(14,165,233,.1);border-radius:2px;overflow:hidden;flex-shrink:0;"><div style="{{ levelBarStyle }}"></div></div>
-        <span class="mono" style="font-size:10px;color:rgba(233,233,237,.60);letter-spacing:.06em;">{{ xpToNextLabel }}</span>
+        <span class="mono" style="font-size:10px;color:rgba(233,233,237,.3);letter-spacing:.06em;">{{ xpToNextLabel }}</span>
       </div>
       <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
-        <span class="mono" style="font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:rgba(233,233,237,.6);">Clearance</span>
+        <span class="mono" style="font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:rgba(233,233,237,.26);">Clearance</span>
         <sc-for list="{{ badgeDisplay }}" as="bd" hint-placeholder-count="5">
           <div class="badge-chip" style="{{ bd.chipStyle }}" title="{{ bd.tooltip }}">
             <i class="ph-bold ph-{{ bd.iconClass }}" style="{{ bd.iconStyle }}"></i>
@@ -203,7 +160,7 @@
         </sc-for>
       </div>
     </div>
-    <div class="mono" style="font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:rgba(14,165,233,.82);margin-bottom:12px;">[ MISSION SELECT ]</div>
+    <div class="mono" style="font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:rgba(14,165,233,.5);margin-bottom:12px;">[ MISSION SELECT ]</div>
     <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(278px,1fr));gap:10px;margin-bottom:12px;">
       <sc-for list="{{ moduleCards }}" as="mc" hint-placeholder-count="7">
         <div class="ops-card" style="{{ mc.cardStyle }}" onClick="{{ mc.open }}">
@@ -219,47 +176,34 @@
               <div style="{{ mc.iconWrap }}"><i class="ph-bold ph-{{ mc.iconClass }}" style="{{ mc.iconPh }}"></i></div>
             </div>
             <div class="hdg" style="font-weight:700;font-size:16px;margin-bottom:5px;line-height:1.25;letter-spacing:.04em;color:rgba(233,233,237,.97);text-transform:uppercase;">{{ mc.title }}</div>
-            <div style="font-size:12.5px;color:rgba(233,233,237,.80);line-height:1.65;margin-bottom:12px;">{{ mc.teaser }}</div>
+            <div style="font-size:12.5px;color:rgba(233,233,237,.62);line-height:1.65;margin-bottom:12px;">{{ mc.teaser }}</div>
             <div style="display:flex;align-items:center;justify-content:space-between;">
-              <span class="mono" style="font-size:10px;color:rgba(233,233,237,.56);">⏱ {{ mc.duration }}</span>
+              <span class="mono" style="font-size:10px;color:rgba(233,233,237,.28);">⏱ {{ mc.duration }}</span>
               <sc-if value="{{ mc.done }}" hint-placeholder-val="{{ false }}">
                 <span class="mono" style="font-size:9px;color:var(--c-green);background:rgba(0,230,118,.07);border:1px solid rgba(0,230,118,.2);padding:2px 9px;border-radius:3px;letter-spacing:.1em;">✓ COMPLETE</span>
               </sc-if>
               <sc-if value="{{ mc.notDone }}" hint-placeholder-val="{{ false }}">
-                <span class="mono" style="font-size:9px;color:rgba(233,233,237,.50);letter-spacing:.08em;">up to 45 XP</span>
+                <span class="mono" style="font-size:9px;color:rgba(233,233,237,.2);letter-spacing:.08em;">up to 45 XP</span>
               </sc-if>
             </div>
           </div>
         </div>
       </sc-for>
     </div>
-    <div class="ops-card" style="{{ finaleCardStyle }}">
+    <div class="{{ finaleCardCls }}" style="{{ finaleCardStyle }}" onClick="{{ openFinale }}">
       <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;">
         <div style="display:flex;align-items:center;gap:18px;">
-          <div style="position:relative;width:56px;height:56px;border-radius:8px;background:rgba(14,165,233,.1);border:1px solid rgba(14,165,233,.25);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+          <div style="width:56px;height:56px;border-radius:8px;background:rgba(14,165,233,.1);border:1px solid rgba(14,165,233,.25);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
             <i class="ph-bold ph-rocket" style="font-size:26px;color:var(--c-blue);"></i>
-            <sc-if value="{{ finaleIsLocked }}" hint-placeholder-val="{{ false }}">
-              <span style="position:absolute;top:-7px;right:-7px;font-size:12px;background:#04080f;border-radius:50%;padding:1px;">🔒</span>
-            </sc-if>
           </div>
           <div>
-            <div class="mono" style="font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:rgba(233,233,237,.74);margin-bottom:4px;">[ GRAND FINALE ]</div>
+            <div class="mono" style="font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:rgba(233,233,237,.36);margin-bottom:4px;">[ GRAND FINALE ]</div>
             <div class="hdg" style="font-size:20px;font-weight:700;margin-bottom:4px;letter-spacing:.06em;text-transform:uppercase;color:rgba(233,233,237,.97);">Mission Prompt Ops</div>
-            <div style="font-size:13px;color:rgba(233,233,237,.74);">{{ finaleSubtitle }}</div>
+            <div style="font-size:13px;color:rgba(233,233,237,.55);">{{ finaleSubtitle }}</div>
           </div>
         </div>
-        <sc-if value="{{ finaleIsUnlocked }}" hint-placeholder-val="{{ false }}">
-          <button onClick="{{ openFinale }}" style="font-family:'Share Tech Mono',monospace;font-size:12px;padding:9px 20px;border-radius:4px;border:1px solid rgba(14,165,233,.5);background:rgba(14,165,233,.12);color:rgba(14,165,233,.95);cursor:pointer;letter-spacing:.06em;">⚡ LAUNCH MISSION →</button>
-        </sc-if>
+        <div style="{{ finaleCtaStyle }}">{{ finaleCta }}</div>
       </div>
-    </div>
-    <!-- SKIP CTA -->
-    <div style="margin-top:12px;">
-      <button onClick="{{ openFinaleDirect }}" style="width:100%;font-family:'Rajdhani',sans-serif;font-size:14px;font-weight:700;letter-spacing:.1em;padding:13px 24px;border-radius:8px;border:1px solid rgba(14,165,233,.45);background:rgba(14,165,233,.08);color:rgba(14,165,233,.95);cursor:pointer;text-align:center;">⚡ Skip Missions &amp; Unlock Mission Prompt Ops</button>
-    </div>
-
-    <div style="text-align:center;margin-top:32px;padding-top:20px;border-top:1px solid rgba(14,165,233,.06);">
-      <button onClick="{{ resetProgress }}" style="background:transparent;border:none;font-family:'Share Tech Mono',monospace;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:rgba(233,233,237,.50);cursor:pointer;padding:6px 12px;border-radius:4px;transition:color .2s;" onMouseOver="{{ resetHover }}" onMouseOut="{{ resetOut }}">↺ Reset Session Progress</button>
     </div>
   </div>
   </sc-if>
@@ -275,7 +219,7 @@
           <sc-for list="{{ lessonDots }}" as="dot" hint-placeholder-count="3">
             <div style="{{ dot.style }}"></div>
           </sc-for>
-          <span class="mono" style="font-size:10px;color:rgba(233,233,237,.56);margin-left:3px;letter-spacing:.05em;">{{ lessonCountLabel }}</span>
+          <span class="mono" style="font-size:10px;color:rgba(233,233,237,.28);margin-left:3px;letter-spacing:.05em;">{{ lessonCountLabel }}</span>
         </div>
       </div>
     </sc-if>
@@ -291,9 +235,9 @@
           <div style="{{ introLetterStyle }}">{{ modLetter }}</div>
         </sc-if>
         <h2 class="hdg" style="font-size:30px;font-weight:700;margin:8px 0 10px;letter-spacing:.06em;text-transform:uppercase;line-height:1.2;color:rgba(233,233,237,.97);">{{ modTitle }}</h2>
-        <p style="font-size:14.5px;color:rgba(233,233,237,.82);line-height:1.82;max-width:460px;margin:0 auto 26px;">{{ modTeaser }}</p>
+        <p style="font-size:14.5px;color:rgba(233,233,237,.66);line-height:1.82;max-width:460px;margin:0 auto 26px;">{{ modTeaser }}</p>
         <div style="background:rgba(14,165,233,.04);border:1px solid rgba(14,165,233,.12);border-radius:6px;padding:18px 22px;max-width:440px;margin:0 auto 24px;text-align:left;">
-          <div class="mono" style="font-size:9px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:rgba(233,233,237,.62);margin-bottom:14px;">[ MISSION OBJECTIVES ]</div>
+          <div class="mono" style="font-size:9px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:rgba(233,233,237,.35);margin-bottom:14px;">[ MISSION OBJECTIVES ]</div>
           <sc-for list="{{ objectives }}" as="obj" hint-placeholder-count="3">
             <div style="{{ obj.rowStyle }}">
               <i class="ph-bold ph-check" style="{{ obj.checkStyle }}"></i>
@@ -302,7 +246,7 @@
           </sc-for>
         </div>
         <div style="display:flex;align-items:center;justify-content:center;gap:18px;">
-          <span class="mono" style="font-size:12px;color:rgba(233,233,237,.60);">⏱ {{ modDuration }}</span>
+          <span class="mono" style="font-size:12px;color:rgba(233,233,237,.3);">⏱ {{ modDuration }}</span>
           <button class="btn btn-primary" onClick="{{ startModule }}" style="font-size:13px;padding:9px 26px;letter-spacing:.06em;">BEGIN MISSION →</button>
         </div>
       </div>
@@ -342,7 +286,7 @@
         <div class="lesson-panel">
           <h2 class="hdg" style="font-size:26px;font-weight:700;margin:0 0 10px;line-height:1.2;letter-spacing:.04em;text-transform:uppercase;color:rgba(233,233,237,.97);">{{ lessonTitle }}</h2>
           <p style="font-size:14.5px;color:rgba(233,233,237,.7);line-height:1.8;margin:0 0 6px;">{{ clearIntro }}</p>
-          <div class="mono" style="font-size:10px;color:rgba(233,233,237,.56);margin:0 0 18px;letter-spacing:.08em;">↓ TAP EACH ELEMENT TO EXPAND</div>
+          <div class="mono" style="font-size:10px;color:rgba(233,233,237,.28);margin:0 0 18px;letter-spacing:.08em;">↓ TAP EACH ELEMENT TO EXPAND</div>
           <div style="display:flex;flex-direction:column;gap:8px;">
             <sc-for list="{{ clearEls }}" as="ce" hint-placeholder-count="5">
               <div style="{{ ce.cardStyle }}" onClick="{{ ce.toggle }}">
@@ -350,7 +294,7 @@
                 <div style="flex:1;min-width:0;">
                   <div class="hdg" style="{{ ce.labelStyle }}">{{ ce.label }}</div>
                   <sc-if value="{{ ce.isCollapsed }}" hint-placeholder-val="{{ false }}">
-                    <span class="mono" style="font-size:10px;color:rgba(233,233,237,.56);letter-spacing:.06em;">TAP TO EXPAND →</span>
+                    <span class="mono" style="font-size:10px;color:rgba(233,233,237,.26);letter-spacing:.06em;">TAP TO EXPAND →</span>
                   </sc-if>
                   <sc-if value="{{ ce.isExpanded }}" hint-placeholder-val="{{ false }}">
                     <div class="clear-desc" style="font-size:13.5px;color:rgba(233,233,237,.8);line-height:1.68;margin-top:6px;">{{ ce.desc }}</div>
@@ -373,7 +317,7 @@
                 </sc-for>
               </div>
               <sc-if value="{{ fieldTestDone }}" hint-placeholder-val="{{ false }}">
-                <div style="{{ ftFbStyle }}"><p style="font-size:13.5px;color:rgba(233,233,237,.95);line-height:1.65;margin:0;">{{ fieldTestFeedback }}</p></div>
+                <div style="{{ ftFbStyle }}"><p style="font-size:13.5px;color:rgba(233,233,237,.88);line-height:1.65;margin:0;">{{ fieldTestFeedback }}</p></div>
               </sc-if>
             </div>
           </sc-if>
@@ -423,7 +367,7 @@
             <!-- CLEAR annotation chips -->
             <sc-if value="{{ hasAnnotations }}" hint-placeholder-val="{{ false }}">
               <div style="margin-top:18px;padding-top:16px;border-top:1px solid rgba(14,165,233,.08);animation:fadeUp .3s .2s ease-out both;">
-                <div class="mono" style="font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:rgba(233,233,237,.60);margin-bottom:10px;">[ WHAT CLEAR CONTRIBUTED — TAP TO EXPLORE ]</div>
+                <div class="mono" style="font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:rgba(233,233,237,.3);margin-bottom:10px;">[ WHAT CLEAR CONTRIBUTED — TAP TO EXPLORE ]</div>
                 <div style="display:flex;gap:7px;flex-wrap:wrap;margin-bottom:12px;">
                   <sc-for list="{{ annotationChips }}" as="ac" hint-placeholder-count="4">
                     <button class="anno-chip" style="{{ ac.chipStyle }}" onClick="{{ ac.select }}">
@@ -434,7 +378,7 @@
                 </div>
                 <sc-if value="{{ showAnnotation }}" hint-placeholder-val="{{ false }}">
                   <div style="animation:slideUp .2s ease-out;background:rgba(14,165,233,.06);border-radius:6px;padding:12px 16px;border:1px solid rgba(14,165,233,.18);">
-                    <p style="font-size:13.5px;color:rgba(233,233,237,.95);line-height:1.65;margin:0;">{{ activeAnnotationText }}</p>
+                    <p style="font-size:13.5px;color:rgba(233,233,237,.88);line-height:1.65;margin:0;">{{ activeAnnotationText }}</p>
                   </div>
                 </sc-if>
               </div>
@@ -449,15 +393,15 @@
           <div class="mono" style="{{ labKickerStyle }}">[ PROMPT LAB ]</div>
           <h2 class="hdg" style="font-size:22px;font-weight:700;margin:8px 0 18px;letter-spacing:.04em;text-transform:uppercase;color:rgba(233,233,237,.97);">{{ lessonTitle }}</h2>
           <div style="background:rgba(14,165,233,.04);border:1px solid rgba(14,165,233,.14);border-left:3px solid var(--c-blue);border-radius:0 6px 6px 0;padding:14px 18px;margin-bottom:14px;">
-            <div class="mono" style="font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:rgba(233,233,237,.60);margin-bottom:7px;">[ SCENARIO ]</div>
-            <p style="font-size:14px;color:rgba(233,233,237,.95);line-height:1.75;margin:0;">{{ labScenario }}</p>
+            <div class="mono" style="font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:rgba(233,233,237,.33);margin-bottom:7px;">[ SCENARIO ]</div>
+            <p style="font-size:14px;color:rgba(233,233,237,.88);line-height:1.75;margin:0;">{{ labScenario }}</p>
           </div>
           <p style="font-size:13.5px;color:rgba(233,233,237,.6);line-height:1.72;margin:0 0 14px;">{{ labTask }}</p>
 
           <sc-if value="{{ labNotAnalyzed }}" hint-placeholder-val="{{ true }}">
             <!-- CLEAR hint chips -->
             <div style="margin-bottom:16px;">
-              <div class="mono" style="font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:rgba(233,233,237,.56);margin-bottom:8px;">CLEAR HINTS — TAP A LETTER FOR A TIP</div>
+              <div class="mono" style="font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:rgba(233,233,237,.28);margin-bottom:8px;">CLEAR HINTS — TAP A LETTER FOR A TIP</div>
               <div style="display:flex;gap:6px;flex-wrap:wrap;">
                 <sc-for list="{{ hintChips }}" as="hc" hint-placeholder-count="5">
                   <button class="hint-chip" style="{{ hc.style }}" onClick="{{ hc.select }}">
@@ -486,13 +430,13 @@
 
           <sc-if value="{{ labAnalyzed }}" hint-placeholder-val="{{ false }}">
             <div style="background:rgba(233,233,237,.03);border:1px solid rgba(233,233,237,.07);border-radius:6px;padding:14px 16px;margin-bottom:14px;">
-              <div class="mono" style="font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:rgba(233,233,237,.56);margin-bottom:8px;">[ YOUR PROMPT ]</div>
-              <p style="font-family:'Share Tech Mono',monospace;font-size:12.5px;color:rgba(233,233,237,.90);line-height:1.7;margin:0;">{{ promptText }}</p>
+              <div class="mono" style="font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:rgba(233,233,237,.26);margin-bottom:8px;">[ YOUR PROMPT ]</div>
+              <p style="font-family:'Share Tech Mono',monospace;font-size:12.5px;color:rgba(233,233,237,.78);line-height:1.7;margin:0;">{{ promptText }}</p>
             </div>
             <div style="{{ labScoreBannerStyle }}">
               <span class="mono" style="{{ labScoreNumStyle }}">{{ labScoreDisplay }}/50</span>
               <div>
-                <div class="mono" style="font-size:10px;color:rgba(233,233,237,.54);letter-spacing:.08em;margin-bottom:2px;">CLEAR ELEMENTS DETECTED</div>
+                <div class="mono" style="font-size:10px;color:rgba(233,233,237,.38);letter-spacing:.08em;margin-bottom:2px;">CLEAR ELEMENTS DETECTED</div>
                 <div class="mono" style="{{ labScoreLabelStyle }}">{{ labScoreLabel }}</div>
               </div>
             </div>
@@ -507,8 +451,8 @@
               </sc-for>
             </div>
             <div style="background:rgba(14,165,233,.05);border:1px solid rgba(14,165,233,.14);border-radius:6px;padding:14px 18px;margin-bottom:10px;">
-              <div class="mono" style="font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:rgba(233,233,237,.60);margin-bottom:6px;">[ ANALYSIS ]</div>
-              <p style="font-size:14px;color:rgba(233,233,237,.95);line-height:1.75;margin:0;">{{ labFeedback }}</p>
+              <div class="mono" style="font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:rgba(233,233,237,.33);margin-bottom:6px;">[ ANALYSIS ]</div>
+              <p style="font-size:14px;color:rgba(233,233,237,.88);line-height:1.75;margin:0;">{{ labFeedback }}</p>
             </div>
             <div style="background:rgba(245,158,11,.05);border:1px solid rgba(245,158,11,.2);border-left:3px solid var(--c-amber);border-radius:0 6px 6px 0;padding:14px 18px;margin-bottom:18px;">
               <div class="mono" style="font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:var(--c-amber);margin-bottom:6px;">[ UPGRADE YOUR PROMPT ]</div>
@@ -548,22 +492,22 @@
           <span class="mono" style="font-size:30px;font-weight:800;color:var(--c-green);line-height:1;">+{{ sessionXp }}</span>
           <div style="text-align:left;">
             <div class="mono" style="font-size:11px;color:var(--c-green);margin-bottom:2px;letter-spacing:.08em;">XP EARNED</div>
-            <div class="mono" style="font-size:10px;color:rgba(233,233,237,.74);letter-spacing:.04em;">{{ xpDisplay }} TOTAL · {{ levelLabel }}</div>
+            <div class="mono" style="font-size:10px;color:rgba(233,233,237,.36);letter-spacing:.04em;">{{ xpDisplay }} TOTAL · {{ levelLabel }}</div>
           </div>
         </div>
         <sc-if value="{{ showStreak }}" hint-placeholder-val="{{ false }}">
-          <div class="mono" style="font-size:12px;color:rgba(233,233,237,.74);margin-bottom:14px;letter-spacing:.04em;">{{ streakText }}</div>
+          <div class="mono" style="font-size:12px;color:rgba(233,233,237,.55);margin-bottom:14px;letter-spacing:.04em;">{{ streakText }}</div>
         </sc-if>
         <sc-if value="{{ showNewBadge }}" hint-placeholder-val="{{ false }}">
           <div style="display:inline-flex;align-items:center;gap:12px;padding:12px 20px;border-radius:6px;background:rgba(14,165,233,.08);border:1px solid rgba(14,165,233,.25);margin-bottom:16px;animation:badgeIn .5s .35s ease-out both;">
             <i class="ph-bold ph-{{ newBadgeIconClass }}" style="font-size:26px;color:var(--c-blue);"></i>
             <div style="text-align:left;">
               <div class="hdg" style="font-size:13px;color:var(--c-blue);font-weight:700;margin-bottom:2px;letter-spacing:.06em;text-transform:uppercase;">{{ newBadgeName }}</div>
-              <div class="mono" style="font-size:10px;color:rgba(233,233,237,.74);letter-spacing:.08em;">BADGE UNLOCKED</div>
+              <div class="mono" style="font-size:10px;color:rgba(233,233,237,.36);letter-spacing:.08em;">BADGE UNLOCKED</div>
             </div>
           </div>
         </sc-if>
-        <div class="mono" style="font-size:11px;color:rgba(233,233,237,.60);margin-bottom:26px;letter-spacing:.06em;">{{ completedCount }}/7 MISSIONS COMPLETE</div>
+        <div class="mono" style="font-size:11px;color:rgba(233,233,237,.3);margin-bottom:26px;letter-spacing:.06em;">{{ completedCount }}/7 MISSIONS COMPLETE</div>
         <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;">
           <button class="btn btn-secondary" onClick="{{ goHome }}" style="font-size:12px;letter-spacing:.04em;">← Command Center</button>
           <sc-if value="{{ hasNextMission }}" hint-placeholder-val="{{ false }}">
@@ -584,39 +528,13 @@
   <!-- TOAST -->
   <div style="{{ toastStyle }}">{{ toastMsg }}</div>
 
-  <!-- DEMO CONTROLLER -->
-  <sc-if value="{{ demoMode }}" hint-placeholder-val="{{ false }}">
-    <sc-if value="{{ demoSceneNum }}" hint-placeholder-val="{{ false }}">
-      <div style="position:fixed;top:18px;left:50%;transform:translateX(-50%);background:rgba(0,0,0,.72);backdrop-filter:blur(10px);border:1px solid rgba(14,165,233,.35);border-radius:20px;padding:6px 18px;z-index:9998;pointer-events:none;display:flex;align-items:center;gap:8px;">
-        <span class="mono" style="font-size:9px;letter-spacing:.18em;color:#0ea5e9;text-transform:uppercase;">SCENE {{ demoSceneNum }}</span>
-        <span class="mono" style="font-size:11px;color:rgba(233,233,237,.95);letter-spacing:.06em;">{{ demoSceneName }}</span>
-      </div>
-    </sc-if>
-    <div style="position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:rgba(4,8,15,.92);backdrop-filter:blur(16px);border:1px solid rgba(14,165,233,.22);border-radius:12px;padding:12px 18px;display:flex;align-items:center;gap:14px;z-index:9998;min-width:340px;">
-      <sc-if value="{{ demoRunning }}" hint-placeholder-val="{{ false }}">
-        <button onClick="{{ demoPause }}" style="width:36px;height:36px;border-radius:50%;background:rgba(14,165,233,.15);border:1px solid rgba(14,165,233,.4);color:#0ea5e9;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0;">⏸</button>
-      </sc-if>
-      <sc-if value="{{ demoRunning }}" hint-placeholder-val="{{ true }}">
-        <button onClick="{{ demoPlay }}" style="width:36px;height:36px;border-radius:50%;background:rgba(14,165,233,.15);border:1px solid rgba(14,165,233,.4);color:#0ea5e9;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0;">▶</button>
-      </sc-if>
-      <div style="flex:1;min-width:0;">
-        <div class="mono" style="font-size:10px;color:rgba(233,233,237,.74);letter-spacing:.08em;margin-bottom:5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">{{ demoLabel }}</div>
-        <div style="height:3px;background:rgba(14,165,233,.1);border-radius:2px;overflow:hidden;">
-          <div style="height:100%;background:linear-gradient(90deg,#0ea5e9,rgba(14,165,233,.4));transition:width .4s linear;width:{{ demoProgress }}%;"></div>
-        </div>
-      </div>
-      <span class="mono" style="font-size:11px;color:rgba(233,233,237,.62);flex-shrink:0;">{{ demoTimer }}</span>
-      <button onClick="{{ demoReset }}" style="background:transparent;border:none;color:rgba(233,233,237,.60);cursor:pointer;font-size:14px;padding:4px;flex-shrink:0;" title="Reset">↺</button>
-    </div>
-  </sc-if>
-
   <!-- GAME OVERLAY -->
   <sc-if value="{{ showGameOverlay }}" hint-placeholder-val="{{ false }}">
     <div style="position:fixed;inset:0;z-index:9000;background:#04080f;display:flex;flex-direction:column;">
       <div style="height:48px;display:flex;align-items:center;justify-content:space-between;padding:0 20px;border-bottom:1px solid rgba(14,165,233,.2);background:rgba(4,8,15,.98);flex-shrink:0;">
         <div style="display:flex;align-items:center;gap:10px;">
           <i class="ph-bold ph-rocket" style="font-size:15px;color:var(--c-blue);"></i>
-          <span class="mono" style="font-size:11px;letter-spacing:.15em;text-transform:uppercase;color:rgba(233,233,237,.80);">Mission Prompt Ops — Grand Finale</span>
+          <span class="mono" style="font-size:11px;letter-spacing:.15em;text-transform:uppercase;color:rgba(233,233,237,.62);">Mission Prompt Ops — Grand Finale</span>
         </div>
         <button class="btn btn-ghost" onClick="{{ closeGame }}" style="font-size:11px;padding:4px 12px;letter-spacing:.04em;">
           <i class="ph-bold ph-x" style="font-size:12px;margin-right:4px;"></i>CLOSE
@@ -656,7 +574,7 @@ class Component extends DCLogic {
   MODULES = [
     {id:'m1',number:'01',letter:null,iconClass:'lightning',color:'#0ea5e9',duration:'5 min',
       title:'Why Prompts Matter',teaser:'Discover why most AI outputs disappoint — and what to do about it.',
-      objectives:['Explain why vague prompts consistently produce mediocre AI output','Contrast a weak prompt with a precise prompt to identify key differences','Describe the core principle that separates effective prompts from ineffective ones'],
+      objectives:['Understand why vague prompts consistently produce mediocre output','Compare a weak and a precise prompt side by side','Grasp the core principle behind effective AI prompting'],
       lessons:[
         {type:'concept',title:'The AI Gap',iconClass:'robot',
           body:['Most people use AI like a search engine: type a vague question, skim the answer, feel vaguely underwhelmed.','The AI isn\'t the problem. The prompt is.','AI systems are powerful but literal — they do exactly what you ask, no more, no less. Vague input produces generic output. Structured input unlocks remarkable results.'],
@@ -674,7 +592,7 @@ class Component extends DCLogic {
       ]},
     {id:'m2',number:'02',letter:null,iconClass:'map-trifold',color:'#38bdf8',duration:'6 min',
       title:'The CLEAR Framework',teaser:'Five elements that transform any prompt from average to exceptional.',
-      objectives:['Identify all five CLEAR elements by name and purpose','Explain how each element shapes AI output quality','Diagnose which CLEAR element is missing from any weak prompt'],
+      objectives:['Learn all five CLEAR elements by name and purpose','See how the parts combine to shape AI output quality','Diagnose which element is missing in any weak prompt'],
       lessons:[
         {type:'clear-grid',title:'Meet CLEAR',intro:'CLEAR is a five-part framework for writing AI prompts that consistently produce high-quality output. Each letter addresses a different aspect of what the AI needs to know.'},
         {type:'concept',title:'How the Parts Work Together',iconClass:'link',
@@ -689,7 +607,7 @@ class Component extends DCLogic {
       ]},
     {id:'m3',number:'03',letter:'C',iconClass:'crosshair',color:'#0ea5e9',duration:'5 min',
       title:'C — Command',teaser:'Your directive to the AI. Be specific, verb-forward, and unambiguous.',
-      objectives:['Construct Commands that are specific and verb-forward','Correct vague, passive, and overloaded Commands','Distinguish between weak and strong directive structures'],
+      objectives:['Write Commands that are specific and verb-forward','Avoid vague, passive, and overloaded Commands','Spot the difference between a weak and a strong directive'],
       lessons:[
         {type:'concept',title:'Be Specific and Verb-Forward',iconClass:'crosshair',
           body:['The Command is the core of your prompt — it tells the AI exactly what to do. A weak Command is vague ("help me with..."), passive ("can you..."), or overloaded with three tasks in one sentence.','Strong Commands start with a clear action verb: Write. Summarise. Analyse. Design. Generate. Identify. Compare. Draft.','The more specific your verb, the more targeted your output. "Write a summary" is weaker than "Extract the three key decisions from this document and list them as numbered bullet points."'],
@@ -707,7 +625,7 @@ class Component extends DCLogic {
       ]},
     {id:'m4',number:'04',letter:'L',iconClass:'scales',color:'#ef4444',duration:'5 min',
       title:'L — Limits',teaser:'Boundaries that focus the AI and prevent scope creep in your output.',
-      objectives:['Explain why setting Limits improves AI output quality','Apply length, tone, and scope constraints in a prompt','Select the appropriate limit type for a given output scenario'],
+      objectives:['Understand why setting Limits actually improves output quality','Set constraints for length, tone, and scope','Know when to add a limit and which type to choose'],
       lessons:[
         {type:'concept',title:'Boundaries Are a Feature',iconClass:'scales',
           body:['Without Limits, an AI defaults to safe, comprehensive, and often verbose output. It errs on covering everything — because that feels "helpful" to a general audience.','Limits are constraints you deliberately set to narrow the output. Common limits: word count ("in 200 words"), tone ("plain language, no jargon"), scope ("focus only on financial risks"), and format ("flowing prose, no bullet points").','Counterintuitively, the more specific your Limits, the more useful the output. A tight brief produces sharper writing.'],
@@ -725,7 +643,7 @@ class Component extends DCLogic {
       ]},
     {id:'m5',number:'05',letter:'E',iconClass:'globe',color:'#14b8a6',duration:'5 min',
       title:'E — Environment',teaser:'The context the AI needs to give you grounded, relevant output.',
-      objectives:['Supply the contextual information the AI needs to produce relevant output','Assign roles and personas to improve prompt targeting','Identify missing context when AI output feels generic or off-target'],
+      objectives:['Give the AI the context it needs to be specific and relevant','Assign roles and personas for better-targeted output','Recognise what\'s missing when AI output feels generic'],
       lessons:[
         {type:'concept',title:'What the AI Doesn\'t Know, It Invents',iconClass:'globe',
           body:['AI has no access to your workplace, your sector, or the document on your desk. When context is missing, it fills the gap with plausible-sounding generalities.','The Environment element gives the AI the background it needs: your sector, organisation type, audience prior knowledge, relevant constraints, or tools being used.','One of the most powerful uses of Environment is assigning a role: "You are acting as a senior HR consultant" produces very different output than "You are a high school science teacher." Role shapes tone, assumptions, and vocabulary.'],
@@ -743,7 +661,7 @@ class Component extends DCLogic {
       ]},
     {id:'m6',number:'06',letter:'A',iconClass:'users',color:'#f59e0b',duration:'5 min',
       title:'A — Audience',teaser:'Tell the AI exactly who the output is for — and watch the tone transform.',
-      objectives:['Define a target audience with precision beyond job title alone','Specify expertise level and emotional context for any audience','Compare how the same prompt produces different output across reader profiles'],
+      objectives:['Define your audience precisely — beyond just a job title','Describe expertise level and emotional context','See how the same prompt transforms for different readers'],
       lessons:[
         {type:'concept',title:'Know Your Reader',iconClass:'users',
           body:['When you don\'t specify an audience, the AI imagines a "general professional" — educated, English-speaking, familiar with common concepts. That default often produces output too complex for some and too basic for others.','The Audience element tells the AI precisely who will receive this output: their role, expertise level, language needs, and any characteristics that should shape tone or vocabulary.','Audience definition also helps when empathy matters: "frontline staff managing a sudden policy change" produces more human, grounded language than simply "employees".'],
@@ -761,7 +679,7 @@ class Component extends DCLogic {
       ]},
     {id:'m7',number:'07',letter:'R',iconClass:'file-text',color:'#22c55e',duration:'6 min',
       title:'R — Response',teaser:'Shape your output. Format, structure, and advanced output techniques.',
-      objectives:['Specify output format and structure using the Response element','Apply advanced output modes: Multi-Option, Critique Engine, and Zero-Hallucination','Construct a complete prompt integrating all five CLEAR elements to solve a real-world task'],
+      objectives:['Specify the exact output format and structure you need','Unlock Multi-Option, Critique Engine, and Zero-Hallucination modes','Combine all five CLEAR elements in one complete, powerful prompt'],
       lessons:[
         {type:'concept',title:'Shape Your Output',iconClass:'file-text',
           body:['The Response element tells the AI exactly how to structure and present its answer. Without it, the AI defaults to whatever format feels natural — often paragraphs when you need bullet points, or bullets when you need a script.','Specify the format (bullet list, numbered steps, table, two-column layout, script), the level of detail (high-level vs step-by-step), and the ending (conclusion, next steps, open question).','One underused technique: ask the AI to open with clarifying questions if key details are missing, rather than guessing. This dramatically improves output quality on complex tasks.'],
@@ -788,8 +706,6 @@ class Component extends DCLogic {
     promptText:'', analyzing:false, analysisResult:null, analysisError:null, activeHint:null,
     showXpPop:false, xpPopAmt:0, toastMsg:'', toastVisible:false,
     musicOn:false, showGameOverlay:false,
-    demoMode:false, demoRunning:false, demoElapsed:0, demoStepIdx:0,
-    demoLabel:'Press ▶ to start demo', demoSceneNum:null, demoSceneName:null,
   };
 
   _xpTmr=null; _toastTmr=null; _typeTimer=null;
@@ -797,9 +713,6 @@ class Component extends DCLogic {
   _audioReady=false; _pingTimer=null;
 
   componentDidMount() {
-    const isDemo = new URLSearchParams(window.location.search).get('demo') === '1';
-    if (isDemo) { this.setState({demoMode:true}); }
-    else {
     try {
       const d=JSON.parse(localStorage.getItem('promptOpsAcademy_v2')||'{}');
       if(d.xp!==undefined||d.completed) this.setState({
@@ -807,7 +720,6 @@ class Component extends DCLogic {
         badges:d.badges||[],learnerName:d.learnerName||''
       });
     } catch(e){}
-    }
     const title='PROMPT OPS ACADEMY';
     this._typeTimer=setInterval(()=>{
       this.setState(prev=>{
@@ -883,155 +795,9 @@ class Component extends DCLogic {
     } else if(on) this._initAudio();
   }
 
-  // ── DEMO MODE ──────────────────────────────────────────────
-  _DEMO_STEPS = [
-    {t:0,     label:'Welcome screen loading…',          scene:null},
-    {t:3500,  label:'Scene 1 — Welcome Screen',         scene:['01','Welcome Screen']},
-    {t:6000,  label:'Typing operative name…',           action:'typeName'},
-    {t:11000, label:'Enrolling…',                       action:'enroll'},
-    {t:14000, label:'Scene 2 — Command Center',         scene:['02','Command Center']},
-    {t:25000, label:'Opening Mission 1…',               action:'openM1'},
-    {t:29000, label:'Scene 3 — CLEAR Framework',        scene:['03','CLEAR Framework']},
-    {t:32000, label:'Tapping C…',                       action:'hint0'},
-    {t:36000, label:'Tapping L…',                       action:'hint1'},
-    {t:40000, label:'Tapping E…',                       action:'hint2'},
-    {t:44000, label:'Tapping A…',                       action:'hint3'},
-    {t:48000, label:'Tapping R…',                       action:'hint4'},
-    {t:52000, label:'Scene 4 — Prompt Lab',             scene:['04','Prompt Lab'], action:'scrollLab'},
-    {t:55000, label:'Writing prompt…',                  action:'typePrompt'},
-    {t:75000, label:'Submitting for AI scoring…',       action:'score'},
-    {t:79000, label:'Scene 5 — AI Scoring',             scene:['05','AI Scoring']},
-    {t:112000,label:'Completing mission…',              action:'complete'},
-    {t:116000,label:'Scene 6 — Mission Complete',       scene:['06','Mission Complete']},
-    {t:126000,label:'Returning to Command Center…',     action:'home'},
-    {t:130000,label:'Scene 7 — Progression & XP',       scene:['07','Progression & XP']},
-    {t:145000,label:'Opening Mission 2…',               action:'openM2'},
-    {t:150000,label:'Scene 8 — 7 Real-World Missions',  scene:['08','7 Real-World Missions']},
-    {t:168000,label:'Back to Command Center…',          action:'home'},
-    {t:172000,label:'Scene 9 — Grand Finale',           scene:['09','Grand Finale']},
-    {t:210000,label:'🎯 Demo complete.',                 action:'end'},
-  ];
-  _DEMO_PROMPT = `You are a senior financial analyst. Summarise the attached Q3 quarterly financial report in 200 words for a board-level audience with no finance background. Highlight the top 3 risks using plain language, quantify each risk with a specific figure from the report, and end with one prioritised recommendation. Format as: executive summary paragraph, then a numbered risk list, then a single "Recommended Action" line.`;
-  _demoRaf = null; _demoLastTs = null; _demoTotalDur = 215000;
-
-  demoPlay() {
-    if (this.state.demoRunning) return;
-    this.setState({demoRunning:true, demoLabel:'Welcome screen loading…'});
-    this._demoLastTs = performance.now();
-    this._demoRaf = requestAnimationFrame(ts => this._demoTick(ts));
-  }
-  demoPause() {
-    this.setState({demoRunning:false});
-    if (this._demoRaf) cancelAnimationFrame(this._demoRaf);
-  }
-  demoReset() {
-    this.demoPause();
-    this.setState({
-      demoElapsed:0, demoStepIdx:0, demoLabel:'Press ▶ to start demo',
-      demoSceneNum:null, demoSceneName:null,
-      view:'welcome', learnerName:'', typeIdx:0, welcomeReady:false,
-      completed:{}, xp:0, sessionXp:0, streak:0, badges:[], newBadge:null,
-      activeModuleId:null, lessonIndex:-1, showComplete:false,
-      promptText:'', analyzing:false, analysisResult:null, analysisError:null, activeHint:null,
-    });
-    clearInterval(this._typeTimer);
-    const title='PROMPT OPS ACADEMY';
-    this._typeTimer = setInterval(()=>{
-      this.setState(prev=>{
-        const next=Math.min(prev.typeIdx+1,title.length);
-        if(next===title.length){clearInterval(this._typeTimer);setTimeout(()=>this.setState({welcomeReady:true}),500);}
-        return {typeIdx:next};
-      });
-    },68);
-  }
-  _demoTick(ts) {
-    if (!this.state.demoRunning) return;
-    const dt = ts - this._demoLastTs; this._demoLastTs = ts;
-    this.setState(prev => {
-      const elapsed = Math.min(prev.demoElapsed + dt, this._demoTotalDur);
-      let idx = prev.demoStepIdx;
-      while (idx < this._DEMO_STEPS.length && elapsed >= this._DEMO_STEPS[idx].t) {
-        const step = this._DEMO_STEPS[idx];
-        if (step.label) setTimeout(() => this.setState({demoLabel: step.label}), 0);
-        if (step.scene) setTimeout(() => this.setState({demoSceneNum: step.scene[0], demoSceneName: step.scene[1]}), 0);
-        if (step.action) setTimeout(() => this._demoAct(step.action, 0), 0);
-        idx++;
-      }
-      return {demoElapsed: elapsed, demoStepIdx: idx};
-    });
-    if (this.state.demoElapsed < this._demoTotalDur)
-      this._demoRaf = requestAnimationFrame(ts2 => this._demoTick(ts2));
-    else this.demoPause();
-  }
-  _demoAct(a, attempt) {
-    const retry = () => { if (attempt < 12) setTimeout(() => this._demoAct(a, attempt+1), 500); };
-    switch(a) {
-      case 'typeName': {
-        let i = 0; const name = 'Jordan';
-        const t = setInterval(() => {
-          this.setState({learnerName: name.slice(0,++i)});
-          if (i >= name.length) clearInterval(t);
-        }, 90); break;
-      }
-      case 'enroll': this.setState({view:'home'}); break;
-      case 'openM1': {
-        const card = document.querySelectorAll('.ops-card')[0];
-        if (!card) { retry(); return; } card.click(); window.scrollTo({top:0,behavior:'smooth'}); break;
-      }
-      case 'hint0': case 'hint1': case 'hint2': case 'hint3': case 'hint4': {
-        const idx = parseInt(a.replace('hint',''));
-        const chips = document.querySelectorAll('button.hint-chip');
-        if (!chips[idx]) { retry(); return; } chips[idx].click(); break;
-      }
-      case 'scrollLab': {
-        const ta = document.querySelector('textarea');
-        if (!ta) { retry(); return; }
-        const y = ta.getBoundingClientRect().top + window.scrollY - 100;
-        window.scrollTo({top:Math.max(0,y), behavior:'smooth'}); break;
-      }
-      case 'typePrompt': {
-        const ta = document.querySelector('textarea');
-        if (!ta) { retry(); return; }
-        let i = 0; const txt = this._DEMO_PROMPT; const chunk = 8;
-        const t = setInterval(() => {
-          this.setState({promptText: txt.slice(0, i)});
-          i += chunk; if (i > txt.length + chunk) clearInterval(t);
-        }, 60); break;
-      }
-      case 'score': {
-        const btns = Array.from(document.querySelectorAll('button.btn-primary'));
-        const b = btns.find(b => !b.textContent.includes('ENROLL') && !b.textContent.includes('COMPLETE') && !b.disabled);
-        if (!b) { retry(); return; } b.click(); break;
-      }
-      case 'complete': {
-        const btns = Array.from(document.querySelectorAll('button.btn-primary'));
-        const b = btns.find(b => b.textContent.includes('COMPLETE'));
-        if (!b) { retry(); return; } b.click(); break;
-      }
-      case 'home': {
-        const btns = Array.from(document.querySelectorAll('button'));
-        const b = btns.find(b => b.textContent.includes('Command Center'));
-        if (!b) { retry(); return; } b.click(); window.scrollTo({top:0,behavior:'smooth'}); break;
-      }
-      case 'openM2': {
-        const cards = document.querySelectorAll('.ops-card');
-        if (cards.length < 2) { retry(); return; } cards[1].click(); break;
-      }
-      case 'end': this.setState({demoSceneNum:null, demoSceneName:null}); break;
-    }
-  }
-
   save(data) {
     try{localStorage.setItem('promptOpsAcademy_v2',JSON.stringify(data));}catch(e){}
   }
-
-  resetProgress() {
-    if (!confirm('Reset all session progress? XP, completed missions and badges will be cleared.')) return;
-    try { localStorage.removeItem('promptOpsAcademy_v2'); } catch(e) {}
-    this.setState({ xp:0, completed:{}, streak:0, earnedBadges:[], view:'home', activeModule:null, lessonIndex:0, promptText:'', labResult:null });
-  }
-  resetHover(e) { e.target.style.color = 'rgba(255,51,85,.6)'; }
-  resetOut(e)   { e.target.style.color = 'rgba(233,233,237,.2)'; }
 
   getLevel(xp){return this.LEVELS.find(l=>xp>=l.min&&(l.max===Infinity||xp<=l.max))||this.LEVELS[0];}
 
@@ -1062,65 +828,28 @@ class Component extends DCLogic {
     this._toastTmr=setTimeout(()=>this.setState({toastVisible:false}),2700);
   }
 
-  _heuristicScore(text,lesson) {
-    const t=text.toLowerCase();
-    const words=t.split(/\s+/).filter(Boolean);
-    const wc=words.length;
-    const actionVerbs=/\b(write|summarise|summarize|draft|analyse|analyze|create|generate|explain|list|compare|extract|produce|identify|suggest|recommend|outline|describe|translate|rewrite|review|assess|evaluate|format|provide|give me|tell me|show me|make|build|design|develop|find|check)\b/;
-    const isPrompt=actionVerbs.test(t)||/^(please\s+)?(can you|could you|would you|help me)/i.test(text);
-    if(!isPrompt){
-      return {score:0,elements:{C:{score:0,note:'No command verb found'},L:{score:0,note:'Not a prompt'},E:{score:0,note:'Not a prompt'},A:{score:0,note:'Not a prompt'},R:{score:0,note:'Not a prompt'}},feedback:'This reads as a description, not a prompt. A prompt must tell the AI what to do - start with an action verb like Write, Summarise, or Analyse.',improvement:'Rewrite starting with a clear command: e.g. "Write a..." or "Summarise..."'};
-    }
-    const strongVerbs=/\b(write|summarise|summarize|draft|analyse|analyze|create|generate|extract|produce|outline|rewrite|translate|evaluate|assess|format)\b/;
-    const weakVerbs=/\b(help me|can you|could you|tell me|give me|show me)\b/;
-    let cScore=0,cNote='';
-    if(strongVerbs.test(t)){cScore=wc>15?9:7;cNote='Clear directive verb present';}
-    else if(weakVerbs.test(t)){cScore=4;cNote='Weak verb - too vague';}
-    else{cScore=2;cNote='Command unclear';}
-    const hasWordCount=/\b(\d+\s*words?|\d+\s*sentences?|\d+\s*bullet|one page|half page|brief|concise|short|under \d+|no more than|at most \d+)\b/.test(t);
-    const hasTone=/\b(professional|formal|informal|casual|friendly|authoritative|neutral|simple|plain|technical)\b/.test(t);
-    const hasScope=/\b(focus on|only|limit to|avoid|exclude|stick to|just the|key points?)\b/.test(t);
-    const lCount=[hasWordCount,hasTone,hasScope].filter(Boolean).length;
-    let lScore=0,lNote='';
-    if(lCount>=2){lScore=9;lNote='Explicit constraints defined';}
-    else if(lCount===1){lScore=5;lNote='Some limits - add more specifics';}
-    else{lScore=1;lNote='No word count, tone, or scope defined';}
-    const hasRole=/\b(you are (a|an)|act as (a|an)|as (a|an) expert|as specialist|pretend you are|imagine you are)\b/.test(t);
-    const hasSectorContext=/\b(company|organisation|organization|department|team|industry|sector|hospital|school|retail|financial|legal|medical|government|startup)\b/.test(t);
-    const hasContext=!!(lesson&&lesson.focus&&t.includes(lesson.focus.toLowerCase().split(' ')[0]));
-    let eScore=0,eNote='';
-    if(hasRole){eScore=9;eNote='Role clearly assigned to AI';}
-    else if(hasSectorContext){eScore=6;eNote='Context given - add a role for the AI';}
-    else if(hasContext){eScore=3;eNote='Scenario present but no AI role assigned';}
-    else{eScore=1;eNote='No environment or role context';}
-    const hasAudience=/\b(for (my|the|our|a|an)|audience|reader|stakeholder|client|customer|manager|executive|ceo|board|team|staff|employee|beginner|expert|non-technical|technical)\b/.test(t);
-    const hasAudienceDetail=/\b(who (are|is)|background|experience|level|expertise|familiar with|unfamiliar|understand)\b/.test(t);
-    let aScore=0,aNote='';
-    if(hasAudience&&hasAudienceDetail){aScore=8;aNote='Audience named with detail';}
-    else if(hasAudience){aScore=5;aNote='Audience named - add expertise or context';}
-    else{aScore=1;aNote='No intended audience specified';}
-    const hasFormat=/\b(bullet points?|numbered list|table|sections?|headers?|paragraphs?|steps?|script|report format|formatted as|structured as|in the format|subheadings?|columns?|rows?|markdown|html)\b/.test(t);
-    const hasOutputShape=/\b(summary|overview|outline|list|breakdown|analysis|comparison|draft|email|memo|slides?|template)\b/.test(t);
-    let rScore=0,rNote='';
-    if(hasFormat){rScore=9;rNote='Output format clearly specified';}
-    else if(hasOutputShape){rScore=5;rNote='Output type named - specify format/structure';}
-    else{rScore=1;rNote='No format or structure requested';}
-    const total=cScore+lScore+eScore+aScore+rScore;
-    const missing=[!strongVerbs.test(t)&&'a stronger command verb',lCount===0&&'word count or tone',!hasRole&&'a role for the AI',!hasAudience&&'your intended audience',!hasFormat&&'a format like bullets or a table'].filter(Boolean);
-    const topMissing=missing[0]||'more specificity';
-    let feedback='';
-    if(total>=35){feedback='Strong, well-crafted prompt covering all CLEAR elements. Minor refinements possible.';}
-    else if(total>=20){feedback='Good start - the command is clear but the prompt needs '+missing.slice(0,2).join(' and ')+' to produce your best result.';}
-    else{feedback='The AI will produce something, but adding '+missing.slice(0,2).join(' and ')+' would dramatically improve output quality.';}
-    const improvement='Add '+topMissing+' to give the AI clearer direction and get more targeted output.';
-    return {score:total,elements:{C:{score:cScore,note:cNote},L:{score:lScore,note:lNote},E:{score:eScore,note:eNote},A:{score:aScore,note:aNote},R:{score:rScore,note:rNote}},feedback:feedback,improvement:improvement};
-  }
-
-
   async _doAnalysis(text,lesson) {
     this.setState({analyzing:true,analysisError:null});
+    const sys=`You are a strict CLEAR framework prompt coach for an AI literacy training program.
+
+CRITICAL RULE: First determine if the input is actually an AI prompt. A valid prompt must be DIRECTED AT AN AI — it should tell the AI what to do (starts with or contains a clear action verb like Write, Summarise, Draft, Analyse, Create, Generate). If the input is just a description of a scenario, background context, or a sentence about a situation (e.g. "Your manager has asked you to..." or "A retail manager needs to..."), it is NOT a prompt — score it 0 and explain clearly that the learner needs to write a prompt TO the AI, not describe the situation.
+
+For valid prompts, apply these STRICT criteria:
+C - Command: Must start with or contain a specific action verb directed at the AI (Write, Summarise, Draft, Analyse, Create, Extract). "Help me with" or "Can you" are WEAK — only mark present if there's a clear, specific directive.
+L - Limits: Must contain EXPLICIT constraints — a word count, tone descriptor, or scope boundary. Vague is not enough.
+E - Environment: Must assign the AI a role ("You are a...") OR provide specific organisational/sector context beyond what's in the scenario. Simply restating the scenario does not count.
+A - Audience: Must name WHO receives the output with at least one detail beyond their job title (expertise level, background, emotional state, language needs).
+R - Response: Must specify output FORMAT or STRUCTURE (bullet points, numbered steps, table, script, sections, word limit on output shape). Simply asking for "a summary" without format does not count.
+
+Scoring philosophy: be REALISTIC, not harsh. A basic prompt like "Summarise this report in 200 words for my CEO" WOULD work with an AI — it's just not optimised. Acknowledge what works, identify what's missing. A score of 2-3 means "it'll produce something but not your best result." A score of 4-5 means genuinely well-crafted. A score of 0-1 means the AI would struggle or the input isn't a prompt at all. Notes under 12 words. Feedback: 2 honest sentences — acknowledge what works, name what's missing. Improvement: one concrete actionable sentence targeting the most impactful missing element.
+
+Score each element 0-10: 0=absent/wrong, 1-3=attempted but weak, 4-6=partially present, 7-9=solid, 10=excellent. The total score is the sum of all five elements (0-50).
+
+Return ONLY valid JSON no markdown: {"score":0,"elements":{"C":{"score":0,"note":""},"L":{"score":0,"note":""},"E":{"score":0,"note":""},"A":{"score":0,"note":""},"R":{"score":0,"note":""}},"feedback":"","improvement":""}`;
     try {
-      const data=this._heuristicScore(text,lesson);
+      const raw=await window.claude.complete({system:sys,messages:[{role:'user',content:`Mission focus: ${lesson.focus}\nLearner's prompt: "${text}"`}]});
+      const s=raw.indexOf('{'),e=raw.lastIndexOf('}')+1;
+      const data=JSON.parse(raw.slice(s,e));
       const score=Math.max(0,Math.min(50,data.score||0));
       const xp=Math.round((score/50)*32)+3;
       this.setState({analyzing:false,analysisResult:{...data,score,xp}});
@@ -1151,14 +880,13 @@ class Component extends DCLogic {
       this.sndNav();
       const n=s.learnerName.trim();
       this.save({completed:s.completed,xp:s.xp,streak:s.streak,badges:s.badges,learnerName:n});
-      this.setState({view:'choice',learnerName:n});
+      this.setState({view:'home',learnerName:n});
     };
 
-    const isChoiceView=s.view==='choice';
     const isWelcomeView=s.view==='welcome';
     const isHomeView=s.view==='home';
     const isModuleView=s.view==='module';
-    const showHeader=!isWelcomeView&&!isChoiceView;
+    const showHeader=!isWelcomeView;
     const operativeLabel=s.learnerName?`[ OPERATIVE: ${s.learnerName.toUpperCase()} ]`:'[ 7 MISSIONS · ~35 MINUTES · LIVE AI FEEDBACK ]';
 
     // XP / Level
@@ -1203,14 +931,11 @@ class Component extends DCLogic {
     });
 
     // Finale
-    const finaleIsLocked=!allComplete;
-    const finaleIsUnlocked=allComplete;
     const finaleCardCls='ops-card'+(allComplete?' finale-ready':' finale-locked');
     const finaleCardStyle={background:allComplete?'linear-gradient(135deg,rgba(14,165,233,.1),rgba(0,230,118,.04))':'#080f1a',border:`1px solid ${allComplete?'rgba(14,165,233,.4)':'rgba(233,233,237,.07)'}`,borderRadius:'8px',padding:'22px 26px',cursor:allComplete?'pointer':'default'};
     const finaleSubtitle=allComplete?'Apply everything in a gamified prompt-building challenge.':`Complete all 7 missions to unlock — ${7-completedCount} remaining.`;
     const finaleCta=allComplete?'⚡ LAUNCH MISSION →':`🔒 ${7-completedCount} missions remaining`;
     const finaleCtaStyle={fontFamily:"'Share Tech Mono',monospace",fontSize:'12px',padding:'9px 20px',whiteSpace:'nowrap',borderRadius:'4px',background:allComplete?'rgba(14,165,233,.12)':'rgba(233,233,237,.04)',border:`1px solid ${allComplete?'rgba(14,165,233,.4)':'rgba(233,233,237,.1)'}`,color:allComplete?'rgba(233,233,237,.9)':'rgba(233,233,237,.3)',letterSpacing:'.06em'};
-    const openFinaleDirect=()=>{this.sndNav();this.setState({showGameOverlay:true});};
     const openFinale=()=>{if(allComplete){this.sndNav();this.setState({showGameOverlay:true});}else{this.sndWrong();this.toast(`${7-completedCount} more mission${7-completedCount===1?'':'s'} to go before the finale unlocks.`);}};
     const showGameOverlay=s.showGameOverlay;
     const closeGame=()=>{this.sndClick();this.setState({showGameOverlay:false});};
@@ -1446,14 +1171,11 @@ class Component extends DCLogic {
     const goHome=()=>{this.sndClick();this.setState({view:'home',activeModuleId:null,showComplete:false});};
 
     return {
-      isWelcomeView,isHomeView,isModuleView,isChoiceView,showHeader,
-      chooseBootcamp:()=>this.setState({view:'home'}),
-      chooseSkip:()=>this.setState({view:'home',showGameOverlay:true}),
-      choiceName:s.learnerName||'Operative',
+      isWelcomeView,isHomeView,isModuleView,showHeader,
       typedTitle,showCursor,wcSub,learnerName:s.learnerName,onNameChange,onNameKeyDown,enroll,operativeLabel,
       completedCount,courseProgressStyle,xpDisplay,levelLabel,levelBadgeStyle,levelBarStyle,xpToNextLabel,
       musicBtnStyle,musicBtnIcon,musicBtnTitle,toggleMusic,badgeDisplay,moduleCards,
-      finaleCardCls,finaleCardStyle,finaleSubtitle,finaleCta,finaleCtaStyle,openFinale,openFinaleDirect,finaleIsLocked,finaleIsUnlocked,showGameOverlay,closeGame,
+      finaleCardCls,finaleCardStyle,finaleSubtitle,finaleCta,finaleCtaStyle,openFinale,showGameOverlay,closeGame,
       showModuleNav,modLabel,modLabelStyle,lessonDots,lessonCountLabel,
       isIntroScreen,modIconClass,modIconPhStyle,modTitle,modTeaser,modDuration,modNumber,modHasLetter,modLetter,
       introBubbleStyle,introNumStyle,introLetterStyle,objectives,startModule,
@@ -1474,12 +1196,6 @@ class Component extends DCLogic {
       isCompleteScreen,sessionXp,showStreak,streakText,showNewBadge,newBadgeIconClass,newBadgeName,completeHeading,
       hasNextMission,goNextMission,
       showXpPop:s.showXpPop,xpPopAmt:s.xpPopAmt,toastMsg:s.toastMsg,toastStyle,goHome,
-      resetProgress:()=>this.resetProgress(),resetHover:e=>this.resetHover(e),resetOut:e=>this.resetOut(e),
-      demoMode:s.demoMode,demoRunning:s.demoRunning,
-      demoPlay:()=>this.demoPlay(),demoPause:()=>this.demoPause(),demoReset:()=>this.demoReset(),
-      demoLabel:s.demoLabel,demoSceneNum:s.demoSceneNum,demoSceneName:s.demoSceneName,
-      demoProgress:Math.min(100,(s.demoElapsed/this._demoTotalDur)*100),
-      demoTimer:(()=>{const sec=Math.floor(s.demoElapsed/1000);return Math.floor(sec/60)+':'+String(sec%60).padStart(2,'0');})(),
     };
   }
 }

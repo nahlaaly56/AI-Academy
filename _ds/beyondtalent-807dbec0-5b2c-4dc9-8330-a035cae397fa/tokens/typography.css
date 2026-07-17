@@ -1,0 +1,49 @@
+@import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&display=swap');
+@font-face {
+  font-family: 'Anton';
+  src: url('../fonts/Anton-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Inter';
+  src: url('../fonts/Inter-Variable.ttf') format('truetype');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Inter';
+  src: url('../fonts/Inter-Variable-Italic.ttf') format('truetype');
+  font-weight: 100 900;
+  font-style: italic;
+  font-display: swap;
+}
+:root {
+  --font-display: 'Anton', sans-serif;
+  --font-body: 'Inter', sans-serif;
+  --font-arabic: 'Tajawal', sans-serif;
+  --fw-light: 300; /* @kind other */
+  --fw-regular: 400; /* @kind other */
+  --fw-medium: 500; /* @kind other */
+  --fw-semibold: 600; /* @kind other */
+  --fw-bold: 700; /* @kind other */
+  /* Type scale */
+  --text-display: 48px; /* @kind other */
+  --text-h1: 36px; /* @kind other */
+  --text-h2: 24px; /* @kind other */
+  --text-h3: 18px; /* @kind other */
+  --text-body: 15px; /* @kind other */
+  --text-sm: 13px; /* @kind other */
+  --text-xs: 12px; /* @kind other */
+  --text-label: 11px; /* @kind other */
+  /* Line heights */
+  --lh-tight: 1; /* @kind other */
+  --lh-heading: 1.2; /* @kind other */
+  --lh-body: 1.6; /* @kind other */
+  /* Letter spacing */
+  --ls-display: 1px; /* @kind other */
+  --ls-label: 2.5px; /* @kind other */
+  --ls-eyebrow: 3px; /* @kind other */
+}

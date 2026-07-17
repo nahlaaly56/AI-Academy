@@ -1,0 +1,27 @@
+:root {
+  /* Primary */
+  --color-blue: #1170A1;
+  --color-red: #AC1225;
+  --color-navy: #0A4166;
+  --color-near-black: #0D1B2A;
+  /* Supporting */
+  --color-dark: #3A4A5C;
+  --color-muted: #6B7A8D;
+  --color-border: #E2E8EF;
+  --color-bg: #F2F5F8;
+  --color-blue-light: #D6E8F4;
+  --color-blue-tint: #EBF4FA;
+  --color-red-tint: #F6DDE1;
+  --color-white: #FFFFFF;
+  /* Gradients */
+  --gradient-blue: linear-gradient(135deg, #1170A1 0%, #0A4166 100%); /* @kind other */
+  --gradient-brand: linear-gradient(90deg, #1170A1 0%, #AC1225 100%); /* @kind other */
+  /* Semantic aliases */
+  --color-text-primary: var(--color-near-black);
+  --color-text-secondary: var(--color-dark);
+  --color-text-muted: var(--color-muted);
+  --color-surface: var(--color-white);
+  --color-surface-alt: var(--color-bg);
+  --color-interactive: var(--color-blue);
+  --color-accent: var(--color-red);
+}
